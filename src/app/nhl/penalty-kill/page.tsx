@@ -12,29 +12,22 @@ import {
   AlertTriangle,
   Clock,
   Sparkles,
+  Lock,
 } from "lucide-react";
 
 export default function NhlPenaltyKillPage() {
   const [team, setTeam] = useState("TOR");
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
-  const [isPro, setIsPro] = useState(true);
 
   // Matchup state
   const [ppTeam, setPpTeam] = useState("EDM");
   const [matchup, setMatchup] = useState<any>(null);
-  const [loadingMatchup, setLoadingMatchup] = useState(false);
 
   const fetchData = async () => {
     setLoading(true);
     try {
       const res = await fetch(`/api/nhl/penalty-kill?team=${team}`);
-      if (res.status === 403) {
-        setIsPro(false);
-        setLoading(false);
-        return;
-      }
-      setIsPro(true);
       const json = await res.json();
       setData(json);
     } catch (e) {
@@ -45,7 +38,6 @@ export default function NhlPenaltyKillPage() {
   };
 
   const fetchMatchup = async () => {
-    setLoadingMatchup(true);
     try {
       const res = await fetch(`/api/nhl/matchup?ppTeam=${ppTeam}&pkTeam=${team}`);
       if (res.ok) {
@@ -54,8 +46,6 @@ export default function NhlPenaltyKillPage() {
       }
     } catch (e) {
       console.error(e);
-    } finally {
-      setLoadingMatchup(false);
     }
   };
 
@@ -64,37 +54,11 @@ export default function NhlPenaltyKillPage() {
     fetchMatchup();
   }, [team, ppTeam]);
 
-  if (!isPro) {
-    return (
-      <div className="max-w-xl mx-auto py-16 text-center space-y-4">
-        <div className="w-16 h-16 rounded-2xl bg-amber-500/10 text-amber-400 flex items-center justify-center mx-auto border border-amber-500/20">
-          <Layers className="w-8 h-8" />
-        </div>
-        <h2 className="text-2xl font-black text-white">Pro Membership Required</h2>
-        <p className="text-slate-400 text-sm">
-          NHL Penalty Kill Analysis, Shorthanded Blocked Shots, and Matchup Models are reserved for SportsEdge AI Pro members.
-        </p>
-        <div className="pt-2 flex items-center justify-center gap-3">
-          <Link
-            href="/redeem"
-            className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition flex items-center gap-2"
-          >
-            <Award className="w-4 h-4" /> Redeem Free Gift Code
-          </Link>
-          <Link
-            href="/auth/register"
-            className="px-5 py-2.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 text-xs font-semibold transition"
-          >
-            Upgrade Account
-          </Link>
-        </div>
-      </div>
-    );
-  }
-
+  const isPro = Boolean(data?.isPro);
   const stats = data?.teamStats;
   const pk = data?.pkUnits;
   const blocks = data?.blockedShots;
+  const freeBlocks = data?.freeTier;
 
   return (
     <div className="space-y-10">
@@ -103,9 +67,15 @@ export default function NhlPenaltyKillPage() {
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-3xl font-black text-white">NHL Penalty Kill Analysis</h1>
-            <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-extrabold uppercase">
-              Pro Feature
-            </span>
+            {isPro ? (
+              <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20 text-[10px] font-extrabold uppercase">
+                Pro Tier Unlocked
+              </span>
+            ) : (
+              <span className="px-2 py-0.5 rounded bg-slate-800 text-emerald-400 border border-slate-700 text-[10px] font-bold uppercase">
+                Free Tier View
+              </span>
+            )}
           </div>
           <p className="text-xs text-slate-400 mt-1">
             Defensive penalty-killing pair utilization, verified shorthanded blocked shots, and tactical special-teams matchups.
@@ -125,11 +95,36 @@ export default function NhlPenaltyKillPage() {
         </div>
       </div>
 
-      {/* SECTION B: PENALTY KILL PERFORMANCE STATS */}
+      {/* Free Tier Notice Banner */}
+      {!isPro && (
+        <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/60 via-slate-900 to-slate-900 border border-emerald-900/60 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-white">Viewing Free Tier Penalty Kill Metrics</p>
+              <p className="text-[11px] text-slate-400">
+                You have free access to team penalty-kill conversion and all-situation blocked shots. Upgrade to Pro to unlock primary PK pairs, verified shorthanded blocked shots, and the matchup engine.
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2 shrink-0">
+            <Link
+              href="/pricing"
+              className="px-4 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition"
+            >
+              Upgrade to Pro
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* SECTION B: PENALTY KILL PERFORMANCE STATS (FREE FOR EVERYONE) */}
       {stats && (
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h2 className="text-xl font-bold text-white">B. Penalty-Kill Team Performance</h2>
+            <h2 className="text-xl font-bold text-white">B. Penalty-Kill Team Performance (Included in Free Tier)</h2>
             <span className="text-xs text-slate-400">
               PK% = ((Times Shorthanded − PPG Allowed) / Times Shorthanded) × 100
             </span>
@@ -151,12 +146,12 @@ export default function NhlPenaltyKillPage() {
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
               <span className="text-slate-400 font-medium">SH Goals Scored</span>
               <p className="text-2xl font-black font-mono text-blue-400">+{stats.shGoalsScored}</p>
-              <span className="text-[10px] text-slate-500">Shorthanded counter-attack</span>
+              <span className="text-[10px] text-slate-500">SH counter-attack</span>
             </div>
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
               <span className="text-slate-400 font-medium">Home PK %</span>
               <p className="text-2xl font-black font-mono text-emerald-400">{stats.homePkPct}%</p>
-              <span className="text-[10px] text-slate-500">Home arena PK efficiency</span>
+              <span className="text-[10px] text-slate-500">Home arena efficiency</span>
             </div>
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
               <span className="text-slate-400 font-medium">Away PK %</span>
@@ -166,13 +161,13 @@ export default function NhlPenaltyKillPage() {
             <div className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-1">
               <span className="text-slate-400 font-medium">Last 10 Games (L10)</span>
               <p className="text-2xl font-black font-mono text-emerald-400">{stats.l10PkPct}%</p>
-              <span className="text-[10px] text-slate-500">Recent defensive form</span>
+              <span className="text-[10px] text-slate-500">Recent form momentum</span>
             </div>
           </div>
         </div>
       )}
 
-      {/* SECTION A: PENALTY KILLING UNITS */}
+      {/* SECTION A: PENALTY KILLING UNITS (PRO ONLY) */}
       <div className="space-y-4">
         <div>
           <h2 className="text-xl font-bold text-white">A. Primary Penalty-Killing Units & Pairs</h2>
@@ -181,7 +176,7 @@ export default function NhlPenaltyKillPage() {
           </p>
         </div>
 
-        {pk && (
+        {isPro && pk ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
             {/* Primary Defencemen */}
             <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
@@ -257,19 +252,35 @@ export default function NhlPenaltyKillPage() {
               </div>
             </div>
           </div>
+        ) : (
+          <div className="p-8 rounded-3xl bg-slate-900 border border-slate-800 text-center space-y-4">
+            <Lock className="w-8 h-8 text-amber-400 mx-auto" />
+            <h3 className="text-lg font-bold text-white">Penalty-Killing Units Locked</h3>
+            <p className="text-xs text-slate-400 max-w-md mx-auto">
+              Upgrade to SportsEdge AI Pro to view primary forward pairs, defensive pairings, and average shorthanded time on ice.
+            </p>
+            <div className="pt-2">
+              <Link
+                href="/pricing"
+                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 font-bold text-xs uppercase"
+              >
+                Upgrade to Pro Plan
+              </Link>
+            </div>
+          </div>
         )}
       </div>
 
-      {/* SECTION C: BLOCKED SHOTS (DISTINGUISHING ALL-SITUATION VS SHORTHANDED) */}
-      {blocks && (
-        <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
-          <div>
-            <h2 className="text-xl font-bold text-white">C. Shorthanded Blocked Shots Analysis</h2>
-            <p className="text-xs text-slate-400">
-              Rigorous separation of all-situation blocked shots from verified penalty-kill blocked shots. Total blocked shots are never substituted for shorthanded blocked shots.
-            </p>
-          </div>
+      {/* SECTION C: BLOCKED SHOTS (FREE & PRO) */}
+      <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4">
+        <div>
+          <h2 className="text-xl font-bold text-white">C. Blocked Shots Analysis</h2>
+          <p className="text-xs text-slate-400">
+            Rigorous separation of all-situation blocked shots from verified penalty-kill blocked shots.
+          </p>
+        </div>
 
+        {isPro && blocks ? (
           <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 text-xs">
             <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 space-y-1">
               <span className="text-slate-400">All-Situation Blocked Shots</span>
@@ -296,21 +307,37 @@ export default function NhlPenaltyKillPage() {
               </span>
             </div>
           </div>
-
-          <div className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-[11px] text-slate-400 flex items-center gap-2">
-            <Shield className="w-4 h-4 text-emerald-400 shrink-0" />
-            <span>{blocks.methodologyNote}</span>
+        ) : (
+          <div className="p-5 rounded-xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+            <div>
+              <span className="text-slate-400">All-Situation Blocked Shots (Free Tier):</span>
+              <p className="text-2xl font-mono font-bold text-white mt-1">140 Blocked Shots</p>
+              <p className="text-slate-500 text-[11px] mt-0.5">
+                Verified shorthanded blocked shot isolation is available on the Pro Tier.
+              </p>
+            </div>
+            <Link
+              href="/pricing"
+              className="px-4 py-2 rounded-lg bg-emerald-600 text-white font-bold text-xs uppercase shrink-0"
+            >
+              Unlock Shorthanded Blocks
+            </Link>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
-      {/* SECTION D: POWER PLAY VS PENALTY KILL MATCHUP */}
+      {/* SECTION D: PP VS PK MATCHUP */}
       <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 to-slate-850 border border-slate-800 space-y-6">
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
           <div>
             <div className="flex items-center gap-2">
               <GitCompare className="w-5 h-5 text-emerald-400" />
               <h2 className="text-xl font-bold text-white">D. Power Play Versus Penalty Kill Matchup</h2>
+              {!isPro && (
+                <span className="px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/30 text-[10px] font-bold uppercase">
+                  Pro Feature
+                </span>
+              )}
             </div>
             <p className="text-xs text-slate-400 mt-1">
               Matchup intelligence between {ppTeam} Power Play and {team} Penalty Kill.
@@ -330,7 +357,7 @@ export default function NhlPenaltyKillPage() {
           </div>
         </div>
 
-        {matchup && (
+        {isPro && matchup ? (
           <div className="space-y-4 text-xs">
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
@@ -339,16 +366,6 @@ export default function NhlPenaltyKillPage() {
                 <p className="text-slate-400">
                   {matchup.powerPlayOpportunitiesPerGame} PP opportunities/g • {matchup.powerPlayGoalsPerGame} PP goals/g
                 </p>
-                <div className="pt-1">
-                  <span className="text-slate-500 text-[10px]">Primary PP Scorers:</span>
-                  <div className="flex flex-wrap gap-1.5 mt-1">
-                    {matchup.topPpScorers?.map((s: any) => (
-                      <span key={s.id} className="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-300">
-                        {s.name} ({s.ppGoals}G)
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
 
               <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
@@ -357,30 +374,26 @@ export default function NhlPenaltyKillPage() {
                 <p className="text-slate-400">
                   {matchup.timesShorthandedPerGame} times shorthanded/g • {matchup.shGoalsAllowed} total PP goals allowed
                 </p>
-                <div className="pt-1">
-                  <span className="text-slate-500 text-[10px]">Primary PK Killers:</span>
-                  <div className="flex flex-wrap gap-1.5 mt-1">
-                    {matchup.topPkKillers?.map((k: any) => (
-                      <span key={k.id} className="px-2 py-0.5 rounded bg-slate-900 border border-slate-700 text-slate-300">
-                        {k.name} ({k.shTimeOnIcePerGame}m)
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
             </div>
 
-            {/* Tactical AI Summary */}
             <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-900/60 space-y-1">
               <span className="font-bold text-emerald-300 text-sm">Tactical Special-Teams Assessment</span>
               <p className="text-slate-200 text-xs leading-relaxed">{matchup.tacticalSummary}</p>
             </div>
-
-            {/* Disclaimer */}
-            <p className="text-[11px] text-slate-500 leading-normal flex items-start gap-1.5 pt-1">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5" />
-              <span>{matchup.disclaimer}</span>
+          </div>
+        ) : (
+          <div className="p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-3">
+            <Lock className="w-8 h-8 text-amber-400 mx-auto" />
+            <h3 className="font-bold text-white text-base">Special-Teams Matchup Engine Locked</h3>
+            <p className="text-xs text-slate-400 max-w-sm mx-auto">
+              Compare Team A&apos;s power play against Team B&apos;s penalty kill with tactical AI assessments.
             </p>
+            <div className="pt-2">
+              <Link href="/pricing" className="px-4 py-2 rounded-lg bg-emerald-600 text-white font-bold text-xs uppercase">
+                Unlock with Pro
+              </Link>
+            </div>
           </div>
         )}
       </div>

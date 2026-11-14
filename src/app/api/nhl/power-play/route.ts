@@ -1,12 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requirePro } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { calculatePlayerShares, filterPlayerScoringTable } from "@/lib/nhl-analytics";
 import { getProviderStatus } from "@/lib/data-providers";
 
 export async function GET(req: NextRequest) {
   try {
-    await requirePro();
+    const user = await getCurrentUser();
+    const isPro = Boolean(user && (user.isProActive || user.role === "ADMIN"));
+
     const { searchParams } = new URL(req.url);
     const team = searchParams.get("team") || "EDM";
     const sortBy = (searchParams.get("sortBy") as any) || "ppPoints";
@@ -50,29 +52,53 @@ export async function GET(req: NextRequest) {
     };
 
     const teamPpGoals = stats.ppGoals || 1;
-    const teamPpPoints = (stats.ppGoals * 2) || 2; // goals + assists approximate
+    const teamPpPoints = stats.ppGoals * 2 || 2;
     const playersWithShares = calculatePlayerShares(rawPlayers as any, teamPpGoals, teamPpPoints);
+    const provider = getProviderStatus().nhlPowerPlay;
 
+    if (!isPro) {
+      // FREE TIER
+      return NextResponse.json({
+        team,
+        provider,
+        userPlan: user?.plan || "FREE",
+        isPro: false,
+        teamStats: stats,
+        freeTierPreview: {
+          topScorersOverview: playersWithShares.slice(0, 3).map((p) => ({
+            name: p.name,
+            position: p.position,
+            ppGoals: p.ppGoals,
+            ppPoints: p.ppPoints,
+          })),
+        },
+        proTeasers: {
+          pp1UnitsLocked: true,
+          pp2UnitsLocked: true,
+          goalShareAttributionLocked: true,
+          iceTimeDistributionLocked: true,
+          scoringTableLocked: true,
+        },
+      });
+    }
+
+    // PRO TIER
     const pp1 = playersWithShares.filter((p) => p.unit === "PP1");
     const pp2 = playersWithShares.filter((p) => p.unit === "PP2");
     const scoringTable = filterPlayerScoringTable(playersWithShares, { sortBy });
-    const provider = getProviderStatus().nhlPowerPlay;
 
     return NextResponse.json({
       team,
       provider,
+      userPlan: "PRO",
+      isPro: true,
       teamStats: stats,
       pp1,
       pp2,
       scoringTable,
     });
   } catch (error: any) {
-    if (error.message === "PRO_REQUIRED") {
-      return NextResponse.json(
-        { error: "SportsEdge AI Pro membership required to view NHL Power-Play Intelligence." },
-        { status: 403 }
-      );
-    }
+    console.error("NHL power-play fetch error:", error);
     return NextResponse.json({ error: "Failed to fetch NHL power-play data" }, { status: 500 });
   }
 }

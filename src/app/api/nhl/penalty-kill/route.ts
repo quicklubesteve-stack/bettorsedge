@@ -1,14 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
-import { requirePro } from "@/lib/auth";
+import { getCurrentUser } from "@/lib/auth";
 import prisma from "@/lib/db";
 import { analyzePkUnits, analyzeBlockedShots } from "@/lib/nhl-analytics";
 import { getProviderStatus } from "@/lib/data-providers";
 
 export async function GET(req: NextRequest) {
   try {
-    await requirePro();
+    const user = await getCurrentUser();
+    const isPro = Boolean(user && (user.isProActive || user.role === "ADMIN"));
+
     const { searchParams } = new URL(req.url);
-    const team = searchParams.get("team") || "EDM";
+    const team = searchParams.get("team") || "TOR";
 
     const [teamStats, rawPlayers] = await Promise.all([
       prisma.nhlSpecialTeamsTeamStats.findFirst({
@@ -48,24 +50,43 @@ export async function GET(req: NextRequest) {
       lastUpdated: new Date().toISOString(),
     };
 
+    const provider = getProviderStatus().nhlPenaltyKill;
+
+    if (!isPro) {
+      // FREE TIER
+      return NextResponse.json({
+        team,
+        provider,
+        userPlan: user?.plan || "FREE",
+        isPro: false,
+        teamStats: stats,
+        freeTier: {
+          allSituationBlockedShots: 140,
+        },
+        proTeasers: {
+          pkPairsLocked: true,
+          shorthandedTOILocked: true,
+          verifiedShorthandedBlockedShotsLocked: true,
+          matchupEngineLocked: true,
+        },
+      });
+    }
+
+    // PRO TIER
     const pkUnits = analyzePkUnits(rawPlayers as any);
     const blockedShots = analyzeBlockedShots(rawPlayers as any, 140);
-    const provider = getProviderStatus().nhlPenaltyKill;
 
     return NextResponse.json({
       team,
       provider,
+      userPlan: "PRO",
+      isPro: true,
       teamStats: stats,
       pkUnits,
       blockedShots,
     });
   } catch (error: any) {
-    if (error.message === "PRO_REQUIRED") {
-      return NextResponse.json(
-        { error: "SportsEdge AI Pro membership required to view NHL Penalty-Kill Intelligence." },
-        { status: 403 }
-      );
-    }
+    console.error("NHL penalty-kill fetch error:", error);
     return NextResponse.json({ error: "Failed to fetch NHL penalty-kill data" }, { status: 500 });
   }
 }

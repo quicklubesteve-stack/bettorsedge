@@ -14,6 +14,7 @@ import {
   LogIn,
   Layers,
   Sparkles,
+  CreditCard,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -50,7 +51,8 @@ export default function Navbar() {
     { href: "/nfl/offense", label: "NFL Offense", icon: Zap, pro: true },
     { href: "/nhl/power-play", label: "NHL Power Play", icon: Activity, pro: true },
     { href: "/nhl/penalty-kill", label: "NHL Penalty Kill", icon: Layers, pro: true },
-    { href: "/redeem", label: "Redeem Gift Code", icon: Award, pro: false },
+    { href: "/pricing", label: "Plans & Pricing", icon: CreditCard, pro: false },
+    { href: "/redeem", label: "Redeem Gift", icon: Award, pro: false },
   ];
 
   return (
@@ -68,7 +70,7 @@ export default function Navbar() {
                   SPORTSEDGE<span className="text-emerald-400">.AI</span>
                 </span>
                 <span className="hidden sm:inline-block ml-2 text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/60">
-                  Pro Intelligence
+                  Two-Tier Platform
                 </span>
               </div>
             </Link>
@@ -110,15 +112,29 @@ export default function Navbar() {
                 }`}
               >
                 <KeyRound className="w-3.5 h-3.5" />
-                Admin Dashboard
+                Admin
               </Link>
             )}
           </nav>
 
-          {/* User actions */}
+          {/* User actions & Tier Badges */}
           <div className="flex items-center gap-3">
             {!loading && user ? (
               <div className="flex items-center gap-2">
+                {/* Plan status pill */}
+                {user.plan === "PRO" ? (
+                  <span className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[10px] font-black uppercase tracking-wider">
+                    <Sparkles className="w-3 h-3" /> PRO VIP
+                  </span>
+                ) : (
+                  <Link
+                    href="/pricing"
+                    className="hidden sm:inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20 text-[10px] font-bold uppercase tracking-wider transition"
+                  >
+                    <span>FREE TIER</span> • <span className="underline font-black">UPGRADE</span>
+                  </Link>
+                )}
+
                 <Link
                   href="/account"
                   className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700 hover:border-slate-600 transition text-xs"
@@ -155,11 +171,11 @@ export default function Navbar() {
                   Sign In
                 </Link>
                 <Link
-                  href="/auth/register"
+                  href="/pricing"
                   className="flex items-center gap-1 px-3 py-1.5 rounded-md text-xs font-semibold bg-emerald-600 hover:bg-emerald-500 text-white shadow transition"
                 >
                   <Sparkles className="w-3.5 h-3.5" />
-                  Get Pro
+                  View Plans
                 </Link>
               </div>
             )}
