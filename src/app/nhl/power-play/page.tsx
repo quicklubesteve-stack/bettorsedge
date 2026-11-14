@@ -14,6 +14,7 @@ import {
   Calendar,
   Lock,
 } from "lucide-react";
+import { NHL_ALL_TEAMS } from "@/lib/teams";
 
 export default function NhlPowerPlayPage() {
   const [team, setTeam] = useState("EDM");
@@ -33,6 +34,13 @@ export default function NhlPowerPlayPage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const q = new URLSearchParams(window.location.search).get("team");
+      if (q) setTeam(q);
+    }
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -71,8 +79,11 @@ export default function NhlPowerPlayPage() {
             onChange={(e) => setTeam(e.target.value)}
             className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 font-bold text-white focus:outline-none focus:border-emerald-500"
           >
-            <option value="EDM">Edmonton Oilers (EDM)</option>
-            <option value="TOR">Toronto Maple Leafs (TOR)</option>
+            {NHL_ALL_TEAMS.map((t) => (
+              <option key={t.abbr} value={t.abbr}>
+                {t.name} ({t.abbr})
+              </option>
+            ))}
           </select>
         </div>
       </div>

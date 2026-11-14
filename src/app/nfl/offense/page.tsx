@@ -15,9 +15,10 @@ import {
   Lock,
   Sparkles,
 } from "lucide-react";
+import { NFL_ALL_TEAMS } from "@/lib/teams";
 
 export default function NflOffensePage() {
-  const [team, setTeam] = useState("Example Team A");
+  const [team, setTeam] = useState("KC");
   const [excludeKneels, setExcludeKneels] = useState(true);
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -32,7 +33,7 @@ export default function NflOffensePage() {
   const [searching, setSearching] = useState(false);
 
   // Opponent comparison state
-  const [opponentTeam, setOpponentTeam] = useState("Example Team B");
+  const [opponentTeam, setOpponentTeam] = useState("SF");
   const [matchupData, setMatchupData] = useState<any>(null);
 
   const fetchData = async () => {
@@ -63,6 +64,13 @@ export default function NflOffensePage() {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const q = new URLSearchParams(window.location.search).get("team");
+      if (q) setTeam(q);
+    }
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -129,6 +137,11 @@ export default function NflOffensePage() {
               onChange={(e) => setTeam(e.target.value)}
               className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 font-bold text-white focus:outline-none focus:border-emerald-500"
             >
+              {NFL_ALL_TEAMS.map((t) => (
+                <option key={t.abbr} value={t.abbr}>
+                  {t.name} ({t.abbr})
+                </option>
+              ))}
               <option value="Example Team A">Example Team A (Dev Fixture)</option>
               <option value="Example Team B">Example Team B (Dev Fixture)</option>
             </select>
@@ -517,6 +530,11 @@ export default function NflOffensePage() {
               onChange={(e) => setOpponentTeam(e.target.value)}
               className="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white font-bold"
             >
+              {NFL_ALL_TEAMS.map((t) => (
+                <option key={t.abbr} value={t.abbr}>
+                  {t.name} ({t.abbr})
+                </option>
+              ))}
               <option value="Example Team B">Example Team B</option>
               <option value="Example Team A">Example Team A</option>
             </select>

@@ -14,6 +14,7 @@ import {
   Sparkles,
   Lock,
 } from "lucide-react";
+import { NHL_ALL_TEAMS } from "@/lib/teams";
 
 export default function NhlPenaltyKillPage() {
   const [team, setTeam] = useState("TOR");
@@ -48,6 +49,13 @@ export default function NhlPenaltyKillPage() {
       console.error(e);
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const q = new URLSearchParams(window.location.search).get("team");
+      if (q) setTeam(q);
+    }
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -89,8 +97,11 @@ export default function NhlPenaltyKillPage() {
             onChange={(e) => setTeam(e.target.value)}
             className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 font-bold text-white focus:outline-none focus:border-emerald-500"
           >
-            <option value="TOR">Toronto Maple Leafs (TOR)</option>
-            <option value="EDM">Edmonton Oilers (EDM)</option>
+            {NHL_ALL_TEAMS.map((t) => (
+              <option key={t.abbr} value={t.abbr}>
+                {t.name} ({t.abbr})
+              </option>
+            ))}
           </select>
         </div>
       </div>
@@ -351,8 +362,11 @@ export default function NhlPenaltyKillPage() {
               onChange={(e) => setPpTeam(e.target.value)}
               className="px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 text-white font-bold"
             >
-              <option value="EDM">Edmonton Oilers (EDM)</option>
-              <option value="TOR">Toronto Maple Leafs (TOR)</option>
+              {NHL_ALL_TEAMS.map((t) => (
+                <option key={t.abbr} value={t.abbr}>
+                  {t.name} ({t.abbr})
+                </option>
+              ))}
             </select>
           </div>
         </div>

@@ -124,6 +124,14 @@ export default function PricingPage() {
               </div>
               <div className="flex items-center gap-2.5">
                 <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Full 32-Team NFL & NHL league leaderboards (/rankings)</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span>Free Head-to-Head team matchup compare tool</span>
+              </div>
+              <div className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>NHL team season power-play & penalty-kill %</span>
               </div>
               <div className="flex items-center gap-2.5">

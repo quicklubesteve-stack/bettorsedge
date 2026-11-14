@@ -15,6 +15,7 @@ import {
   Layers,
   Sparkles,
   CreditCard,
+  Trophy,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -47,11 +48,12 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { href: "/rankings", label: "32-Team Rankings", icon: Trophy, pro: false },
     { href: "/nfl/defense", label: "NFL Defense", icon: ShieldAlert, pro: true },
     { href: "/nfl/offense", label: "NFL Offense", icon: Zap, pro: true },
     { href: "/nhl/power-play", label: "NHL Power Play", icon: Activity, pro: true },
     { href: "/nhl/penalty-kill", label: "NHL Penalty Kill", icon: Layers, pro: true },
-    { href: "/pricing", label: "Plans & Pricing", icon: CreditCard, pro: false },
+    { href: "/pricing", label: "Plans", icon: CreditCard, pro: false },
     { href: "/redeem", label: "Redeem Gift", icon: Award, pro: false },
   ];
 
@@ -70,7 +72,7 @@ export default function Navbar() {
                   SPORTSEDGE<span className="text-emerald-400">.AI</span>
                 </span>
                 <span className="hidden sm:inline-block ml-2 text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded bg-emerald-950 text-emerald-400 border border-emerald-800/60">
-                  Two-Tier Platform
+                  NFL & NHL Intelligence
                 </span>
               </div>
             </Link>

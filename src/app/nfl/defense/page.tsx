@@ -15,9 +15,10 @@ import {
   Lock,
   ArrowRight,
 } from "lucide-react";
+import { NFL_ALL_TEAMS } from "@/lib/teams";
 
 export default function NflDefensePage() {
-  const [team, setTeam] = useState("Example Team A");
+  const [team, setTeam] = useState("KC");
   const [data, setData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
 
@@ -42,6 +43,13 @@ export default function NflDefensePage() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const q = new URLSearchParams(window.location.search).get("team");
+      if (q) setTeam(q);
+    }
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -108,8 +116,13 @@ export default function NflDefensePage() {
             onChange={(e) => setTeam(e.target.value)}
             className="px-3 py-1.5 rounded-lg bg-slate-900 border border-slate-700 text-xs font-bold text-white focus:outline-none focus:border-emerald-500"
           >
-            <option value="Example Team A">Example Team A (Development Fixture)</option>
-            <option value="Example Team B">Example Team B (Development Fixture)</option>
+            {NFL_ALL_TEAMS.map((t) => (
+              <option key={t.abbr} value={t.abbr}>
+                {t.name} ({t.abbr})
+              </option>
+            ))}
+            <option value="Example Team A">Example Team A (Dev Fixture)</option>
+            <option value="Example Team B">Example Team B (Dev Fixture)</option>
           </select>
         </div>
       </div>

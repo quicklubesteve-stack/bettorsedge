@@ -10,6 +10,9 @@ import {
   TrendingUp,
   Sliders,
   CheckCircle2,
+  Trophy,
+  GitCompare,
+  Sparkles,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -183,6 +186,75 @@ export default function HomePage() {
           >
             Inspect Penalty Killers <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
           </Link>
+        </div>
+      </div>
+
+      {/* FREE TIER FEATURE SPOTLIGHT & 32-TEAM LEAGUE HUB */}
+      <div className="p-8 rounded-2xl bg-gradient-to-br from-slate-900 via-slate-850 to-slate-900 border border-emerald-900/40 space-y-6 shadow-2xl">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
+              <Trophy className="w-6 h-6" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="text-xl font-bold text-white">Free Plan: 32-Team League Intelligence Hub</h2>
+                <span className="px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">
+                  100% Free Access
+                </span>
+              </div>
+              <p className="text-xs text-slate-400 mt-1">
+                Access comprehensive season statistics, defensive blitz rankings, offensive pass/run splits, and special-teams index for all 32 NFL & 32 NHL franchises.
+              </p>
+            </div>
+          </div>
+          <Link
+            href="/rankings"
+            className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs uppercase tracking-wider transition flex items-center gap-2 shrink-0"
+          >
+            Open 32-Team Rankings <ArrowRight className="w-4 h-4" />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
+            <div className="flex items-center gap-2 text-emerald-400 font-bold">
+              <Sparkles className="w-4 h-4" />
+              <span>Full 32-Team League Rankings</span>
+            </div>
+            <p className="text-slate-400 text-[11px]">
+              Sort, filter, and search across every NFL & NHL team by blitz rate, pressure rate, pass percentage, PP%, PK%, and special teams index.
+            </p>
+            <Link href="/rankings" className="text-emerald-400 hover:underline text-[11px] font-semibold block pt-1">
+              View Leaderboards →
+            </Link>
+          </div>
+
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
+            <div className="flex items-center gap-2 text-blue-400 font-bold">
+              <GitCompare className="w-4 h-4" />
+              <span>Interactive Head-to-Head Compare</span>
+            </div>
+            <p className="text-slate-400 text-[11px]">
+              Select any two franchises from the 32-team database to compare blitz frequencies, run/pass balance, and special teams ratings side-by-side.
+            </p>
+            <Link href="/rankings" className="text-blue-400 hover:underline text-[11px] font-semibold block pt-1">
+              Launch Matchup Tool →
+            </Link>
+          </div>
+
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
+            <div className="flex items-center gap-2 text-purple-400 font-bold">
+              <TrendingUp className="w-4 h-4" />
+              <span>Free Base Analytics & Previews</span>
+            </div>
+            <p className="text-slate-400 text-[11px]">
+              Enjoy free 1st-down blitz counts, full-season power-play conversions, all-situation blocked shots, and live preview cards for advanced Pro models.
+            </p>
+            <Link href="/pricing" className="text-purple-400 hover:underline text-[11px] font-semibold block pt-1">
+              Compare Free vs Pro Plans →
+            </Link>
+          </div>
         </div>
       </div>
 
