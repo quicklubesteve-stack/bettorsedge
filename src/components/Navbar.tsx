@@ -18,6 +18,7 @@ import {
   Trophy,
   Cpu,
   Calendar,
+  Users,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -50,6 +51,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { href: "/rosters", label: "Team Rosters", icon: Users, pro: false },
     { href: "/standings", label: "Standings", icon: Trophy, pro: false },
     { href: "/schedule", label: "Game Odds & Props", icon: Calendar, pro: false },
     { href: "/rankings", label: "32-Team Analytics", icon: Sparkles, pro: false },

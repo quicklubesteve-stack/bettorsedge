@@ -314,3 +314,44 @@ model TeamStandings {
   @@index([league, conference, division])
   @@index([league, rankConference])
 }
+
+model TeamRosterPlayer {
+  id              String      @id @default(uuid())
+  league          String      // NFL or NHL
+  team            String      // e.g. "KC", "BUF", "TOR", "EDM"
+  teamName        String      // e.g. "Kansas City Chiefs"
+  name            String      // e.g. "Patrick Mahomes", "Auston Matthews"
+  jerseyNumber    Int         @default(0)
+  position        String      // QB, RB, WR, TE, K, C, LW, RW, D, G
+  unit            String      // OFFENSE, DEFENSE, SPECIAL_TEAMS, FORWARD, DEFENSEMAN, GOALIE
+  depthOrder      Int         @default(1) // 1 = Starter/1st Line, 2 = Backup/2nd Line, etc.
+  status          String      @default("ACTIVE") // ACTIVE, QUESTIONABLE, DOUBTFUL, OUT, IR
+  injuryDetails   String?     // e.g. "Ankle - Probable for Sunday"
+  roleDescription String      // e.g. "Starting QB", "RB1 Workhorse", "PP1 Point / Top Center"
+  statsSummary    String      // e.g. "2,680 Pass Yds • 22 TD • 6 INT"
+  
+  // Weights for simulations & projections
+  simulationWeight Float      @default(1.0)
+  touchdownWeight  Float      @default(0.2)
+  goalWeight       Float      @default(0.2)
+  
+  season          String      @default("2024-2025")
+  lastUpdated     DateTime    @default(now())
+
+  @@index([league, team])
+  @@index([league, position])
+  @@index([status])
+}
+
+model RosterSyncMeta {
+  id              String      @id @default(uuid())
+  league          String      @unique // NFL, NHL, or ALL
+  lastSyncedAt    DateTime    @default(now())
+  nextSyncDue     DateTime    // Exactly 7 days after lastSyncedAt
+  updateFrequency String      @default("WEEKLY") // WEEKLY (Every 7 Days)
+  totalPlayers    Int         @default(0)
+  totalTeams      Int         @default(32)
+  status          String      @default("UP_TO_DATE") // UP_TO_DATE, SYNCING, PENDING
+  syncNotes       String      @default("Current active rosters verified for Week 11")
+  updatedAt       DateTime    @updatedAt
+}
