@@ -17,6 +17,7 @@ import {
   CreditCard,
   Trophy,
   Cpu,
+  Calendar,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -49,6 +50,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { href: "/schedule", label: "Game Odds & Props", icon: Calendar, pro: false },
     { href: "/rankings", label: "32-Team Rankings", icon: Trophy, pro: false },
     { href: "/simulation", label: "Simulation Lab (90%+)", icon: Cpu, pro: false },
     { href: "/nfl/defense", label: "NFL Defense", icon: ShieldAlert, pro: true },

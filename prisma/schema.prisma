@@ -213,3 +213,56 @@ model NhlShBlockedShotEvent {
   situation         String      @default("PK") // PK, EV, PP
   createdAt         DateTime    @default(now())
 }
+
+model ScheduledGame {
+  id                    String      @id @default(uuid())
+  league                String      // NFL or NHL
+  gameId                String      @unique
+  date                  DateTime
+  week                  Int?
+  status                String      @default("SCHEDULED") // SCHEDULED, LIVE, FINAL
+  homeTeam              String
+  awayTeam              String
+  homeTeamName          String
+  awayTeamName          String
+  venue                 String
+  broadcast             String?
+
+  // Betting Odds
+  homeMoneyline         Int
+  awayMoneyline         Int
+  spread                Float       // e.g. -2.5
+  spreadFavorite        String      // HOME or AWAY
+  overUnder             Float       // e.g. 47.5
+  homeWinProbability    Float       // e.g. 56.5
+  awayWinProbability    Float       // e.g. 43.5
+
+  // AI Predictions
+  predictedWinner       String
+  predictedScore        String      // e.g. "27 - 24"
+  predictedSpreadPick   String      // e.g. "BUF -2.5"
+  spreadConfidence      String      // HIGH, MODERATE, LEAN
+  predictedOverUnder    String      // OVER or UNDER
+  predictionReasoning   String
+
+  // Props & Safe Bets
+  firstTeamToScore      String
+  firstTeamOdds         Int         // e.g. -125
+  firstTeamReasoning    String
+  
+  homeFirstScorer       String
+  homeFirstScorerOdds   String
+  homeFirstScorerReason String
+
+  awayFirstScorer       String
+  awayFirstScorerOdds   String
+  awayFirstScorerReason String
+
+  safePropsJson         String      // JSON array of high-conviction props
+
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  @@index([league, date])
+  @@index([homeTeam, awayTeam])
+}
