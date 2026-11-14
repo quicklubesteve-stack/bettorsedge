@@ -50,8 +50,9 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { href: "/standings", label: "Standings", icon: Trophy, pro: false },
     { href: "/schedule", label: "Game Odds & Props", icon: Calendar, pro: false },
-    { href: "/rankings", label: "32-Team Rankings", icon: Trophy, pro: false },
+    { href: "/rankings", label: "32-Team Analytics", icon: Sparkles, pro: false },
     { href: "/simulation", label: "Simulation Lab (90%+)", icon: Cpu, pro: false },
     { href: "/nfl/defense", label: "NFL Defense", icon: ShieldAlert, pro: true },
     { href: "/nfl/offense", label: "NFL Offense", icon: Zap, pro: true },

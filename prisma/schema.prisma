@@ -266,3 +266,51 @@ model ScheduledGame {
   @@index([league, date])
   @@index([homeTeam, awayTeam])
 }
+
+model TeamStandings {
+  id                String      @id @default(uuid())
+  league            String      // NFL or NHL
+  season            String      // "2024" or "2024-2025"
+  team              String      // e.g. "KC", "EDM"
+  name              String      // e.g. "Kansas City Chiefs"
+  conference        String      // AFC / NFC or Eastern / Western
+  division          String      // East, North, South, West or Atlantic, Metropolitan, Central, Pacific
+  rankDivision      Int         // 1 to 4 or 1 to 8
+  rankConference    Int         // 1 to 16
+  rankLeague        Int         // 1 to 32
+  playoffSeed       Int?        // 1 to 7 for NFL, 1 to 8 for NHL, null if out of playoff picture
+
+  // Common record
+  gamesPlayed       Int         @default(0)
+  wins              Int         @default(0)
+  losses            Int         @default(0)
+  
+  // NFL specific
+  ties              Int         @default(0)
+  winPct            Float       @default(0.0)
+  pointsFor         Int         @default(0)
+  pointsAgainst     Int         @default(0)
+  pointDiff         Int         @default(0)
+
+  // NHL specific
+  otLosses          Int         @default(0)
+  points            Int         @default(0)
+  regulationWins    Int         @default(0)
+  goalsFor          Int         @default(0)
+  goalsAgainst      Int         @default(0)
+  goalDiff          Int         @default(0)
+
+  // Splits & streaks
+  homeRecord        String      @default("0-0")
+  awayRecord        String      @default("0-0")
+  divisionRecord    String      @default("0-0")
+  conferenceRecord  String      @default("0-0")
+  streak            String      @default("W1")
+  lastTen           String      @default("5-5")
+
+  lastUpdated       DateTime    @default(now())
+
+  @@unique([league, season, team])
+  @@index([league, conference, division])
+  @@index([league, rankConference])
+}

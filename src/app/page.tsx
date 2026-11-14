@@ -43,6 +43,13 @@ export default function HomePage() {
               Redeem Pro Gift Code
             </Link>
             <Link
+              href="/standings"
+              className="px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-white font-semibold text-sm border border-slate-700 transition flex items-center gap-2"
+            >
+              <Trophy className="w-4 h-4 text-emerald-400" />
+              Live Standings
+            </Link>
+            <Link
               href="/schedule"
               className="px-5 py-2.5 rounded-xl bg-slate-800/80 hover:bg-slate-700/80 text-white font-semibold text-sm border border-slate-700 transition flex items-center gap-2"
             >
