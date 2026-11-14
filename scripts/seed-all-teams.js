@@ -71,8 +71,35 @@ const NHL_TEAMS = [
   { abbr: "WSH", name: "Washington Capitals", ppPct: 21.8, pkPct: 81.0, stars: [{ name: "Alex Ovechkin", pos: "LW", g: 9, a: 6 }, { name: "John Carlson", pos: "D", g: 3, a: 9 }] },
 ];
 
+function calcSituationalPassProbability(passBase, down, yardsToGo, isGoalLine, isTwoMinuteDrill, quarter, scoreDiff, timeRemainingSeconds) {
+  // 1. Extreme passing situations (NFL ground truth 90%+)
+  if (down === 3 && yardsToGo >= 7) return 94.0;
+  if (isTwoMinuteDrill && scoreDiff < 0) return 93.0;
+  if (quarter === 4 && scoreDiff < 0 && timeRemainingSeconds <= 300) return 92.0;
+
+  // 2. Extreme running situations (NFL ground truth 90%+)
+  if (down === 4 && yardsToGo <= 2) return 8.0; // 92% run
+  if (down === 3 && yardsToGo <= 3) return 10.0; // 90% run
+  if (isGoalLine && down <= 2) return 9.0; // 91% run
+  if (quarter === 4 && scoreDiff >= 7 && timeRemainingSeconds <= 300) return 7.0; // 93% run
+
+  // 3. Situational adjustments
+  let p = passBase;
+  if (down === 2 && yardsToGo >= 8) p += 20;
+  if (down === 2 && yardsToGo <= 3) p -= 20;
+  if (down === 1) p -= 6;
+  if (isGoalLine) p -= 25;
+  if (scoreDiff < -7) p += 15;
+  if (scoreDiff > 7) p -= 15;
+
+  return Math.max(15, Math.min(85, p));
+}
+
 async function main() {
   console.log("Seeding all 32 NFL teams and 32 NHL teams...");
+
+  // Clear existing mock plays to keep seed clean
+  await prisma.nflPlay.deleteMany({});
 
   // 1. Seed NFL Plays for all 32 NFL teams
   console.log("Generating NFL plays for all 32 franchises...");
@@ -93,10 +120,13 @@ async function main() {
       const afterTurnover = i % 7 === 0;
       const quarter = Math.min(4, Math.floor(i / 7) + 1);
       const scoreDiff = (i % 7) - 3;
+      const timeRemainingSeconds = 900 - (i * 30);
+      const isTwoMinuteDrill = i % 10 === 0 || (quarter === 4 && timeRemainingSeconds <= 120);
 
       // Defensive perspective (team.abbr is defensiveTeam)
       const isBlitzDef = Math.random() * 100 < (down === 3 ? team.blitzBase * 1.35 : team.blitzBase);
-      const isPassDef = Math.random() * 100 < opp.passBase;
+      const passProbDef = calcSituationalPassProbability(opp.passBase, down, yardsToGo, isGoalLine, isTwoMinuteDrill, quarter, -scoreDiff, timeRemainingSeconds);
+      const isPassDef = Math.random() * 100 < passProbDef;
       const isSackDef = isBlitzDef && Math.random() < 0.18;
       const isPressureDef = isBlitzDef || Math.random() < 0.22;
       const yardsGainedDef = isSackDef ? -7 : isPassDef ? (Math.random() > 0.4 ? 11 : 0) : Math.floor(Math.random() * 6) + 1;
@@ -121,7 +151,7 @@ async function main() {
         isTurnover: i % 18 === 0,
         isRedZone,
         isGoalLine,
-        isTwoMinuteDrill: i % 10 === 0,
+        isTwoMinuteDrill,
         driveNumber: Math.floor(i / 6) + 1,
         isFirstDrive,
         afterTurnover,
@@ -139,7 +169,8 @@ async function main() {
       });
 
       // Offensive perspective (team.abbr is possessionTeam)
-      const isPassOff = Math.random() * 100 < (down === 3 && yardsToGo >= 7 ? team.passBase * 1.25 : team.passBase);
+      const passProbOff = calcSituationalPassProbability(team.passBase, down, yardsToGo, isGoalLine, isTwoMinuteDrill, quarter, scoreDiff, timeRemainingSeconds);
+      const isPassOff = Math.random() * 100 < passProbOff;
       const yardsGainedOff = isPassOff ? (Math.random() > 0.38 ? 12 : -1) : Math.floor(Math.random() * 5) + 2;
       const isFirstDownOff = yardsGainedOff >= yardsToGo;
 
@@ -162,7 +193,7 @@ async function main() {
         isTurnover: i % 22 === 0,
         isRedZone,
         isGoalLine,
-        isTwoMinuteDrill: i % 10 === 0,
+        isTwoMinuteDrill,
         driveNumber: Math.floor(i / 6) + 1,
         isFirstDrive,
         afterTurnover,

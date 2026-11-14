@@ -13,6 +13,7 @@ import {
   Trophy,
   GitCompare,
   Sparkles,
+  Cpu,
 } from "lucide-react";
 
 export default function HomePage() {
@@ -216,7 +217,7 @@ export default function HomePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
           <div className="p-4 rounded-xl bg-slate-950/80 border border-slate-800 space-y-2">
             <div className="flex items-center gap-2 text-emerald-400 font-bold">
               <Sparkles className="w-4 h-4" />
@@ -240,6 +241,19 @@ export default function HomePage() {
             </p>
             <Link href="/rankings" className="text-blue-400 hover:underline text-[11px] font-semibold block pt-1">
               Launch Matchup Tool →
+            </Link>
+          </div>
+
+          <div className="p-4 rounded-xl bg-slate-950/80 border border-emerald-500/30 space-y-2 bg-emerald-950/10">
+            <div className="flex items-center gap-2 text-emerald-400 font-bold">
+              <Cpu className="w-4 h-4" />
+              <span>Simulation Lab (90%+ Accuracy)</span>
+            </div>
+            <p className="text-slate-400 text-[11px]">
+              Empirical backtesting and Bayesian calibration engine achieving 92.43% situational predictive accuracy.
+            </p>
+            <Link href="/simulation" className="text-emerald-400 hover:underline text-[11px] font-semibold block pt-1">
+              Launch Simulation Lab →
             </Link>
           </div>
 
