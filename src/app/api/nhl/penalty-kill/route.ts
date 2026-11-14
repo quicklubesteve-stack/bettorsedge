@@ -1,0 +1,71 @@
+import { NextRequest, NextResponse } from "next/server";
+import { requirePro } from "@/lib/auth";
+import prisma from "@/lib/db";
+import { analyzePkUnits, analyzeBlockedShots } from "@/lib/nhl-analytics";
+import { getProviderStatus } from "@/lib/data-providers";
+
+export async function GET(req: NextRequest) {
+  try {
+    await requirePro();
+    const { searchParams } = new URL(req.url);
+    const team = searchParams.get("team") || "EDM";
+
+    const [teamStats, rawPlayers] = await Promise.all([
+      prisma.nhlSpecialTeamsTeamStats.findFirst({
+        where: { team },
+      }),
+      prisma.nhlSpecialTeamsPlayer.findMany({
+        where: { team },
+      }),
+    ]);
+
+    const stats = teamStats || {
+      id: "fallback",
+      team,
+      season: "2024-2025",
+      gameType: "REGULAR",
+      ppOpportunities: 45,
+      ppGoals: 13,
+      ppPct: 28.9,
+      ppOpportunitiesPerGame: 3.2,
+      ppGoalsPerGame: 0.9,
+      homePpPct: 31.2,
+      awayPpPct: 26.5,
+      l5PpPct: 33.3,
+      l10PpPct: 29.0,
+      timesShorthanded: 40,
+      pkGoalsAllowed: 8,
+      pkPct: 80.0,
+      shGoalsScored: 2,
+      shShotsAllowed: 65,
+      shBlockedShots: 22,
+      shTimeOnIceSeconds: 4800,
+      homePkPct: 82.0,
+      awayPkPct: 77.8,
+      l5PkPct: 80.0,
+      l10PkPct: 80.0,
+      dataProvider: "MOCK_FIXTURE",
+      lastUpdated: new Date().toISOString(),
+    };
+
+    const pkUnits = analyzePkUnits(rawPlayers as any);
+    const blockedShots = analyzeBlockedShots(rawPlayers as any, 140);
+    const provider = getProviderStatus().nhlPenaltyKill;
+
+    return NextResponse.json({
+      team,
+      provider,
+      teamStats: stats,
+      pkUnits,
+      blockedShots,
+    });
+  } catch (error: any) {
+    if (error.message === "PRO_REQUIRED") {
+      return NextResponse.json(
+        { error: "SportsEdge AI Pro membership required to view NHL Penalty-Kill Intelligence." },
+        { status: 403 }
+      );
+    }
+    return NextResponse.json({ error: "Failed to fetch NHL penalty-kill data" }, { status: 500 });
+  }
+}

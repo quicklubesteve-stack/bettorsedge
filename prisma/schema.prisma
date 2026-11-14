@@ -1,0 +1,215 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String            @id @default(uuid())
+  email               String            @unique
+  name                String?
+  passwordHash        String
+  role                String            @default("USER") // USER, ADMIN
+  plan                String            @default("FREE") // FREE, PRO
+  proExpiresAt        DateTime?
+  stripeCustomerId    String?
+  stripeSubscriptionId String?
+  createdAt           DateTime          @default(now())
+  updatedAt           DateTime          @updatedAt
+
+  redemptions         PromoRedemption[]
+  entitlements        UserEntitlement[]
+}
+
+model PromoCode {
+  id              String            @id @default(uuid())
+  code            String            @unique // e.g. SPORTSEDGE-30DAY-GIFT
+  codeHash        String            @unique // SHA-256 for secure verification
+  type            String            // ONE_MONTH, ONE_YEAR, CUSTOM
+  durationDays    Int               @default(30)
+  maxRedemptions  Int?              // null = unlimited
+  timesRedeemed   Int               @default(0)
+  startDate       DateTime          @default(now())
+  expiresAt       DateTime?
+  isActive        Boolean           @default(true)
+  newUsersOnly    Boolean           @default(false)
+  allowedEmail    String?           // Optional recipient email restriction
+  notes           String?           // Admin internal notes
+  createdBy       String            @default("SYSTEM")
+  createdAt       DateTime          @default(now())
+  updatedAt       DateTime          @updatedAt
+
+  redemptions     PromoRedemption[]
+}
+
+model PromoRedemption {
+  id            String      @id @default(uuid())
+  codeId        String
+  userId        String
+  redeemedAt    DateTime    @default(now())
+  accessStart   DateTime
+  accessExpires DateTime
+  status        String      @default("SUCCESS") // SUCCESS, REVOKED
+  ipAddress     String?
+  userAgent     String?
+
+  code          PromoCode   @relation(fields: [codeId], references: [id], onDelete: Cascade)
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([codeId, userId]) // Prevent duplicate redemptions by same user for same code
+}
+
+model UserEntitlement {
+  id          String      @id @default(uuid())
+  userId      String
+  source      String      // PROMO_CODE, STRIPE_SUBSCRIPTION, ADMIN_OVERRIDE
+  sourceId    String?
+  startsAt    DateTime
+  expiresAt   DateTime?
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model AdminAuditLog {
+  id          String      @id @default(uuid())
+  adminId     String
+  adminEmail  String
+  action      String      // CREATE_PROMO, DISABLE_PROMO, REVOKE_REDEMPTION, EXPORT_REPORT
+  targetType  String      // PROMO_CODE, USER, REDEMPTION
+  targetId    String?
+  details     String      // JSON payload
+  createdAt   DateTime    @default(now())
+}
+
+model NflPlay {
+  id                    String      @id @default(uuid())
+  gameId                String
+  season                Int
+  week                  Int
+  possessionTeam        String
+  defensiveTeam         String
+  down                  Int         // 1, 2, 3, 4
+  yardsToGo             Int
+  yardline100           Int         // Yards from opponent goal line (1-99)
+  quarter               Int         // 1, 2, 3, 4, 5 (OT)
+  timeRemainingSeconds  Int         // Time left in quarter/half
+  scoreDiff             Int         // possessionTeam score - defensiveTeam score
+  playType              String      // RUN, PASS, SACK, SCRAMBLE, KNEEL, SPIKE, NO_PLAY
+  yardsGained           Int
+  isFirstDown           Boolean     @default(false)
+  isTouchdown           Boolean     @default(false)
+  isTurnover            Boolean     @default(false)
+  isRedZone             Boolean     @default(false) // <= 20 yards from goal
+  isGoalLine            Boolean     @default(false) // <= 5 yards from goal
+  isTwoMinuteDrill      Boolean     @default(false)
+  driveNumber           Int         @default(1)
+  isFirstDrive          Boolean     @default(false)
+  afterTurnover         Boolean     @default(false)
+  afterPenalty          Boolean     @default(false)
+  personnel             String?     // e.g. "11 Personnel", "12 Personnel"
+  formation             String?     // e.g. "SHOTGUN", "UNDER CENTER", "PISTOL"
+  
+  // Blitz & Pressure Fields (Null when verified blitz data unavailable)
+  isBlitz               Boolean?    // null = no verified blitz tracking data
+  isPressure            Boolean     @default(false)
+  isSack                Boolean     @default(false)
+  isCompletion          Boolean?
+  passingYards          Int?
+  isExplosivePlay       Boolean     @default(false) // Pass >= 20 yds or Run >= 12 yds
+  dataProvider          String      @default("MOCK_FIXTURE") // "PFF", "SPORTRADAR", "MOCK_FIXTURE", "UNVERIFIED"
+  isVerifiedBlitzData   Boolean     @default(false)
+  
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+
+  @@index([defensiveTeam, down, yardsToGo])
+  @@index([possessionTeam, down, yardsToGo])
+}
+
+model NhlSpecialTeamsTeamStats {
+  id                    String      @id @default(uuid())
+  team                  String      // e.g. "TOR", "EDM", "BOS"
+  season                String      // e.g. "2024-2025"
+  gameType              String      @default("REGULAR") // REGULAR, PLAYOFFS
+  
+  // Power-play metrics
+  ppOpportunities       Int         @default(0)
+  ppGoals               Int         @default(0)
+  ppPct                 Float       @default(0.0)
+  ppOpportunitiesPerGame Float      @default(0.0)
+  ppGoalsPerGame        Float       @default(0.0)
+  homePpPct             Float       @default(0.0)
+  awayPpPct             Float       @default(0.0)
+  l5PpPct               Float       @default(0.0)
+  l10PpPct              Float       @default(0.0)
+  
+  // Penalty-kill metrics
+  timesShorthanded      Int         @default(0)
+  pkGoalsAllowed        Int         @default(0)
+  pkPct                 Float       @default(0.0)
+  shGoalsScored         Int         @default(0)
+  shShotsAllowed        Int         @default(0)
+  shBlockedShots        Int         @default(0)
+  shTimeOnIceSeconds    Int         @default(0)
+  homePkPct             Float       @default(0.0)
+  awayPkPct             Float       @default(0.0)
+  l5PkPct               Float       @default(0.0)
+  l10PkPct              Float       @default(0.0)
+  
+  dataProvider          String      @default("MOCK_FIXTURE")
+  lastUpdated           DateTime    @default(now())
+
+  @@unique([team, season, gameType])
+}
+
+model NhlSpecialTeamsPlayer {
+  id                      String      @id @default(uuid())
+  playerId                String      // Provider player ID
+  name                    String
+  team                    String
+  position                String      // C, LW, RW, D, G
+  unit                    String      // PP1, PP2, PK1, PK2, INFERRED_PK
+  unitStatus              String      @default("CONFIRMED") // CONFIRMED, REPORTED, PROJECTED, INFERRED
+  
+  // Power Play Contribution
+  ppTimeOnIcePerGame      Float       @default(0.0) // Minutes per game
+  ppGoals                 Int         @default(0)
+  ppAssists               Int         @default(0)
+  ppPoints                Int         @default(0)
+  ppShots                 Int         @default(0)
+  ppShootingPct           Float       @default(0.0)
+  shareTeamPpGoals        Float       @default(0.0) // % of team PP goals
+  shareTeamPpPoints       Float       @default(0.0) // % of team PP points
+  
+  // Penalty Kill & Shorthanded Metrics
+  shTimeOnIcePerGame      Float       @default(0.0) // Minutes per game
+  shBlockedShots          Int         @default(0)
+  shBlockedShotsPerMinute Float       @default(0.0)
+  
+  // Availability
+  isInjured               Boolean     @default(false)
+  injuryNote              String?
+  
+  source                  String      @default("MOCK_FIXTURE")
+  lastUpdated             DateTime    @default(now())
+
+  @@index([team, unit])
+}
+
+model NhlShBlockedShotEvent {
+  id                String      @id @default(uuid())
+  gameId            String
+  playerId          String
+  playerName        String
+  team              String
+  position          String      // F or D
+  isShorthanded     Boolean     @default(true)
+  timeOnIceSeconds  Int         @default(0)
+  situation         String      @default("PK") // PK, EV, PP
+  createdAt         DateTime    @default(now())
+}

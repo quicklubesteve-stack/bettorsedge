@@ -1,0 +1,104 @@
+"use client";
+
+import { useState } from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { LogIn, AlertCircle } from "lucide-react";
+
+export default function LoginPage() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+
+    try {
+      const res = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+
+      router.push("/");
+      router.refresh();
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="max-w-md mx-auto py-12 space-y-6">
+      <div className="text-center space-y-2">
+        <h1 className="text-2xl font-black text-white">Sign In to SportsEdge AI</h1>
+        <p className="text-xs text-slate-400">Access your betting analytics, models, and subscription perks.</p>
+      </div>
+
+      <div className="p-8 rounded-2xl bg-slate-900 border border-slate-800 shadow-xl space-y-5 text-xs">
+        {error && (
+          <div className="p-3 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-2">
+            <AlertCircle className="w-4 h-4 shrink-0" />
+            <span>{error}</span>
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-1">
+            <label className="font-semibold text-slate-300">Email Address</label>
+            <input
+              type="email"
+              required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="e.g. user@example.com or admin@sportsedge.ai"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-emerald-500 text-xs"
+            />
+          </div>
+
+          <div className="space-y-1">
+            <label className="font-semibold text-slate-300">Password</label>
+            <input
+              type="password"
+              required
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white focus:outline-none focus:border-emerald-500 text-xs"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 font-bold text-white uppercase tracking-wider transition disabled:opacity-50 text-xs shadow-lg shadow-emerald-600/20"
+          >
+            {loading ? "Signing in..." : "Sign In"}
+          </button>
+        </form>
+
+        <div className="border-t border-slate-800 pt-4 text-center text-slate-400 space-y-1">
+          <p>
+            Don&apos;t have an account?{" "}
+            <Link href="/auth/register" className="text-emerald-400 hover:underline font-bold">
+              Create Free Account
+            </Link>
+          </p>
+          <div className="pt-2 text-[11px] text-slate-500 font-mono">
+            Demo Admin: admin@sportsedge.ai / AdminPass2026!
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
