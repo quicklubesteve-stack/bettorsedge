@@ -250,6 +250,10 @@ export default function PricingPage() {
                 <Check className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span className="font-semibold text-white">PP vs PK Tactical AI Matchup Engine</span>
               </div>
+              <div className="flex items-center gap-2.5">
+                <Check className="w-4 h-4 text-emerald-400 shrink-0" />
+                <span className="font-semibold text-white">Pro Head-to-Head Game Simulator (Win %, Yards Ran/Thrown, TD & Goal Scorers)</span>
+              </div>
             </div>
           </div>
 

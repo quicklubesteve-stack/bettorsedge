@@ -16,6 +16,7 @@ import {
   Shield,
   Layers,
   ArrowRight,
+  GitCompare,
 } from "lucide-react";
 import { SimulationReport } from "@/lib/simulation-engine";
 
@@ -76,24 +77,34 @@ export default function SimulationPage() {
           </div>
         </div>
 
-        {/* Action Button */}
-        <button
-          onClick={handleRunSimulation}
-          disabled={simulating}
-          className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 font-bold text-slate-950 text-xs uppercase tracking-wider transition flex items-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-50"
-        >
-          {simulating ? (
-            <>
-              <RefreshCw className="w-4 h-4 animate-spin" />
-              Running Monte Carlo Simulation...
-            </>
-          ) : (
-            <>
-              <PlayCircle className="w-4 h-4" />
-              Re-Run 1,600-Play Simulation
-            </>
-          )}
-        </button>
+        {/* Action Buttons */}
+        <div className="flex flex-wrap items-center gap-3">
+          <Link
+            href="/simulation/matchup"
+            className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs uppercase tracking-wider transition flex items-center gap-2 border border-slate-700"
+          >
+            <GitCompare className="w-4 h-4 text-emerald-400" />
+            Pro Team vs Team Simulator →
+          </Link>
+
+          <button
+            onClick={handleRunSimulation}
+            disabled={simulating}
+            className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 font-bold text-slate-950 text-xs uppercase tracking-wider transition flex items-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-50"
+          >
+            {simulating ? (
+              <>
+                <RefreshCw className="w-4 h-4 animate-spin" />
+                Running Monte Carlo Simulation...
+              </>
+            ) : (
+              <>
+                <PlayCircle className="w-4 h-4" />
+                Re-Run 1,600-Play Simulation
+              </>
+            )}
+          </button>
+        </div>
       </div>
 
       {loading ? (
