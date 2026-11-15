@@ -192,15 +192,28 @@ export interface NflMatchupSimulationResult {
   }>;
 }
 
+export interface TeamLearnedFactors {
+  offRating?: number;
+  defRating?: number;
+  paceFactor?: number;
+  recentFormBonus?: number;
+}
+
 export function simulateNflMatchup(
   teamA: string,
   teamB: string,
-  iterations = 1000
+  iterations = 1000,
+  learnedA?: TeamLearnedFactors,
+  learnedB?: TeamLearnedFactors
 ): NflMatchupSimulationResult {
   const starsA = getOrGenerateNflStars(teamA);
   const starsB = getOrGenerateNflStars(teamB);
   const nameA = NFL_ALL_TEAMS.find((t) => t.abbr === teamA)?.name || teamA;
   const nameB = NFL_ALL_TEAMS.find((t) => t.abbr === teamB)?.name || teamB;
+
+  // Adaptive learning modifiers
+  const offModA = ((learnedA?.offRating || 100) / 100) * (100 / (learnedB?.defRating || 100)) * (learnedA?.paceFactor || 1.0);
+  const offModB = ((learnedB?.offRating || 100) / 100) * (100 / (learnedA?.defRating || 100)) * (learnedB?.paceFactor || 1.0);
 
   let winsA = 0;
   let winsB = 0;
@@ -224,15 +237,15 @@ export function simulateNflMatchup(
   for (let g = 0; g < iterations; g++) {
     // Simulate game possessions (~11 drives each)
     // Team A
-    const passYardsA = Math.round(starsA.qb.passBaseYds + (Math.random() * 80 - 40));
-    const rushYardsA = Math.round(120 + (Math.random() * 60 - 30));
+    const passYardsA = Math.round((starsA.qb.passBaseYds + (Math.random() * 80 - 40)) * offModA);
+    const rushYardsA = Math.round((120 + (Math.random() * 60 - 30)) * offModA);
     const tdsA = Math.max(1, Math.round((passYardsA / 110) + (rushYardsA / 85) + (Math.random() * 1.5 - 0.75)));
     const fgsA = Math.floor(Math.random() * 3) + 1;
     const scoreA = (tdsA * 7) + (fgsA * 3);
 
     // Team B
-    const passYardsB = Math.round(starsB.qb.passBaseYds + (Math.random() * 80 - 40));
-    const rushYardsB = Math.round(115 + (Math.random() * 60 - 30));
+    const passYardsB = Math.round((starsB.qb.passBaseYds + (Math.random() * 80 - 40)) * offModB);
+    const rushYardsB = Math.round((115 + (Math.random() * 60 - 30)) * offModB);
     const tdsB = Math.max(1, Math.round((passYardsB / 115) + (rushYardsB / 90) + (Math.random() * 1.5 - 0.75)));
     const fgsB = Math.floor(Math.random() * 3) + 1;
     const scoreB = (tdsB * 7) + (fgsB * 3);
@@ -402,12 +415,18 @@ export interface NhlMatchupSimulationResult {
 export function simulateNhlMatchup(
   teamA: string,
   teamB: string,
-  iterations = 1000
+  iterations = 1000,
+  learnedA?: TeamLearnedFactors,
+  learnedB?: TeamLearnedFactors
 ): NhlMatchupSimulationResult {
   const starsA = getOrGenerateNhlStars(teamA);
   const starsB = getOrGenerateNhlStars(teamB);
   const nameA = NHL_ALL_TEAMS.find((t) => t.abbr === teamA)?.name || teamA;
   const nameB = NHL_ALL_TEAMS.find((t) => t.abbr === teamB)?.name || teamB;
+
+  // Adaptive learning modifiers
+  const offModA = ((learnedA?.offRating || 100) / 100) * (100 / (learnedB?.defRating || 100));
+  const offModB = ((learnedB?.offRating || 100) / 100) * (100 / (learnedA?.defRating || 100));
 
   let winsA = 0;
   let winsB = 0;
@@ -423,8 +442,8 @@ export function simulateNhlMatchup(
 
   for (let g = 0; g < iterations; g++) {
     // Generate Goals (Poisson-like distribution around ~3.2 goals)
-    const baseA = teamA === "EDM" ? 3.6 : teamA === "TOR" ? 3.3 : 3.0;
-    const baseB = teamB === "EDM" ? 3.6 : teamB === "TOR" ? 3.3 : 3.0;
+    const baseA = (teamA === "EDM" ? 3.6 : teamA === "TOR" ? 3.3 : 3.0) * offModA;
+    const baseB = (teamB === "EDM" ? 3.6 : teamB === "TOR" ? 3.3 : 3.0) * offModB;
 
     let goalsA = Math.max(0, Math.round(baseA + (Math.random() * 3 - 1.5)));
     let goalsB = Math.max(0, Math.round(baseB + (Math.random() * 3 - 1.5)));

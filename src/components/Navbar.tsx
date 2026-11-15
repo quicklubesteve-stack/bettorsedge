@@ -19,6 +19,7 @@ import {
   Cpu,
   Calendar,
   Users,
+  Brain,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -56,6 +57,7 @@ export default function Navbar() {
     { href: "/schedule", label: "Game Odds & Props", icon: Calendar, pro: false },
     { href: "/rankings", label: "32-Team Analytics", icon: Sparkles, pro: false },
     { href: "/simulation", label: "Simulation Lab (90%+)", icon: Cpu, pro: false },
+    { href: "/learning", label: "AI Learning", icon: Brain, pro: false },
     { href: "/nfl/defense", label: "NFL Defense", icon: ShieldAlert, pro: true },
     { href: "/nfl/offense", label: "NFL Offense", icon: Zap, pro: true },
     { href: "/nhl/power-play", label: "NHL Power Play", icon: Activity, pro: true },
@@ -94,11 +96,10 @@ export default function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition ${
-                    isActive
-                      ? "bg-slate-800 text-emerald-400 border border-slate-700 shadow-sm"
-                      : "text-slate-300 hover:text-white hover:bg-slate-800/60"
-                  }`}
+                  className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition ${isActive
+                    ? "bg-slate-800 text-emerald-400 border border-slate-700 shadow-sm"
+                    : "text-slate-300 hover:text-white hover:bg-slate-800/60"
+                    }`}
                 >
                   <Icon className="w-3.5 h-3.5" />
                   {item.label}
@@ -114,11 +115,10 @@ export default function Navbar() {
             {user?.role === "ADMIN" && (
               <Link
                 href="/admin"
-                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition ${
-                  pathname.startsWith("/admin")
-                    ? "bg-purple-900/40 text-purple-300 border border-purple-700"
-                    : "text-purple-300 hover:text-white hover:bg-purple-900/30"
-                }`}
+                className={`flex items-center gap-1.5 px-3 py-1.5 rounded-md text-xs font-semibold transition ${pathname.startsWith("/admin")
+                  ? "bg-purple-900/40 text-purple-300 border border-purple-700"
+                  : "text-purple-300 hover:text-white hover:bg-purple-900/30"
+                  }`}
               >
                 <KeyRound className="w-3.5 h-3.5" />
                 Admin
@@ -154,9 +154,8 @@ export default function Navbar() {
                   <div className="text-left hidden sm:block">
                     <p className="font-semibold text-slate-200 leading-none">{user.name || user.email.split("@")[0]}</p>
                     <span
-                      className={`inline-block text-[9px] font-bold uppercase mt-0.5 ${
-                        user.plan === "PRO" ? "text-amber-400" : "text-slate-400"
-                      }`}
+                      className={`inline-block text-[9px] font-bold uppercase mt-0.5 ${user.plan === "PRO" ? "text-amber-400" : "text-slate-400"
+                        }`}
                     >
                       {user.plan} Plan
                     </span>

@@ -355,3 +355,66 @@ model RosterSyncMeta {
   syncNotes       String      @default("Current active rosters verified for Week 11")
   updatedAt       DateTime    @updatedAt
 }
+
+model GameLearningRecord {
+  id                    String      @id @default(uuid())
+  gameId                String
+  league                String      // NFL or NHL
+  date                  DateTime
+  homeTeam              String
+  awayTeam              String
+  homeTeamName          String
+  awayTeamName          String
+  
+  // Predictions vs Actuals
+  predictedWinner       String
+  actualWinner          String
+  isWinnerCorrect       Boolean
+  
+  predictedScoreHome    Float
+  predictedScoreAway    Float
+  actualScoreHome       Int
+  actualScoreAway       Int
+  scoreMarginError      Float       // Math.abs((actualScoreHome - actualScoreAway) - (predictedScoreHome - predictedScoreAway))
+  
+  predictedSpread       String
+  actualSpreadCover     String
+  isSpreadCorrect       Boolean
+  
+  predictedTotal        Float
+  actualTotal           Int
+  isTotalCorrect        Boolean
+  
+  propsEvaluated        Int         @default(0)
+  propsCorrect          Int         @default(0)
+  propsAccuracyPct      Float       @default(0.0)
+  
+  // Adaptive Learning & Self-Calibration
+  adjustmentsApplied    String      // JSON string of parameter updates
+  learningInsight       String      // AI commentary on how it refined its model
+  modelGeneration       Int         // Iteration count (e.g. 142)
+  cumulativeAccuracyPct Float       // Rolling accuracy after this game
+  
+  createdAt             DateTime    @default(now())
+
+  @@index([league, date])
+  @@index([homeTeam, awayTeam])
+}
+
+model TeamAdaptiveWeights {
+  id                    String      @id @default(uuid())
+  league                String      // NFL or NHL
+  team                  String      // e.g. "KC", "BUF", "TOR", "EDM"
+  teamName              String
+  offensiveRating       Float       @default(100.0) // 80 - 120 baseline scale
+  defensiveRating       Float       @default(100.0) // 80 - 120 baseline scale
+  paceFactor            Float       @default(1.0)   // Possessions / pace multiplier
+  homeAdvantage         Float       @default(2.5)   // Home field/ice advantage weight
+  recentFormBonus       Float       @default(0.0)   // Dynamic momentum factor (-3.0 to +3.0)
+  gamesProcessed        Int         @default(0)
+  lastLearnedGameId     String?
+  lastAdjustedAt        DateTime    @default(now())
+
+  @@unique([league, team])
+  @@index([league, offensiveRating])
+}

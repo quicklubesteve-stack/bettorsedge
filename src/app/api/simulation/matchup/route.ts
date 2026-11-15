@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
+import { prisma } from "@/lib/db";
 import { simulateNflMatchup, simulateNhlMatchup } from "@/lib/matchup-simulation";
 
 export async function POST(req: Request) {
@@ -16,16 +17,48 @@ export async function POST(req: Request) {
 
     const simIterations = Math.min(5000, Math.max(100, Number(iterations) || 1000));
 
+    // Fetch dynamic calibrated weights learned from past games
+    const weightsA = await prisma.teamAdaptiveWeights.findUnique({
+      where: { league_team: { league, team: teamA } },
+    });
+    const weightsB = await prisma.teamAdaptiveWeights.findUnique({
+      where: { league_team: { league, team: teamB } },
+    });
+
+    const learnedFactorsA = weightsA
+      ? {
+          offRating: weightsA.offensiveRating,
+          defRating: weightsA.defensiveRating,
+          paceFactor: weightsA.paceFactor,
+          recentFormBonus: weightsA.recentFormBonus,
+        }
+      : undefined;
+
+    const learnedFactorsB = weightsB
+      ? {
+          offRating: weightsB.offensiveRating,
+          defRating: weightsB.defensiveRating,
+          paceFactor: weightsB.paceFactor,
+          recentFormBonus: weightsB.recentFormBonus,
+        }
+      : undefined;
+
     if (league === "NHL") {
-      const result = simulateNhlMatchup(teamA, teamB, simIterations);
+      const result = simulateNhlMatchup(teamA, teamB, simIterations, learnedFactorsA, learnedFactorsB);
       return NextResponse.json({
         isPro,
+        learnedCalibrationApplied: Boolean(weightsA || weightsB),
+        teamACalibratedOffense: weightsA?.offensiveRating ?? 100.0,
+        teamBCalibratedOffense: weightsB?.offensiveRating ?? 100.0,
         ...result,
       });
     } else {
-      const result = simulateNflMatchup(teamA, teamB, simIterations);
+      const result = simulateNflMatchup(teamA, teamB, simIterations, learnedFactorsA, learnedFactorsB);
       return NextResponse.json({
         isPro,
+        learnedCalibrationApplied: Boolean(weightsA || weightsB),
+        teamACalibratedOffense: weightsA?.offensiveRating ?? 100.0,
+        teamBCalibratedOffense: weightsB?.offensiveRating ?? 100.0,
         ...result,
       });
     }
