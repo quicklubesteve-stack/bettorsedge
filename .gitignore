@@ -8,6 +8,7 @@ node_modules/
 out/
 build/
 dist/
+.cloudflare-deploy/
 
 # SQLite Database & local storage
 *.db
