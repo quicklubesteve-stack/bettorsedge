@@ -96,18 +96,20 @@ export default function StandingsPage() {
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-3xl font-black text-white">2026 NFL Division Standings</h1>
+                <h1 className="text-3xl font-black text-white">
+                  {league === "NFL" ? "2026 NFL Division Standings" : "2025–2026 NHL Division Standings"}
+                </h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">
-                  NFL.com Official Feed
+                  {league === "NFL" ? "NFL.com Official Feed" : "NHL.com Official Feed"}
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] font-extrabold uppercase">
-                  {league === "NFL" ? "2026 NFL Season" : "2025-2026 NHL Official Feed"}
+                  {league === "NFL" ? "2026 NFL Season" : "Nov 18, 2026 Live Standings"}
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
                 {league === "NFL"
                   ? "Official 2026 NFL division standings direct from NFL.com (https://www.nfl.com/standings/): complete 32-team records, point differentials, home/road splits, divisional tiebreakers, and postseason seeds."
-                  : "Official 2025–2026 NHL regular season standings: points, regulation wins, goal differentials, divisional rankings, and postseason wild card seeds for all 32 franchises."}
+                  : "Official 2025–2026 NHL regular season division standings direct from NHL.com (https://www.nhl.com/standings/2026-11-18/division): points, regulation wins, goal differentials, home/road splits, streaks, and playoff wild card seeds."}
               </p>
             </div>
           </div>
@@ -133,17 +135,15 @@ export default function StandingsPage() {
           <div className="flex items-center gap-1 bg-slate-900 p-1 rounded-xl border border-slate-800 text-xs">
             <button
               onClick={() => setLeague("NFL")}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition ${
-                league === "NFL" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
-              }`}
+              className={`px-3.5 py-1.5 rounded-lg font-bold transition ${league === "NFL" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
+                }`}
             >
               NFL (2026 Standings)
             </button>
             <button
               onClick={() => setLeague("NHL")}
-              className={`px-3.5 py-1.5 rounded-lg font-bold transition ${
-                league === "NHL" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
-              }`}
+              className={`px-3.5 py-1.5 rounded-lg font-bold transition ${league === "NHL" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
+                }`}
             >
               NHL (2025–2026)
             </button>
@@ -156,34 +156,30 @@ export default function StandingsPage() {
         <div className="flex items-center gap-2 bg-slate-950 p-1 rounded-xl border border-slate-800">
           <button
             onClick={() => setViewMode("DIVISION")}
-            className={`px-3 py-1.5 rounded-lg font-bold transition ${
-              viewMode === "DIVISION" ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold transition ${viewMode === "DIVISION" ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
+              }`}
           >
             Divisional
           </button>
           <button
             onClick={() => setViewMode("CONFERENCE")}
-            className={`px-3 py-1.5 rounded-lg font-bold transition ${
-              viewMode === "CONFERENCE" ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold transition ${viewMode === "CONFERENCE" ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
+              }`}
           >
             Conference (Seeds 1–16)
           </button>
           <button
             onClick={() => setViewMode("PLAYOFF")}
-            className={`px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
-              viewMode === "PLAYOFF" ? "bg-emerald-600 text-white shadow" : "text-slate-400 hover:text-white"
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${viewMode === "PLAYOFF" ? "bg-emerald-600 text-white shadow" : "text-slate-400 hover:text-white"
+              }`}
           >
             <Award className="w-3.5 h-3.5" />
             Playoff Bracket
           </button>
           <button
             onClick={() => setViewMode("LEAGUE")}
-            className={`px-3 py-1.5 rounded-lg font-bold transition ${
-              viewMode === "LEAGUE" ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
-            }`}
+            className={`px-3 py-1.5 rounded-lg font-bold transition ${viewMode === "LEAGUE" ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
+              }`}
           >
             League Overall (1–32)
           </button>
@@ -276,13 +272,12 @@ export default function StandingsPage() {
                                       {league === "NFL" ? t.winPct.toFixed(3) : t.points}
                                     </td>
                                     <td
-                                      className={`py-2.5 font-mono text-center font-bold ${
-                                        (league === "NFL" ? t.pointDiff : t.goalDiff) > 0
-                                          ? "text-emerald-400"
-                                          : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
+                                      className={`py-2.5 font-mono text-center font-bold ${(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
+                                        ? "text-emerald-400"
+                                        : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
                                           ? "text-red-400"
                                           : "text-slate-400"
-                                      }`}
+                                        }`}
                                     >
                                       {(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
                                         ? `+${league === "NFL" ? t.pointDiff : t.goalDiff}`
@@ -363,9 +358,8 @@ export default function StandingsPage() {
                             return (
                               <tr
                                 key={t.team}
-                                className={`hover:bg-slate-850/60 transition ${
-                                  isCutline ? "border-b-2 border-emerald-500/60" : ""
-                                }`}
+                                className={`hover:bg-slate-850/60 transition ${isCutline ? "border-b-2 border-emerald-500/60" : ""
+                                  }`}
                               >
                                 <td className="py-2.5 font-mono text-slate-500 font-bold">{t.rankConference}</td>
                                 <td className="py-2.5 font-bold text-white flex items-center gap-2">
@@ -391,13 +385,12 @@ export default function StandingsPage() {
                                 <td className="py-2.5 font-mono text-slate-400 text-center">{t.homeRecord}</td>
                                 <td className="py-2.5 font-mono text-slate-400 text-center">{t.awayRecord}</td>
                                 <td
-                                  className={`py-2.5 font-mono text-center font-bold ${
-                                    (league === "NFL" ? t.pointDiff : t.goalDiff) > 0
-                                      ? "text-emerald-400"
-                                      : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
+                                  className={`py-2.5 font-mono text-center font-bold ${(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
+                                    ? "text-emerald-400"
+                                    : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
                                       ? "text-red-400"
                                       : "text-slate-400"
-                                  }`}
+                                    }`}
                                 >
                                   {(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
                                     ? `+${league === "NFL" ? t.pointDiff : t.goalDiff}`
@@ -547,19 +540,17 @@ export default function StandingsPage() {
                         {playoffTeams.map((t) => (
                           <div
                             key={t.team}
-                            className={`p-3.5 rounded-xl border flex items-center justify-between transition ${
-                              t.playoffSeed === 1
-                                ? "bg-emerald-950/30 border-emerald-500/40"
-                                : "bg-slate-950/70 border-slate-800"
-                            }`}
+                            className={`p-3.5 rounded-xl border flex items-center justify-between transition ${t.playoffSeed === 1
+                              ? "bg-emerald-950/30 border-emerald-500/40"
+                              : "bg-slate-950/70 border-slate-800"
+                              }`}
                           >
                             <div className="flex items-center gap-3">
                               <span
-                                className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono font-black text-xs ${
-                                  t.playoffSeed === 1
-                                    ? "bg-emerald-500 text-slate-950"
-                                    : "bg-slate-800 text-white"
-                                }`}
+                                className={`w-8 h-8 rounded-lg flex items-center justify-center font-mono font-black text-xs ${t.playoffSeed === 1
+                                  ? "bg-emerald-500 text-slate-950"
+                                  : "bg-slate-800 text-white"
+                                  }`}
                               >
                                 #{t.playoffSeed}
                               </span>
@@ -644,13 +635,12 @@ export default function StandingsPage() {
                           <td className="py-2.5 font-mono text-slate-400 text-center">{t.homeRecord}</td>
                           <td className="py-2.5 font-mono text-slate-400 text-center">{t.awayRecord}</td>
                           <td
-                            className={`py-2.5 font-mono text-center font-bold ${
-                              (league === "NFL" ? t.pointDiff : t.goalDiff) > 0
-                                ? "text-emerald-400"
-                                : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
+                            className={`py-2.5 font-mono text-center font-bold ${(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
+                              ? "text-emerald-400"
+                              : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
                                 ? "text-red-400"
                                 : "text-slate-400"
-                            }`}
+                              }`}
                           >
                             {(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
                               ? `+${league === "NFL" ? t.pointDiff : t.goalDiff}`

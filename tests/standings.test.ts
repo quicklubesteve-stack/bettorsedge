@@ -87,6 +87,50 @@ describe("Live Standings & Playoff Picture (2026 NFL.com Division Standings)", (
     }
   });
 
+  it("verifies official records matching 2026-11-18 NHL.com division standings", async () => {
+    const edm = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "EDM" } });
+    expect(edm?.points).toBe(37);
+    expect(edm?.wins).toBe(17);
+    expect(edm?.losses).toBe(3);
+    expect(edm?.otLosses).toBe(3);
+    expect(edm?.playoffSeed).toBe(1);
+
+    const min = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "MIN" } });
+    expect(min?.points).toBe(36);
+    expect(min?.wins).toBe(16);
+    expect(min?.losses).toBe(3);
+    expect(min?.otLosses).toBe(4);
+    expect(min?.playoffSeed).toBe(2);
+
+    const vgk = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "VGK" } });
+    expect(vgk?.points).toBe(30);
+    expect(vgk?.wins).toBe(13);
+    expect(vgk?.losses).toBe(6);
+    expect(vgk?.otLosses).toBe(4);
+
+    const car = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "CAR" } });
+    expect(car?.points).toBe(34);
+    expect(car?.wins).toBe(16);
+    expect(car?.losses).toBe(3);
+    expect(car?.otLosses).toBe(2);
+    expect(car?.playoffSeed).toBe(1);
+
+    const tbl = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "TBL" } });
+    expect(tbl?.points).toBe(30);
+    expect(tbl?.wins).toBe(14);
+    expect(tbl?.losses).toBe(5);
+    expect(tbl?.otLosses).toBe(2);
+    expect(tbl?.playoffSeed).toBe(2);
+
+    const tor = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "TOR" } });
+    expect(tor?.points).toBe(18);
+    expect(tor?.wins).toBe(8);
+    expect(tor?.losses).toBe(13);
+    expect(tor?.otLosses).toBe(2);
+    expect(tor?.streak).toBe("L7");
+    expect(tor?.playoffSeed).toBeNull();
+  });
+
   it("assigns valid playoff seeding according to official NFL.com order", async () => {
     const afcSeeds = await prisma.teamStandings.findMany({
       where: { league: "NFL", conference: "AFC", playoffSeed: { not: null } },
