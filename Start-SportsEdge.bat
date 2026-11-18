@@ -1,16 +1,25 @@
 @echo off
-title SportsEdge AI — Advanced Sports Analytics
+title SportsEdge AI — Safe Bets & Sports Analytics
 cd /d "%~dp0"
 echo ========================================================
-echo   SPORTSEDGE AI — ADVANCED PRO ANALYTICS PLATFORM
+echo   SPORTSEDGE AI — SAFE BETS & SPORTS ANALYTICS
 echo ========================================================
 echo.
+
+:: Check if server is already running on port 3000
+powershell -Command "try { $r = Invoke-WebRequest -Uri 'http://localhost:3000' -UseBasicParsing -TimeoutSec 1; exit 0 } catch { exit 1 }"
+if %ERRORLEVEL% EQU 0 (
+    echo SportsEdge AI server is already running!
+    echo Opening Safe Bets tab in default browser...
+    start http://localhost:3000/safe-bets
+    timeout /t 2 >nul
+    exit /b
+)
+
 echo Starting SportsEdge AI server on http://localhost:3000...
 echo The browser will open automatically once the server is ready.
 echo.
 
-:: Wait 4 seconds for server socket initialization before opening the browser
-start "" /b cmd /c "timeout /t 4 /nobreak >nul & start http://localhost:3000"
-
+start "" /b cmd /c "timeout /t 3 /nobreak >nul & start http://localhost:3000/safe-bets"
 npm.cmd run dev
 pause
