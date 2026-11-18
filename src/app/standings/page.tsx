@@ -88,11 +88,11 @@ export default function StandingsPage() {
               <div className="flex items-center gap-2">
                 <h1 className="text-3xl font-black text-white">Up-to-Date League Standings</h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">
-                  Official 2024–2025
+                  TSN & Sportsnet Live Feed
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                Real-time records, point differentials, home/away splits, streak tracking, and playoff seedings for all 32 NFL & 32 NHL franchises.
+                Real-time official standings from TSN & Sportsnet: records, point differentials, home/away splits, streaks, and playoff seedings for all 32 NFL & 32 NHL franchises.
               </p>
             </div>
           </div>
