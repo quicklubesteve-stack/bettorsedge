@@ -1,59 +1,37 @@
+const fs = require("fs");
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-// Official 2025–2026 NFL Season Standings as of November 18, 2025 (Week 11)
-// Direct from official NFL schedule and records
-const NFL_STANDINGS_2025 = [
-  // AFC EAST
-  { team: "NE", name: "New England Patriots", conf: "AFC", div: "East", w: 9, l: 2, t: 0, pf: 292, pa: 206, home: "4-2", away: "5-0", divRec: "3-0", confRec: "5-2", strk: "W6", l10: "8-2", divRank: 1, confRank: 2, leagueRank: 2, seed: 2 },
-  { team: "BUF", name: "Buffalo Bills", conf: "AFC", div: "East", w: 7, l: 3, t: 0, pf: 292, pa: 229, home: "5-1", away: "2-2", divRec: "2-1", confRec: "5-2", strk: "W2", l10: "7-3", divRank: 2, confRank: 5, leagueRank: 6, seed: 5 },
-  { team: "MIA", name: "Miami Dolphins", conf: "AFC", div: "East", w: 4, l: 7, t: 0, pf: 226, pa: 269, home: "3-3", away: "1-4", divRec: "2-2", confRec: "3-5", strk: "L1", l10: "4-6", divRank: 3, confRank: 11, leagueRank: 22, seed: null },
-  { team: "NYJ", name: "New York Jets", conf: "AFC", div: "East", w: 2, l: 8, t: 0, pf: 209, pa: 268, home: "1-5", away: "1-3", divRec: "0-3", confRec: "1-6", strk: "L3", l10: "2-8", divRank: 4, confRank: 15, leagueRank: 29, seed: null },
+const nflRaw = require("./nfl-2026-extracted.json");
 
-  // AFC NORTH
-  { team: "PIT", name: "Pittsburgh Steelers", conf: "AFC", div: "North", w: 6, l: 4, t: 0, pf: 246, pa: 232, home: "4-2", away: "2-2", divRec: "2-1", confRec: "5-2", strk: "W1", l10: "6-4", divRank: 1, confRank: 4, leagueRank: 10, seed: 4 },
-  { team: "BAL", name: "Baltimore Ravens", conf: "AFC", div: "North", w: 5, l: 5, t: 0, pf: 252, pa: 251, home: "2-3", away: "3-2", divRec: "2-0", confRec: "3-3", strk: "L1", l10: "5-5", divRank: 2, confRank: 8, leagueRank: 15, seed: null },
-  { team: "CIN", name: "Cincinnati Bengals", conf: "AFC", div: "North", w: 3, l: 7, t: 0, pf: 228, pa: 334, home: "2-3", away: "1-4", divRec: "2-1", confRec: "3-3", strk: "L2", l10: "3-7", divRank: 3, confRank: 12, leagueRank: 24, seed: null },
-  { team: "CLE", name: "Cleveland Browns", conf: "AFC", div: "North", w: 2, l: 8, t: 0, pf: 162, pa: 234, home: "2-3", away: "0-5", divRec: "0-4", confRec: "1-6", strk: "L4", l10: "2-8", divRank: 4, confRank: 14, leagueRank: 30, seed: null },
+// Define conference seeds & rankConference for each conference
+const afcOrder = ["BUF", "JAX", "CIN", "KC", "DEN", "PIT", "CLE", "NE", "LV", "BAL", "HOU", "IND", "NYJ", "TEN", "MIA", "LAC"];
+const nfcOrder = ["SF", "DET", "NYG", "CAR", "CHI", "MIN", "LAR", "SEA", "GB", "DAL", "WAS", "TB", "NO", "ATL", "ARI", "PHI"];
 
-  // AFC SOUTH
-  { team: "IND", name: "Indianapolis Colts", conf: "AFC", div: "South", w: 8, l: 2, t: 0, pf: 321, pa: 206, home: "6-0", away: "2-2", divRec: "2-0", confRec: "6-1", strk: "W4", l10: "8-2", divRank: 1, confRank: 3, leagueRank: 4, seed: 3 },
-  { team: "JAX", name: "Jacksonville Jaguars", conf: "AFC", div: "South", w: 6, l: 4, t: 0, pf: 240, pa: 226, home: "4-2", away: "2-2", divRec: "1-1", confRec: "4-2", strk: "W2", l10: "6-4", divRank: 2, confRank: 7, leagueRank: 11, seed: 7 },
-  { team: "HOU", name: "Houston Texans", conf: "AFC", div: "South", w: 5, l: 5, t: 0, pf: 220, pa: 163, home: "3-2", away: "2-3", divRec: "3-1", confRec: "4-2", strk: "W1", l10: "5-5", divRank: 3, confRank: 9, leagueRank: 16, seed: null },
-  { team: "TEN", name: "Tennessee Titans", conf: "AFC", div: "South", w: 1, l: 9, t: 0, pf: 143, pa: 273, home: "0-5", away: "1-4", divRec: "0-4", confRec: "0-8", strk: "L5", l10: "1-9", divRank: 4, confRank: 16, leagueRank: 32, seed: null },
-
-  // AFC WEST
-  { team: "DEN", name: "Denver Broncos", conf: "AFC", div: "West", w: 9, l: 2, t: 0, pf: 257, pa: 192, home: "6-0", away: "3-2", divRec: "2-1", confRec: "6-2", strk: "W5", l10: "8-2", divRank: 1, confRank: 1, leagueRank: 1, seed: 1 },
-  { team: "LAC", name: "Los Angeles Chargers", conf: "AFC", div: "West", w: 7, l: 4, t: 0, pf: 246, pa: 238, home: "4-2", away: "3-2", divRec: "3-0", confRec: "6-2", strk: "L1", l10: "6-4", divRank: 2, confRank: 6, leagueRank: 8, seed: 6 },
-  { team: "KC", name: "Kansas City Chiefs", conf: "AFC", div: "West", w: 5, l: 5, t: 0, pf: 254, pa: 181, home: "4-1", away: "1-4", divRec: "1-2", confRec: "2-4", strk: "L2", l10: "5-5", divRank: 3, confRank: 10, leagueRank: 14, seed: null },
-  { team: "LV", name: "Las Vegas Raiders", conf: "AFC", div: "West", w: 2, l: 8, t: 0, pf: 155, pa: 253, home: "1-4", away: "1-4", divRec: "0-3", confRec: "2-5", strk: "L3", l10: "2-8", divRank: 4, confRank: 13, leagueRank: 31, seed: null },
-
-  // NFC EAST
-  { team: "PHI", name: "Philadelphia Eagles", conf: "NFC", div: "East", w: 8, l: 2, t: 0, pf: 234, pa: 201, home: "4-1", away: "4-1", divRec: "2-1", confRec: "7-1", strk: "W4", l10: "8-2", divRank: 1, confRank: 2, leagueRank: 3, seed: 2 },
-  { team: "DAL", name: "Dallas Cowboys", conf: "NFC", div: "East", w: 4, l: 5, t: 1, pf: 296, pa: 293, home: "2-1-1", away: "2-4", divRec: "2-1", confRec: "2-4-1", strk: "L1", l10: "4-5-1", divRank: 2, confRank: 10, leagueRank: 19, seed: null },
-  { team: "WAS", name: "Washington Commanders", conf: "NFC", div: "East", w: 3, l: 8, t: 0, pf: 236, pa: 296, home: "2-3", away: "1-5", divRec: "1-1", confRec: "1-6", strk: "L3", l10: "3-7", divRank: 3, confRank: 13, leagueRank: 26, seed: null },
-  { team: "NYG", name: "New York Giants", conf: "NFC", div: "East", w: 2, l: 9, t: 0, pf: 237, pa: 300, home: "2-3", away: "0-6", divRec: "1-3", confRec: "1-7", strk: "L2", l10: "2-8", divRank: 4, confRank: 16, leagueRank: 28, seed: null },
-
-  // NFC NORTH
-  { team: "CHI", name: "Chicago Bears", conf: "NFC", div: "North", w: 7, l: 3, t: 0, pf: 258, pa: 264, home: "3-1", away: "4-2", divRec: "1-2", confRec: "5-2", strk: "W2", l10: "7-3", divRank: 1, confRank: 3, leagueRank: 7, seed: 3 },
-  { team: "GB", name: "Green Bay Packers", conf: "NFC", div: "North", w: 6, l: 3, t: 1, pf: 240, pa: 196, home: "3-2", away: "3-1-1", divRec: "1-0", confRec: "4-2-1", strk: "W1", l10: "6-3-1", divRank: 2, confRank: 6, leagueRank: 9, seed: 6 },
-  { team: "DET", name: "Detroit Lions", conf: "NFC", div: "North", w: 6, l: 4, t: 0, pf: 292, pa: 216, home: "3-1", away: "3-3", divRec: "1-1", confRec: "4-3", strk: "L1", l10: "6-4", divRank: 3, confRank: 8, leagueRank: 12, seed: null },
-  { team: "MIN", name: "Minnesota Vikings", conf: "NFC", div: "North", w: 4, l: 6, t: 0, pf: 218, pa: 232, home: "1-4", away: "3-2", divRec: "2-1", confRec: "2-3", strk: "L2", l10: "4-6", divRank: 4, confRank: 11, leagueRank: 20, seed: null },
-
-  // NFC SOUTH
-  { team: "TB", name: "Tampa Bay Buccaneers", conf: "NFC", div: "South", w: 6, l: 4, t: 0, pf: 252, pa: 250, home: "2-2", away: "4-2", divRec: "2-0", confRec: "4-2", strk: "W1", l10: "6-4", divRank: 1, confRank: 4, leagueRank: 13, seed: 4 },
-  { team: "CAR", name: "Carolina Panthers", conf: "NFC", div: "South", w: 6, l: 5, t: 0, pf: 207, pa: 249, home: "3-2", away: "3-3", divRec: "2-1", confRec: "4-2", strk: "W2", l10: "6-4", divRank: 2, confRank: 9, leagueRank: 17, seed: null },
-  { team: "ATL", name: "Atlanta Falcons", conf: "NFC", div: "South", w: 3, l: 7, t: 0, pf: 195, pa: 239, home: "2-3", away: "1-4", divRec: "0-3", confRec: "2-4", strk: "L2", l10: "3-7", divRank: 3, confRank: 12, leagueRank: 23, seed: null },
-  { team: "NO", name: "New Orleans Saints", conf: "NFC", div: "South", w: 2, l: 8, t: 0, pf: 155, pa: 250, home: "1-4", away: "1-4", divRec: "1-1", confRec: "2-6", strk: "L4", l10: "2-8", divRank: 4, confRank: 14, leagueRank: 27, seed: null },
-
-  // NFC WEST
-  { team: "LAR", name: "Los Angeles Rams", conf: "NFC", div: "West", w: 8, l: 2, t: 0, pf: 272, pa: 172, home: "4-1", away: "4-1", divRec: "2-1", confRec: "3-2", strk: "W3", l10: "8-2", divRank: 1, confRank: 1, leagueRank: 5, seed: 1 },
-  { team: "SEA", name: "Seattle Seahawks", conf: "NFC", div: "West", w: 7, l: 3, t: 0, pf: 294, pa: 193, home: "3-2", away: "4-1", divRec: "2-1", confRec: "4-3", strk: "W1", l10: "7-3", divRank: 2, confRank: 5, leagueRank: 6, seed: 5 },
-  { team: "SF", name: "San Francisco 49ers", conf: "NFC", div: "West", w: 7, l: 4, t: 0, pf: 261, pa: 252, home: "4-2", away: "3-2", divRec: "2-2", confRec: "5-3", strk: "W1", l10: "7-3", divRank: 3, confRank: 7, leagueRank: 8, seed: 7 },
-  { team: "ARI", name: "Arizona Cardinals", conf: "NFC", div: "West", w: 3, l: 7, t: 0, pf: 224, pa: 256, home: "2-3", away: "1-4", divRec: "0-2", confRec: "2-5", strk: "L1", l10: "3-7", divRank: 4, confRank: 15, leagueRank: 25, seed: null },
+// Define league rank (1 to 32) sorted by pct desc, net desc
+const leagueRankOrder = [
+  "BUF", "SF", "JAX", "CIN", "KC", "DET", "CHI", "MIN", "DEN", "PIT",
+  "NYG", "LAR", "SEA", "GB", "CLE", "NE", "CAR", "DAL", "LV", "BAL",
+  "WAS", "TB", "HOU", "NO", "IND", "ATL", "ARI", "PHI", "NYJ", "TEN",
+  "MIA", "LAC"
 ];
 
-// Official NHL Standings (2025–2026 Season as of November 18, 2025)
+const NFL_STANDINGS_NFL_COM = nflRaw.map((t) => {
+  const isAfc = t.conf === "AFC";
+  const confList = isAfc ? afcOrder : nfcOrder;
+  const confRank = confList.indexOf(t.team) + 1;
+  const seed = confRank <= 7 ? confRank : null;
+  const leagueRank = leagueRankOrder.indexOf(t.team) + 1;
+
+  return {
+    ...t,
+    confRank,
+    seed,
+    leagueRank,
+  };
+});
+
+// NHL Standings (2025–2026)
 const NHL_STANDINGS_2025 = [
   // ATLANTIC DIVISION
   { team: "FLA", name: "Florida Panthers", conf: "Eastern", div: "Atlantic", gp: 18, w: 12, l: 5, otl: 1, pts: 25, rw: 11, gf: 67, ga: 56, home: "6-3-1", away: "6-2-0", strk: "W1", l10: "7-3-0", divRank: 1, confRank: 3, leagueRank: 5, seed: 2 },
@@ -97,22 +75,22 @@ const NHL_STANDINGS_2025 = [
 ];
 
 async function seedStandings() {
-  console.log("=== SEEDING 2025-2026 NFL STANDINGS AS OF NOVEMBER 18, 2025 ===");
+  console.log("=== SEEDING OFFICIAL 2026 NFL.COM DIVISION STANDINGS ===");
 
   await prisma.teamStandings.deleteMany({});
 
-  const now = new Date("2025-11-18T16:00:00Z");
+  const now = new Date();
 
-  // 1. Seed NFL Standings for 2025-2026 as of Nov 18, 2025
-  for (const t of NFL_STANDINGS_2025) {
+  // 1. Seed NFL Standings directly scraped from https://www.nfl.com/standings/
+  for (const t of NFL_STANDINGS_NFL_COM) {
     const gamesPlayed = t.w + t.l + t.t;
     const winPct = gamesPlayed > 0 ? Number(((t.w + 0.5 * t.t) / gamesPlayed).toFixed(3)) : 0;
-    const pointDiff = t.pf - t.pa;
+    const pointDiff = t.net;
 
     await prisma.teamStandings.create({
       data: {
         league: "NFL",
-        season: "2025-2026",
+        season: "2026",
         team: t.team,
         name: t.name,
         conference: t.conf,
@@ -134,21 +112,21 @@ async function seedStandings() {
         divisionRecord: t.divRec,
         conferenceRecord: t.confRec,
         streak: t.strk,
-        lastTen: t.l10,
+        lastTen: t.l5,
         lastUpdated: now,
       },
     });
   }
-  console.log(`✅ Seeded all 32 NFL team standings for 2025-2026 Season as of November 18, 2025.`);
+  console.log(`✅ Seeded all 32 NFL team standings matching official NFL.com table.`);
 
-  // 2. Seed NHL Standings for 2025-2026
+  // 2. Seed NHL Standings
   for (const t of NHL_STANDINGS_2025) {
     const goalDiff = t.gf - t.ga;
 
     await prisma.teamStandings.create({
       data: {
         league: "NHL",
-        season: "2025-2026",
+        season: "2026",
         team: t.team,
         name: t.name,
         conference: t.conf,
@@ -174,12 +152,12 @@ async function seedStandings() {
       },
     });
   }
-  console.log(`✅ Seeded all 32 NHL team standings for 2025-2026 Season.`);
+  console.log(`✅ Seeded all 32 NHL team standings.`);
 
-  console.log("=== 2025-2026 STANDINGS AS OF NOVEMBER 18, 2025 COMPLETE ===");
+  console.log("=== 2026 NFL.COM STANDINGS SEED COMPLETE ===");
 }
 
-module.exports = { seedStandings, NFL_STANDINGS_2025, NHL_STANDINGS_2025 };
+module.exports = { seedStandings, NFL_STANDINGS_NFL_COM, NHL_STANDINGS_2025 };
 
 if (require.main === module) {
   seedStandings()

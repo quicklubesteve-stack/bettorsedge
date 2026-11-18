@@ -96,17 +96,17 @@ export default function StandingsPage() {
             </div>
             <div>
               <div className="flex flex-wrap items-center gap-2">
-                <h1 className="text-3xl font-black text-white">2025–2026 League Standings</h1>
+                <h1 className="text-3xl font-black text-white">2026 NFL Division Standings</h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">
-                  As of November 18, 2025
+                  NFL.com Official Feed
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] font-extrabold uppercase">
-                  {league === "NFL" ? "2025-2026 NFL (Week 11)" : "2025-2026 NHL Official Feed"}
+                  {league === "NFL" ? "2026 NFL Season" : "2025-2026 NHL Official Feed"}
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
                 {league === "NFL"
-                  ? "Official 2025–2026 NFL regular season standings as of November 18, 2025 (Week 11): 32-team records, point differentials, division leaders, conference seeds 1–7, and wild card races."
+                  ? "Official 2026 NFL division standings direct from NFL.com (https://www.nfl.com/standings/): complete 32-team records, point differentials, home/road splits, divisional tiebreakers, and postseason seeds."
                   : "Official 2025–2026 NHL regular season standings: points, regulation wins, goal differentials, divisional rankings, and postseason wild card seeds for all 32 franchises."}
               </p>
             </div>
@@ -137,7 +137,7 @@ export default function StandingsPage() {
                 league === "NFL" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
               }`}
             >
-              NFL (2025–2026)
+              NFL (2026 Standings)
             </button>
             <button
               onClick={() => setLeague("NHL")}

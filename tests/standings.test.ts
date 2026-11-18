@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { prisma } from "../src/lib/db";
 
-describe("Live Standings & Playoff Picture (NFL & NHL 2025–2026 as of Nov 18, 2025)", () => {
+describe("Live Standings & Playoff Picture (2026 NFL.com Division Standings)", () => {
   it("contains complete 32-team standings for the NFL", async () => {
     const nflStandings = await prisma.teamStandings.findMany({
       where: { league: "NFL" },
@@ -17,50 +17,54 @@ describe("Live Standings & Playoff Picture (NFL & NHL 2025–2026 as of Nov 18, 
       expect(team.wins).toBeGreaterThanOrEqual(0);
       expect(team.losses).toBeGreaterThanOrEqual(0);
       expect(team.winPct).toBeGreaterThanOrEqual(0);
-      expect(team.streak).toMatch(/^(W|L|T)\d+$/);
+      expect(team.streak).toMatch(/^[WL]\d+$/);
       expect(team.homeRecord).toMatch(/^\d+-\d+(-\d+)?$/);
       expect(team.awayRecord).toMatch(/^\d+-\d+(-\d+)?$/);
     }
   });
 
-  it("verifies official 2025-2026 NFL records as of November 18, 2025", async () => {
-    const patriots = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "NE" } });
-    expect(patriots?.wins).toBe(9);
-    expect(patriots?.losses).toBe(2);
+  it("verifies official records matching 2026 NFL.com division standings", async () => {
+    const bills = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "BUF" } });
+    expect(bills?.wins).toBe(8);
+    expect(bills?.losses).toBe(1);
 
-    const broncos = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "DEN" } });
-    expect(broncos?.wins).toBe(9);
-    expect(broncos?.losses).toBe(2);
+    const niners = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "SF" } });
+    expect(niners?.wins).toBe(8);
+    expect(niners?.losses).toBe(1);
 
-    const colts = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "IND" } });
-    expect(colts?.wins).toBe(8);
-    expect(colts?.losses).toBe(2);
+    const jags = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "JAX" } });
+    expect(jags?.wins).toBe(7);
+    expect(jags?.losses).toBe(2);
 
-    const eagles = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "PHI" } });
-    expect(eagles?.wins).toBe(8);
-    expect(eagles?.losses).toBe(2);
-
-    const rams = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "LAR" } });
-    expect(rams?.wins).toBe(8);
-    expect(rams?.losses).toBe(2);
-
-    const bears = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "CHI" } });
-    expect(bears?.wins).toBe(7);
-    expect(bears?.losses).toBe(3);
+    const bengals = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "CIN" } });
+    expect(bengals?.wins).toBe(7);
+    expect(bengals?.losses).toBe(2);
 
     const chiefs = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "KC" } });
-    expect(chiefs?.wins).toBe(5);
-    expect(chiefs?.losses).toBe(5);
+    expect(chiefs?.wins).toBe(7);
+    expect(chiefs?.losses).toBe(2);
 
-    const packers = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "GB" } });
-    expect(packers?.wins).toBe(6);
-    expect(packers?.losses).toBe(3);
-    expect(packers?.ties).toBe(1);
+    const broncos = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "DEN" } });
+    expect(broncos?.wins).toBe(7);
+    expect(broncos?.losses).toBe(2);
 
-    const cowboys = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "DAL" } });
-    expect(cowboys?.wins).toBe(4);
-    expect(cowboys?.losses).toBe(5);
-    expect(cowboys?.ties).toBe(1);
+    const lions = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "DET" } });
+    expect(lions?.wins).toBe(7);
+    expect(lions?.losses).toBe(2);
+
+    const giants = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "NYG" } });
+    expect(giants?.wins).toBe(5);
+    expect(giants?.losses).toBe(3);
+    expect(giants?.ties).toBe(1);
+
+    const commanders = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "WAS" } });
+    expect(commanders?.wins).toBe(3);
+    expect(commanders?.losses).toBe(5);
+    expect(commanders?.ties).toBe(1);
+
+    const eagles = await prisma.teamStandings.findFirst({ where: { league: "NFL", team: "PHI" } });
+    expect(eagles?.wins).toBe(2);
+    expect(eagles?.losses).toBe(7);
   });
 
   it("contains complete 32-team standings for the NHL", async () => {
@@ -83,32 +87,32 @@ describe("Live Standings & Playoff Picture (NFL & NHL 2025–2026 as of Nov 18, 
     }
   });
 
-  it("assigns valid playoff seeding to 2025-2026 contenders as of November 18, 2025", async () => {
+  it("assigns valid playoff seeding according to official NFL.com order", async () => {
     const afcSeeds = await prisma.teamStandings.findMany({
       where: { league: "NFL", conference: "AFC", playoffSeed: { not: null } },
       orderBy: { playoffSeed: "asc" },
     });
     expect(afcSeeds.length).toBe(7);
-    expect(afcSeeds[0].team).toBe("DEN"); // Seed 1
-    expect(afcSeeds[1].team).toBe("NE");  // Seed 2
-    expect(afcSeeds[2].team).toBe("IND"); // Seed 3
-    expect(afcSeeds[3].team).toBe("PIT"); // Seed 4
-    expect(afcSeeds[4].team).toBe("BUF"); // Seed 5
-    expect(afcSeeds[5].team).toBe("LAC"); // Seed 6
-    expect(afcSeeds[6].team).toBe("JAX"); // Seed 7
+    expect(afcSeeds[0].team).toBe("BUF"); // Seed 1
+    expect(afcSeeds[1].team).toBe("JAX"); // Seed 2
+    expect(afcSeeds[2].team).toBe("CIN"); // Seed 3
+    expect(afcSeeds[3].team).toBe("KC");  // Seed 4
+    expect(afcSeeds[4].team).toBe("DEN"); // Seed 5
+    expect(afcSeeds[5].team).toBe("PIT"); // Seed 6
+    expect(afcSeeds[6].team).toBe("CLE"); // Seed 7
 
     const nfcSeeds = await prisma.teamStandings.findMany({
       where: { league: "NFL", conference: "NFC", playoffSeed: { not: null } },
       orderBy: { playoffSeed: "asc" },
     });
     expect(nfcSeeds.length).toBe(7);
-    expect(nfcSeeds[0].team).toBe("LAR"); // Seed 1
-    expect(nfcSeeds[1].team).toBe("PHI"); // Seed 2
-    expect(nfcSeeds[2].team).toBe("CHI"); // Seed 3
-    expect(nfcSeeds[3].team).toBe("TB");  // Seed 4
-    expect(nfcSeeds[4].team).toBe("SEA"); // Seed 5
-    expect(nfcSeeds[5].team).toBe("GB");  // Seed 6
-    expect(nfcSeeds[6].team).toBe("SF");  // Seed 7
+    expect(nfcSeeds[0].team).toBe("SF");  // Seed 1
+    expect(nfcSeeds[1].team).toBe("DET"); // Seed 2
+    expect(nfcSeeds[2].team).toBe("NYG"); // Seed 3
+    expect(nfcSeeds[3].team).toBe("CAR"); // Seed 4
+    expect(nfcSeeds[4].team).toBe("CHI"); // Seed 5
+    expect(nfcSeeds[5].team).toBe("MIN"); // Seed 6
+    expect(nfcSeeds[6].team).toBe("LAR"); // Seed 7
 
     const eastNhlSeeds = await prisma.teamStandings.findMany({
       where: { league: "NHL", conference: "Eastern", playoffSeed: { not: null } },
