@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
     const stats = teamStats || {
       id: "fallback",
       team,
-      season: "2024-2025",
+      season: "2025-2026",
       gameType: "REGULAR",
       ppOpportunities: 45,
       ppGoals: 13,

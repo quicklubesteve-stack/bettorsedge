@@ -8,9 +8,9 @@ export async function GET(req: NextRequest) {
     const league = searchParams.get("league") || "NFL"; // "NFL" or "NHL"
 
     if (league === "NFL") {
-      // Aggregate blitz rates and run/pass percentages for all 32 teams
-      const allPlays = await prisma.nflPlay.findMany({
-        where: { season: 2024 },
+      // Aggregate blitz rates and run/pass percentages for all 32 teams for 2025-2026 season
+      let allPlays = await prisma.nflPlay.findMany({
+        where: { season: 2025 },
         select: {
           defensiveTeam: true,
           possessionTeam: true,
@@ -21,6 +21,20 @@ export async function GET(req: NextRequest) {
           down: true,
         },
       });
+
+      if (allPlays.length === 0) {
+        allPlays = await prisma.nflPlay.findMany({
+          select: {
+            defensiveTeam: true,
+            possessionTeam: true,
+            isBlitz: true,
+            isPressure: true,
+            isSack: true,
+            playType: true,
+            down: true,
+          },
+        });
+      }
 
       const nflRankings = NFL_ALL_TEAMS.map((team) => {
         const defPlays = allPlays.filter((p) => p.defensiveTeam === team.abbr);
@@ -61,15 +75,21 @@ export async function GET(req: NextRequest) {
 
       return NextResponse.json({
         league: "NFL",
-        season: "2024",
+        season: "2025-2026",
         rankings: nflRankings,
       });
     } else {
-      // NHL Special Teams Rankings for all 32 teams
-      const stats = await prisma.nhlSpecialTeamsTeamStats.findMany({
-        where: { season: "2024-2025" },
+      // NHL Special Teams Rankings for all 32 teams for 2025-2026 season
+      let stats = await prisma.nhlSpecialTeamsTeamStats.findMany({
+        where: { season: "2025-2026" },
         orderBy: { ppPct: "desc" },
       });
+
+      if (stats.length === 0) {
+        stats = await prisma.nhlSpecialTeamsTeamStats.findMany({
+          orderBy: { ppPct: "desc" },
+        });
+      }
 
       const nhlRankings = stats.map((s, idx) => {
         const teamInfo = NHL_ALL_TEAMS.find((t) => t.abbr === s.team);
@@ -93,7 +113,7 @@ export async function GET(req: NextRequest) {
 
       return NextResponse.json({
         league: "NHL",
-        season: "2024-2025",
+        season: "2025-2026",
         rankings: nhlRankings,
       });
     }

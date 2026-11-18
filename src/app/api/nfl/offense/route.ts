@@ -11,15 +11,24 @@ export async function GET(req: NextRequest) {
 
     const { searchParams } = new URL(req.url);
     const team = searchParams.get("team") || "Example Team A";
-    const season = searchParams.get("season") ? Number(searchParams.get("season")) : 2024;
+    const seasonParam = searchParams.get("season");
+    const season = seasonParam ? Number(seasonParam) : 2025;
     const excludeSpecial = searchParams.get("excludeKneels") !== "false";
 
-    const plays = (await prisma.nflPlay.findMany({
+    let plays = (await prisma.nflPlay.findMany({
       where: {
         possessionTeam: team,
         season,
       },
     })) as any[];
+
+    if (plays.length === 0) {
+      plays = (await prisma.nflPlay.findMany({
+        where: {
+          possessionTeam: team,
+        },
+      })) as any[];
+    }
 
     const tendencies = calculateOffensiveTendencies(plays, excludeSpecial);
     const provider = getProviderStatus().nflOffense;

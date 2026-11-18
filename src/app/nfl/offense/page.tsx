@@ -40,7 +40,7 @@ export default function NflOffensePage() {
     setLoading(true);
     try {
       const res = await fetch(
-        `/api/nfl/offense?team=${encodeURIComponent(team)}&season=2024&excludeKneels=${excludeKneels}`
+        `/api/nfl/offense?team=${encodeURIComponent(team)}&season=2025&excludeKneels=${excludeKneels}`
       );
       const json = await res.json();
       setData(json);

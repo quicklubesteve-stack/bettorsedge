@@ -118,7 +118,7 @@ export default function NhlPowerPlayPage() {
         <div className="space-y-3">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-white">Power-Play Team Statistics (Included in Free Tier)</h2>
-            <span className="text-xs text-slate-400">Season: 2024-2025 Regular Season</span>
+            <span className="text-xs text-slate-400">Season: 2025-2026 Regular Season</span>
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs">

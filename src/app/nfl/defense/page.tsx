@@ -34,7 +34,7 @@ export default function NflDefensePage() {
   const fetchData = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/nfl/defense?team=${encodeURIComponent(team)}&season=2024`);
+      const res = await fetch(`/api/nfl/defense?team=${encodeURIComponent(team)}&season=2025`);
       const json = await res.json();
       setData(json);
     } catch (e) {
