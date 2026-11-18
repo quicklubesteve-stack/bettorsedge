@@ -98,16 +98,16 @@ export default function StandingsPage() {
               <div className="flex flex-wrap items-center gap-2">
                 <h1 className="text-3xl font-black text-white">2025–2026 League Standings</h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">
-                  Week 11
+                  As of November 18, 2025
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] font-extrabold uppercase">
-                  {league === "NFL" ? "Official NFL.com Standings" : "Official NHL Standings Feed"}
+                  {league === "NFL" ? "2025-2026 NFL (Week 11)" : "2025-2026 NHL Official Feed"}
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
                 {league === "NFL"
-                  ? "Official Week 11 standings verified via NFL.com: complete 32-team win/loss records, point differentials, division standings with official tiebreakers, conference playoff seeds 1–7, and wild card spots."
-                  : "Official 2025–2026 NHL regular-season standings: points, regulation wins, goal differentials, divisional rankings, and postseason wild card seeds for all 32 franchises."}
+                  ? "Official 2025–2026 NFL regular season standings as of November 18, 2025 (Week 11): 32-team records, point differentials, division leaders, conference seeds 1–7, and wild card races."
+                  : "Official 2025–2026 NHL regular season standings: points, regulation wins, goal differentials, divisional rankings, and postseason wild card seeds for all 32 franchises."}
               </p>
             </div>
           </div>
@@ -137,7 +137,7 @@ export default function StandingsPage() {
                 league === "NFL" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
               }`}
             >
-              NFL (32 Teams - W11)
+              NFL (2025–2026)
             </button>
             <button
               onClick={() => setLeague("NHL")}
@@ -145,7 +145,7 @@ export default function StandingsPage() {
                 league === "NHL" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
               }`}
             >
-              NHL (32 Teams)
+              NHL (2025–2026)
             </button>
           </div>
         </div>
@@ -203,10 +203,10 @@ export default function StandingsPage() {
 
       {/* Main Content Area */}
       {loading ? (
-        <div className="p-12 text-center text-slate-400">Loading live standings from {league === "NFL" ? "NFL.com" : "NHL official feed"}...</div>
+        <div className="p-12 text-center text-slate-400">Loading 2025–2026 standings...</div>
       ) : (
         <div className="space-y-10">
-          {/* VIEW MODE 1: DIVISIONAL (Organized by Conference then Division matching NFL.com) */}
+          {/* VIEW MODE 1: DIVISIONAL */}
           {viewMode === "DIVISION" && (
             <div className="space-y-10">
               {conferenceList.map((conf) => (
@@ -235,7 +235,7 @@ export default function StandingsPage() {
                           <div className="flex items-center justify-between border-b border-slate-800 pb-2">
                             <h3 className="font-bold text-white text-sm">{divName}</h3>
                             <span className="text-[10px] text-emerald-400 uppercase font-mono font-bold">
-                              {league === "NFL" ? "NFL.com W11" : "NHL 2025-26"}
+                              {league === "NFL" ? "2025–2026 Season" : "NHL 2025-2026"}
                             </span>
                           </div>
 
@@ -311,7 +311,7 @@ export default function StandingsPage() {
             </div>
           )}
 
-          {/* VIEW MODE 2: CONFERENCE (Seeds 1–16 matching official NFL.com / NHL order) */}
+          {/* VIEW MODE 2: CONFERENCE */}
           {viewMode === "CONFERENCE" && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
               {conferenceList.map((confName) => {
@@ -331,7 +331,7 @@ export default function StandingsPage() {
                         </h3>
                         <p className="text-[11px] text-slate-400">
                           {league === "NFL"
-                            ? "Seeds 1–4 are Division Leaders; Seeds 5–7 are Wild Cards. Ranks 8–16 are In The Hunt."
+                            ? "Seeds 1–4: Division Leaders. Seeds 5–7: Wild Cards. Ranks 8–16: In The Hunt."
                             : "Top 3 per division (Seeds 1-6) + 2 Wild Cards (Seeds 7-8) qualify for Stanley Cup Playoffs."}
                         </p>
                       </div>
@@ -357,7 +357,7 @@ export default function StandingsPage() {
                         <tbody className="divide-y divide-slate-800/50">
                           {confTeams.map((t, idx) => {
                             const isPlayoffSpot = t.playoffSeed !== null;
-                            const isDivLeader = t.playoffSeed !== null && t.playoffSeed <= (league === "NFL" ? 4 : 4);
+                            const isDivLeader = t.playoffSeed !== null && t.playoffSeed <= 4;
                             const isCutline = league === "NFL" ? idx === 6 : idx === 7;
 
                             return (
@@ -423,7 +423,7 @@ export default function StandingsPage() {
                 <div className="flex items-center gap-2">
                   <Award className="w-5 h-5 text-emerald-400 shrink-0" />
                   <div>
-                    <span className="font-bold text-white">Projected Week 11 Postseason Bracket (NFL.com Criteria)</span>
+                    <span className="font-bold text-white">Projected 2025–2026 Postseason Bracket (As of Nov 18, 2025)</span>
                     <p className="text-slate-400 text-[11px]">
                       {league === "NFL"
                         ? "Seed 1 receives first-round bye. Seeds 2, 3, 4 host Wild Card weekend games against Seeds 7, 6, 5."
@@ -436,130 +436,91 @@ export default function StandingsPage() {
                 </span>
               </div>
 
-              {/* NFL Specific Wild Card Matchup Preview */}
+              {/* Dynamic Postseason Matchup Preview */}
               {league === "NFL" && (
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {/* AFC Matchups */}
-                  <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-                    <h3 className="font-black text-white text-sm flex items-center justify-between border-b border-slate-800 pb-2">
-                      <span className="text-emerald-400">AFC Projected Postseason Matchups</span>
-                      <span className="text-[10px] text-slate-400 font-mono">Week 11 Official Seeds</span>
-                    </h3>
+                  {conferenceList.map((conf) => {
+                    const playoffTeams = filtered
+                      .filter((t) => t.conference === conf && t.playoffSeed !== null)
+                      .sort((a, b) => a.playoffSeed - b.playoffSeed);
 
-                    {/* Bye */}
-                    <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-3">
-                        <span className="w-7 h-7 rounded-lg bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-xs">
-                          #1
-                        </span>
-                        <div>
-                          <p className="font-bold text-white">Kansas City Chiefs (9–1)</p>
-                          <span className="text-[10px] text-emerald-400 font-semibold">1st-Round Bye & Home Field Advantage</span>
+                    if (playoffTeams.length < 7) return null;
+
+                    const seed1 = playoffTeams[0];
+                    const seed2 = playoffTeams[1];
+                    const seed3 = playoffTeams[2];
+                    const seed4 = playoffTeams[3];
+                    const seed5 = playoffTeams[4];
+                    const seed6 = playoffTeams[5];
+                    const seed7 = playoffTeams[6];
+
+                    return (
+                      <div
+                        key={conf}
+                        className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl"
+                      >
+                        <h3 className="font-black text-white text-sm flex items-center justify-between border-b border-slate-800 pb-2">
+                          <span className="text-emerald-400">{conf} Projected Postseason Matchups</span>
+                          <span className="text-[10px] text-slate-400 font-mono">2025–2026 Official Seeds</span>
+                        </h3>
+
+                        {/* Bye */}
+                        <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 flex items-center justify-between text-xs">
+                          <div className="flex items-center gap-3">
+                            <span className="w-7 h-7 rounded-lg bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-xs">
+                              #1
+                            </span>
+                            <div>
+                              <p className="font-bold text-white">
+                                {seed1.name} ({seed1.wins}–{seed1.losses}{seed1.ties ? `–${seed1.ties}` : ""})
+                              </p>
+                              <span className="text-[10px] text-emerald-400 font-semibold">1st-Round Bye & Home Field Advantage</span>
+                            </div>
+                          </div>
+                          <span className="font-mono text-emerald-400 text-xs font-bold">BYE</span>
+                        </div>
+
+                        {/* Matchup 1: #7 @ #2 */}
+                        <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                          <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                            <span>WILD CARD GAME 1</span>
+                            <span>HOST: #2 SEED</span>
+                          </div>
+                          <div className="flex items-center justify-between font-bold text-white">
+                            <span>#{seed7.playoffSeed} {seed7.name} ({seed7.wins}–{seed7.losses})</span>
+                            <span className="text-slate-500">@</span>
+                            <span className="text-emerald-400">#{seed2.playoffSeed} {seed2.name} ({seed2.wins}–{seed2.losses})</span>
+                          </div>
+                        </div>
+
+                        {/* Matchup 2: #6 @ #3 */}
+                        <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                          <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                            <span>WILD CARD GAME 2</span>
+                            <span>HOST: #3 SEED</span>
+                          </div>
+                          <div className="flex items-center justify-between font-bold text-white">
+                            <span>#{seed6.playoffSeed} {seed6.name} ({seed6.wins}–{seed6.losses}{seed6.ties ? `–${seed6.ties}` : ""})</span>
+                            <span className="text-slate-500">@</span>
+                            <span className="text-emerald-400">#{seed3.playoffSeed} {seed3.name} ({seed3.wins}–{seed3.losses})</span>
+                          </div>
+                        </div>
+
+                        {/* Matchup 3: #5 @ #4 */}
+                        <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                          <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                            <span>WILD CARD GAME 3</span>
+                            <span>HOST: #4 SEED</span>
+                          </div>
+                          <div className="flex items-center justify-between font-bold text-white">
+                            <span>#{seed5.playoffSeed} {seed5.name} ({seed5.wins}–{seed5.losses})</span>
+                            <span className="text-slate-500">@</span>
+                            <span className="text-emerald-400">#{seed4.playoffSeed} {seed4.name} ({seed4.wins}–{seed4.losses})</span>
+                          </div>
                         </div>
                       </div>
-                      <span className="font-mono text-emerald-400 text-xs font-bold">BYE</span>
-                    </div>
-
-                    {/* Matchup 1 */}
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
-                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
-                        <span>WILD CARD GAME 1</span>
-                        <span>HOST: #2 SEED</span>
-                      </div>
-                      <div className="flex items-center justify-between font-bold text-white">
-                        <span>#7 Denver Broncos (6–5)</span>
-                        <span className="text-slate-500">@</span>
-                        <span className="text-emerald-400">#2 Buffalo Bills (9–2)</span>
-                      </div>
-                    </div>
-
-                    {/* Matchup 2 */}
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
-                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
-                        <span>WILD CARD GAME 2</span>
-                        <span>HOST: #3 SEED</span>
-                      </div>
-                      <div className="flex items-center justify-between font-bold text-white">
-                        <span>#6 Baltimore Ravens (7–4)</span>
-                        <span className="text-slate-500">@</span>
-                        <span className="text-emerald-400">#3 Pittsburgh Steelers (8–2)</span>
-                      </div>
-                    </div>
-
-                    {/* Matchup 3 */}
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
-                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
-                        <span>WILD CARD GAME 3</span>
-                        <span>HOST: #4 SEED</span>
-                      </div>
-                      <div className="flex items-center justify-between font-bold text-white">
-                        <span>#5 Los Angeles Chargers (7–3)</span>
-                        <span className="text-slate-500">@</span>
-                        <span className="text-emerald-400">#4 Houston Texans (7–4)</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* NFC Matchups */}
-                  <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
-                    <h3 className="font-black text-white text-sm flex items-center justify-between border-b border-slate-800 pb-2">
-                      <span className="text-emerald-400">NFC Projected Postseason Matchups</span>
-                      <span className="text-[10px] text-slate-400 font-mono">Week 11 Official Seeds</span>
-                    </h3>
-
-                    {/* Bye */}
-                    <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 flex items-center justify-between text-xs">
-                      <div className="flex items-center gap-3">
-                        <span className="w-7 h-7 rounded-lg bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-xs">
-                          #1
-                        </span>
-                        <div>
-                          <p className="font-bold text-white">Detroit Lions (9–1)</p>
-                          <span className="text-[10px] text-emerald-400 font-semibold">1st-Round Bye & Home Field Advantage</span>
-                        </div>
-                      </div>
-                      <span className="font-mono text-emerald-400 text-xs font-bold">BYE</span>
-                    </div>
-
-                    {/* Matchup 1 */}
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
-                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
-                        <span>WILD CARD GAME 1</span>
-                        <span>HOST: #2 SEED</span>
-                      </div>
-                      <div className="flex items-center justify-between font-bold text-white">
-                        <span>#7 Washington Commanders (7–4)</span>
-                        <span className="text-slate-500">@</span>
-                        <span className="text-emerald-400">#2 Philadelphia Eagles (8–2)</span>
-                      </div>
-                    </div>
-
-                    {/* Matchup 2 */}
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
-                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
-                        <span>WILD CARD GAME 2</span>
-                        <span>HOST: #3 SEED</span>
-                      </div>
-                      <div className="flex items-center justify-between font-bold text-white">
-                        <span>#6 Green Bay Packers (7–3)</span>
-                        <span className="text-slate-500">@</span>
-                        <span className="text-emerald-400">#3 Arizona Cardinals (6–4)</span>
-                      </div>
-                    </div>
-
-                    {/* Matchup 3 */}
-                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
-                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
-                        <span>WILD CARD GAME 3</span>
-                        <span>HOST: #4 SEED</span>
-                      </div>
-                      <div className="flex items-center justify-between font-bold text-white">
-                        <span>#5 Minnesota Vikings (8–2)</span>
-                        <span className="text-slate-500">@</span>
-                        <span className="text-emerald-400">#4 Atlanta Falcons (6–5)</span>
-                      </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
               )}
 
@@ -615,7 +576,7 @@ export default function StandingsPage() {
 
                             <div className="text-right">
                               <span className="font-mono font-bold text-white text-sm block">
-                                {league === "NFL" ? `${t.wins}-${t.losses}` : `${t.points} PTS`}
+                                {league === "NFL" ? `${t.wins}-${t.losses}${t.ties ? `-${t.ties}` : ""}` : `${t.points} PTS`}
                               </span>
                               <span className="text-[10px] text-emerald-400 font-mono">
                                 Streak: {t.streak}
@@ -636,9 +597,9 @@ export default function StandingsPage() {
             <div className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl overflow-hidden">
               <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                 <div>
-                  <h3 className="font-bold text-white text-base">All 32 {league} Franchises Overall</h3>
+                  <h3 className="font-bold text-white text-base">All 32 {league} Franchises Overall (2025–2026)</h3>
                   <p className="text-[11px] text-slate-400">
-                    Comprehensive full league rank order by winning percentage and differentials (NFL.com League Table).
+                    Comprehensive full league rank order by winning percentage and differentials as of November 18, 2025.
                   </p>
                 </div>
                 <span className="font-mono text-emerald-400 font-bold text-xs">32 Teams</span>
