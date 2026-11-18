@@ -629,6 +629,10 @@ async function main() {
   await prisma.nhlSpecialTeamsPlayer.createMany({ data: nhlPlayers });
   console.log(`Seeded ${nhlPlayers.length} NHL special-teams players.`);
 
+  // 10. Seed Official Week 11 Standings
+  const { seedStandings } = require("./seed-standings");
+  await seedStandings();
+
   console.log("Database seed completed successfully.");
 }
 

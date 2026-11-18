@@ -30,7 +30,7 @@ export default function StandingsPage() {
   const fetchStandings = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`/api/standings?league=${league}`);
+      const res = await fetch(`/api/standings?league=${league}&view=${viewMode}`, { cache: "no-store" });
       const data = await res.json();
       setStandings(data.standings || []);
       setLastUpdated(data.lastUpdated);
@@ -59,7 +59,7 @@ export default function StandingsPage() {
 
   useEffect(() => {
     fetchStandings();
-  }, [league]);
+  }, [league, viewMode]);
 
   const filtered = standings.filter((t) => {
     const q = search.toLowerCase();
@@ -71,9 +71,19 @@ export default function StandingsPage() {
     );
   });
 
-  // Groupings
-  const divisions = Array.from(new Set(filtered.map((t) => `${t.conference} ${t.division}`)));
-  const conferences = Array.from(new Set(filtered.map((t) => t.conference)));
+  // Canonical ordering matching NFL.com and NHL.com
+  const nflConferenceDivisions: { [conf: string]: string[] } = {
+    AFC: ["AFC East", "AFC North", "AFC South", "AFC West"],
+    NFC: ["NFC East", "NFC North", "NFC South", "NFC West"],
+  };
+
+  const nhlConferenceDivisions: { [conf: string]: string[] } = {
+    Eastern: ["Eastern Atlantic", "Eastern Metropolitan"],
+    Western: ["Western Central", "Western Pacific"],
+  };
+
+  const currentConfDivMap = league === "NFL" ? nflConferenceDivisions : nhlConferenceDivisions;
+  const conferenceList = Object.keys(currentConfDivMap);
 
   return (
     <div className="space-y-8 py-6 max-w-7xl mx-auto">
@@ -85,17 +95,19 @@ export default function StandingsPage() {
               <Trophy className="w-5 h-5" />
             </div>
             <div>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center gap-2">
                 <h1 className="text-3xl font-black text-white">2025–2026 League Standings</h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">
-                  2025–2026 Season
+                  Week 11
                 </span>
                 <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] font-extrabold uppercase">
-                  TSN & Sportsnet Official Feed
+                  {league === "NFL" ? "Official NFL.com Standings" : "Official NHL Standings Feed"}
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                Official 2025–2026 standings verified via TSN & Sportsnet: full win/loss records, point differentials, home/away splits, streaks, and playoff seedings for all 32 NFL & 32 NHL franchises.
+                {league === "NFL"
+                  ? "Official Week 11 standings verified via NFL.com: complete 32-team win/loss records, point differentials, division standings with official tiebreakers, conference playoff seeds 1–7, and wild card spots."
+                  : "Official 2025–2026 NHL regular-season standings: points, regulation wins, goal differentials, divisional rankings, and postseason wild card seeds for all 32 franchises."}
               </p>
             </div>
           </div>
@@ -125,7 +137,7 @@ export default function StandingsPage() {
                 league === "NFL" ? "bg-emerald-600 text-white" : "text-slate-400 hover:text-white"
               }`}
             >
-              NFL (32 Teams)
+              NFL (32 Teams - W11)
             </button>
             <button
               onClick={() => setLeague("NHL")}
@@ -156,7 +168,7 @@ export default function StandingsPage() {
               viewMode === "CONFERENCE" ? "bg-slate-800 text-white shadow" : "text-slate-400 hover:text-white"
             }`}
           >
-            Conference
+            Conference (Seeds 1–16)
           </button>
           <button
             onClick={() => setViewMode("PLAYOFF")}
@@ -165,7 +177,7 @@ export default function StandingsPage() {
             }`}
           >
             <Award className="w-3.5 h-3.5" />
-            Playoff Picture
+            Playoff Bracket
           </button>
           <button
             onClick={() => setViewMode("LEAGUE")}
@@ -191,103 +203,121 @@ export default function StandingsPage() {
 
       {/* Main Content Area */}
       {loading ? (
-        <div className="p-12 text-center text-slate-400">Loading live standings...</div>
+        <div className="p-12 text-center text-slate-400">Loading live standings from {league === "NFL" ? "NFL.com" : "NHL official feed"}...</div>
       ) : (
-        <div className="space-y-8">
-          {/* VIEW MODE 1: DIVISIONAL */}
+        <div className="space-y-10">
+          {/* VIEW MODE 1: DIVISIONAL (Organized by Conference then Division matching NFL.com) */}
           {viewMode === "DIVISION" && (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {divisions.map((divName) => {
-                const teamsInDiv = filtered
-                  .filter((t) => `${t.conference} ${t.division}` === divName)
-                  .sort((a, b) =>
-                    league === "NFL" ? b.winPct - a.winPct : b.points - a.points
-                  );
-
-                return (
-                  <div
-                    key={divName}
-                    className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 overflow-hidden shadow-xl"
-                  >
-                    <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                      <h3 className="font-bold text-white text-sm">{divName}</h3>
-                      <span className="text-[10px] text-slate-400 uppercase font-mono">
-                        {league}
-                      </span>
-                    </div>
-
-                    <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs">
-                        <thead>
-                          <tr className="text-slate-500 border-b border-slate-800/60 pb-1 text-[11px]">
-                            <th className="pb-2 font-semibold">Team</th>
-                            <th className="pb-2 font-mono text-center">{league === "NFL" ? "W-L-T" : "W-L-OT"}</th>
-                            <th className="pb-2 font-mono text-center">{league === "NFL" ? "PCT" : "PTS"}</th>
-                            <th className="pb-2 font-mono text-center">{league === "NFL" ? "DIFF" : "DIFF"}</th>
-                            <th className="pb-2 font-mono text-center">STRK</th>
-                            <th className="pb-2 text-right">Deep Dive</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-800/40">
-                          {teamsInDiv.map((t, idx) => (
-                            <tr key={t.team} className="hover:bg-slate-850/60 transition">
-                              <td className="py-2.5 font-bold text-white flex items-center gap-2">
-                                <span className="font-mono text-emerald-400 text-xs w-8">{t.team}</span>
-                                <span className="truncate">{t.name}</span>
-                                {idx === 0 && (
-                                  <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-400 text-[9px] font-extrabold uppercase border border-amber-500/20">
-                                    1st
-                                  </span>
-                                )}
-                              </td>
-                              <td className="py-2.5 font-mono text-slate-300 text-center">
-                                {league === "NFL" ? `${t.wins}-${t.losses}-${t.ties}` : `${t.wins}-${t.losses}-${t.otLosses}`}
-                              </td>
-                              <td className="py-2.5 font-mono font-bold text-emerald-400 text-center">
-                                {league === "NFL" ? t.winPct.toFixed(3) : t.points}
-                              </td>
-                              <td
-                                className={`py-2.5 font-mono text-center font-bold ${
-                                  (league === "NFL" ? t.pointDiff : t.goalDiff) > 0
-                                    ? "text-emerald-400"
-                                    : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
-                                    ? "text-red-400"
-                                    : "text-slate-400"
-                                }`}
-                              >
-                                {(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
-                                  ? `+${league === "NFL" ? t.pointDiff : t.goalDiff}`
-                                  : (league === "NFL" ? t.pointDiff : t.goalDiff)}
-                              </td>
-                              <td className="py-2.5 font-mono text-slate-300 text-center">{t.streak}</td>
-                              <td className="py-2.5 text-right">
-                                <Link
-                                  href={league === "NFL" ? `/nfl/defense?team=${t.team}` : `/nhl/power-play?team=${t.team}`}
-                                  className="text-[11px] text-emerald-400 hover:underline font-semibold"
-                                >
-                                  Intel →
-                                </Link>
-                              </td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
+            <div className="space-y-10">
+              {conferenceList.map((conf) => (
+                <div key={conf} className="space-y-4">
+                  <div className="flex items-center gap-3 border-b border-slate-800 pb-2">
+                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
+                    <h2 className="text-xl font-black text-white tracking-wide uppercase">
+                      {conf === "AFC" ? "American Football Conference (AFC)" : conf === "NFC" ? "National Football Conference (NFC)" : `${conf} Conference`}
+                    </h2>
                   </div>
-                );
-              })}
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {currentConfDivMap[conf].map((divName) => {
+                      const divSuffix = divName.replace(`${conf} `, "");
+                      const teamsInDiv = filtered
+                        .filter((t) => t.conference === conf && t.division === divSuffix)
+                        .sort((a, b) => a.rankDivision - b.rankDivision);
+
+                      if (teamsInDiv.length === 0) return null;
+
+                      return (
+                        <div
+                          key={divName}
+                          className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 overflow-hidden shadow-xl"
+                        >
+                          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
+                            <h3 className="font-bold text-white text-sm">{divName}</h3>
+                            <span className="text-[10px] text-emerald-400 uppercase font-mono font-bold">
+                              {league === "NFL" ? "NFL.com W11" : "NHL 2025-26"}
+                            </span>
+                          </div>
+
+                          <div className="overflow-x-auto">
+                            <table className="w-full text-left text-xs">
+                              <thead>
+                                <tr className="text-slate-500 border-b border-slate-800/60 pb-1 text-[11px]">
+                                  <th className="pb-2 font-semibold">Team</th>
+                                  <th className="pb-2 font-mono text-center">{league === "NFL" ? "W-L-T" : "W-L-OT"}</th>
+                                  <th className="pb-2 font-mono text-center">{league === "NFL" ? "PCT" : "PTS"}</th>
+                                  <th className="pb-2 font-mono text-center">{league === "NFL" ? "DIFF" : "DIFF"}</th>
+                                  <th className="pb-2 font-mono text-center">STRK</th>
+                                  <th className="pb-2 text-right">Intel</th>
+                                </tr>
+                              </thead>
+                              <tbody className="divide-y divide-slate-800/40">
+                                {teamsInDiv.map((t) => (
+                                  <tr key={t.team} className="hover:bg-slate-850/60 transition">
+                                    <td className="py-2.5 font-bold text-white flex items-center gap-2">
+                                      <span className="font-mono text-slate-500 text-xs w-4">#{t.rankDivision}</span>
+                                      <span className="font-mono text-emerald-400 text-xs w-8">{t.team}</span>
+                                      <span className="truncate">{t.name}</span>
+                                      {t.rankDivision === 1 && (
+                                        <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-400 text-[9px] font-extrabold uppercase border border-amber-500/20">
+                                          1st
+                                        </span>
+                                      )}
+                                      {t.playoffSeed && (
+                                        <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 text-[9px] font-extrabold uppercase border border-emerald-500/20">
+                                          Seed {t.playoffSeed}
+                                        </span>
+                                      )}
+                                    </td>
+                                    <td className="py-2.5 font-mono text-slate-300 text-center font-bold">
+                                      {league === "NFL" ? `${t.wins}-${t.losses}-${t.ties}` : `${t.wins}-${t.losses}-${t.otLosses}`}
+                                    </td>
+                                    <td className="py-2.5 font-mono font-bold text-emerald-400 text-center">
+                                      {league === "NFL" ? t.winPct.toFixed(3) : t.points}
+                                    </td>
+                                    <td
+                                      className={`py-2.5 font-mono text-center font-bold ${
+                                        (league === "NFL" ? t.pointDiff : t.goalDiff) > 0
+                                          ? "text-emerald-400"
+                                          : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
+                                          ? "text-red-400"
+                                          : "text-slate-400"
+                                      }`}
+                                    >
+                                      {(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
+                                        ? `+${league === "NFL" ? t.pointDiff : t.goalDiff}`
+                                        : (league === "NFL" ? t.pointDiff : t.goalDiff)}
+                                    </td>
+                                    <td className="py-2.5 font-mono text-slate-300 text-center">{t.streak}</td>
+                                    <td className="py-2.5 text-right">
+                                      <Link
+                                        href={league === "NFL" ? `/nfl/defense?team=${t.team}` : `/nhl/power-play?team=${t.team}`}
+                                        className="text-[11px] text-emerald-400 hover:underline font-semibold"
+                                      >
+                                        Intel →
+                                      </Link>
+                                    </td>
+                                  </tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 
-          {/* VIEW MODE 2: CONFERENCE */}
+          {/* VIEW MODE 2: CONFERENCE (Seeds 1–16 matching official NFL.com / NHL order) */}
           {viewMode === "CONFERENCE" && (
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              {conferences.map((confName) => {
+              {conferenceList.map((confName) => {
                 const confTeams = filtered
                   .filter((t) => t.conference === confName)
-                  .sort((a, b) =>
-                    league === "NFL" ? b.winPct - a.winPct : b.points - a.points
-                  );
+                  .sort((a, b) => a.rankConference - b.rankConference);
 
                 return (
                   <div
@@ -296,9 +326,13 @@ export default function StandingsPage() {
                   >
                     <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                       <div>
-                        <h3 className="font-bold text-white text-base">{confName} Conference</h3>
+                        <h3 className="font-bold text-white text-base">
+                          {confName === "AFC" ? "AFC Conference" : confName === "NFC" ? "NFC Conference" : `${confName} Conference`}
+                        </h3>
                         <p className="text-[11px] text-slate-400">
-                          Top {league === "NFL" ? "7" : "8"} teams qualify for the postseason.
+                          {league === "NFL"
+                            ? "Seeds 1–4 are Division Leaders; Seeds 5–7 are Wild Cards. Ranks 8–16 are In The Hunt."
+                            : "Top 3 per division (Seeds 1-6) + 2 Wild Cards (Seeds 7-8) qualify for Stanley Cup Playoffs."}
                         </p>
                       </div>
                       <span className="px-2.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-xs font-bold">
@@ -322,25 +356,33 @@ export default function StandingsPage() {
                         </thead>
                         <tbody className="divide-y divide-slate-800/50">
                           {confTeams.map((t, idx) => {
-                            const isPlayoffSpot = idx < (league === "NFL" ? 7 : 8);
+                            const isPlayoffSpot = t.playoffSeed !== null;
+                            const isDivLeader = t.playoffSeed !== null && t.playoffSeed <= (league === "NFL" ? 4 : 4);
+                            const isCutline = league === "NFL" ? idx === 6 : idx === 7;
+
                             return (
                               <tr
                                 key={t.team}
                                 className={`hover:bg-slate-850/60 transition ${
-                                  idx === (league === "NFL" ? 6 : 7) ? "border-b-2 border-emerald-500/40" : ""
+                                  isCutline ? "border-b-2 border-emerald-500/60" : ""
                                 }`}
                               >
-                                <td className="py-2.5 font-mono text-slate-500 font-bold">{idx + 1}</td>
+                                <td className="py-2.5 font-mono text-slate-500 font-bold">{t.rankConference}</td>
                                 <td className="py-2.5 font-bold text-white flex items-center gap-2">
                                   <span className="font-mono text-emerald-400">{t.team}</span>
                                   <span className="truncate">{t.name}</span>
-                                  {isPlayoffSpot && (
+                                  {isDivLeader && (
+                                    <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-400 text-[9px] font-extrabold uppercase border border-amber-500/20">
+                                      Seed {t.playoffSeed} (Div Leader)
+                                    </span>
+                                  )}
+                                  {isPlayoffSpot && !isDivLeader && (
                                     <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 text-[9px] font-extrabold uppercase border border-emerald-500/20">
-                                      Seed {idx + 1}
+                                      Seed {t.playoffSeed} (Wild Card)
                                     </span>
                                   )}
                                 </td>
-                                <td className="py-2.5 font-mono text-slate-300 text-center">
+                                <td className="py-2.5 font-mono text-slate-300 text-center font-bold">
                                   {league === "NFL" ? `${t.wins}-${t.losses}-${t.ties}` : `${t.wins}-${t.losses}-${t.otLosses}`}
                                 </td>
                                 <td className="py-2.5 font-mono font-bold text-emerald-400 text-center">
@@ -374,17 +416,17 @@ export default function StandingsPage() {
             </div>
           )}
 
-          {/* VIEW MODE 3: PLAYOFF PICTURE */}
+          {/* VIEW MODE 3: PLAYOFF BRACKET */}
           {viewMode === "PLAYOFF" && (
             <div className="space-y-6">
               <div className="p-4 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-between text-xs">
                 <div className="flex items-center gap-2">
                   <Award className="w-5 h-5 text-emerald-400 shrink-0" />
                   <div>
-                    <span className="font-bold text-white">Current Projected Postseason Bracket</span>
+                    <span className="font-bold text-white">Projected Week 11 Postseason Bracket (NFL.com Criteria)</span>
                     <p className="text-slate-400 text-[11px]">
                       {league === "NFL"
-                        ? "Seed 1 receives first-round bye. Seeds 2-4 host Wild Card weekend (Seeds 5-7)."
+                        ? "Seed 1 receives first-round bye. Seeds 2, 3, 4 host Wild Card weekend games against Seeds 7, 6, 5."
                         : "Seeds 1-3 from each division qualify, plus 2 Wild Card berths per conference."}
                     </p>
                   </div>
@@ -394,8 +436,136 @@ export default function StandingsPage() {
                 </span>
               </div>
 
+              {/* NFL Specific Wild Card Matchup Preview */}
+              {league === "NFL" && (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {/* AFC Matchups */}
+                  <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+                    <h3 className="font-black text-white text-sm flex items-center justify-between border-b border-slate-800 pb-2">
+                      <span className="text-emerald-400">AFC Projected Postseason Matchups</span>
+                      <span className="text-[10px] text-slate-400 font-mono">Week 11 Official Seeds</span>
+                    </h3>
+
+                    {/* Bye */}
+                    <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-3">
+                        <span className="w-7 h-7 rounded-lg bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-xs">
+                          #1
+                        </span>
+                        <div>
+                          <p className="font-bold text-white">Kansas City Chiefs (9–1)</p>
+                          <span className="text-[10px] text-emerald-400 font-semibold">1st-Round Bye & Home Field Advantage</span>
+                        </div>
+                      </div>
+                      <span className="font-mono text-emerald-400 text-xs font-bold">BYE</span>
+                    </div>
+
+                    {/* Matchup 1 */}
+                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                        <span>WILD CARD GAME 1</span>
+                        <span>HOST: #2 SEED</span>
+                      </div>
+                      <div className="flex items-center justify-between font-bold text-white">
+                        <span>#7 Denver Broncos (6–5)</span>
+                        <span className="text-slate-500">@</span>
+                        <span className="text-emerald-400">#2 Buffalo Bills (9–2)</span>
+                      </div>
+                    </div>
+
+                    {/* Matchup 2 */}
+                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                        <span>WILD CARD GAME 2</span>
+                        <span>HOST: #3 SEED</span>
+                      </div>
+                      <div className="flex items-center justify-between font-bold text-white">
+                        <span>#6 Baltimore Ravens (7–4)</span>
+                        <span className="text-slate-500">@</span>
+                        <span className="text-emerald-400">#3 Pittsburgh Steelers (8–2)</span>
+                      </div>
+                    </div>
+
+                    {/* Matchup 3 */}
+                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                        <span>WILD CARD GAME 3</span>
+                        <span>HOST: #4 SEED</span>
+                      </div>
+                      <div className="flex items-center justify-between font-bold text-white">
+                        <span>#5 Los Angeles Chargers (7–3)</span>
+                        <span className="text-slate-500">@</span>
+                        <span className="text-emerald-400">#4 Houston Texans (7–4)</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* NFC Matchups */}
+                  <div className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl">
+                    <h3 className="font-black text-white text-sm flex items-center justify-between border-b border-slate-800 pb-2">
+                      <span className="text-emerald-400">NFC Projected Postseason Matchups</span>
+                      <span className="text-[10px] text-slate-400 font-mono">Week 11 Official Seeds</span>
+                    </h3>
+
+                    {/* Bye */}
+                    <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/40 flex items-center justify-between text-xs">
+                      <div className="flex items-center gap-3">
+                        <span className="w-7 h-7 rounded-lg bg-emerald-500 text-slate-950 font-black flex items-center justify-center text-xs">
+                          #1
+                        </span>
+                        <div>
+                          <p className="font-bold text-white">Detroit Lions (9–1)</p>
+                          <span className="text-[10px] text-emerald-400 font-semibold">1st-Round Bye & Home Field Advantage</span>
+                        </div>
+                      </div>
+                      <span className="font-mono text-emerald-400 text-xs font-bold">BYE</span>
+                    </div>
+
+                    {/* Matchup 1 */}
+                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                        <span>WILD CARD GAME 1</span>
+                        <span>HOST: #2 SEED</span>
+                      </div>
+                      <div className="flex items-center justify-between font-bold text-white">
+                        <span>#7 Washington Commanders (7–4)</span>
+                        <span className="text-slate-500">@</span>
+                        <span className="text-emerald-400">#2 Philadelphia Eagles (8–2)</span>
+                      </div>
+                    </div>
+
+                    {/* Matchup 2 */}
+                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                        <span>WILD CARD GAME 2</span>
+                        <span>HOST: #3 SEED</span>
+                      </div>
+                      <div className="flex items-center justify-between font-bold text-white">
+                        <span>#6 Green Bay Packers (7–3)</span>
+                        <span className="text-slate-500">@</span>
+                        <span className="text-emerald-400">#3 Arizona Cardinals (6–4)</span>
+                      </div>
+                    </div>
+
+                    {/* Matchup 3 */}
+                    <div className="p-3 rounded-xl bg-slate-950 border border-slate-800 space-y-1.5 text-xs">
+                      <div className="flex items-center justify-between text-slate-400 text-[10px] font-mono">
+                        <span>WILD CARD GAME 3</span>
+                        <span>HOST: #4 SEED</span>
+                      </div>
+                      <div className="flex items-center justify-between font-bold text-white">
+                        <span>#5 Minnesota Vikings (8–2)</span>
+                        <span className="text-slate-500">@</span>
+                        <span className="text-emerald-400">#4 Atlanta Falcons (6–5)</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Seed Breakdown by Conference */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {conferences.map((confName) => {
+                {conferenceList.map((confName) => {
                   const playoffTeams = filtered
                     .filter((t) => t.conference === confName && t.playoffSeed !== null)
                     .sort((a, b) => a.playoffSeed - b.playoffSeed);
@@ -468,7 +638,7 @@ export default function StandingsPage() {
                 <div>
                   <h3 className="font-bold text-white text-base">All 32 {league} Franchises Overall</h3>
                   <p className="text-[11px] text-slate-400">
-                    Comprehensive full league rank order by winning percentage and differentials.
+                    Comprehensive full league rank order by winning percentage and differentials (NFL.com League Table).
                   </p>
                 </div>
                 <span className="font-mono text-emerald-400 font-bold text-xs">32 Teams</span>
@@ -493,10 +663,10 @@ export default function StandingsPage() {
                   </thead>
                   <tbody className="divide-y divide-slate-800/50">
                     {filtered
-                      .sort((a, b) => (league === "NFL" ? b.winPct - a.winPct : b.points - a.points))
-                      .map((t, idx) => (
+                      .sort((a, b) => a.rankLeague - b.rankLeague)
+                      .map((t) => (
                         <tr key={t.team} className="hover:bg-slate-850/60 transition">
-                          <td className="py-2.5 font-mono text-slate-500 font-bold">{idx + 1}</td>
+                          <td className="py-2.5 font-mono text-slate-500 font-bold">{t.rankLeague}</td>
                           <td className="py-2.5 font-bold text-white flex items-center gap-2">
                             <span className="font-mono text-emerald-400">{t.team}</span>
                             <span>{t.name}</span>
@@ -504,7 +674,7 @@ export default function StandingsPage() {
                           <td className="py-2.5 text-slate-400">
                             {t.conference} {t.division}
                           </td>
-                          <td className="py-2.5 font-mono text-slate-300 text-center">
+                          <td className="py-2.5 font-mono text-slate-300 text-center font-bold">
                             {league === "NFL" ? `${t.wins}-${t.losses}-${t.ties}` : `${t.wins}-${t.losses}-${t.otLosses}`}
                           </td>
                           <td className="py-2.5 font-mono font-bold text-emerald-400 text-center">

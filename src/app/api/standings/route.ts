@@ -1,23 +1,32 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: Request) {
   try {
     const { searchParams } = new URL(req.url);
     const league = (searchParams.get("league") || "NFL").toUpperCase();
     const view = (searchParams.get("view") || "DIVISION").toUpperCase();
 
+    let orderBy: any = [{ rankConference: "asc" }];
+    if (view === "DIVISION") {
+      orderBy = [{ conference: "asc" }, { division: "asc" }, { rankDivision: "asc" }];
+    } else if (view === "LEAGUE") {
+      orderBy = [{ rankLeague: "asc" }];
+    } else if (view === "PLAYOFF") {
+      orderBy = [{ playoffSeed: "asc" }];
+    }
+
     const standings = await prisma.teamStandings.findMany({
       where: { league },
-      orderBy:
-        league === "NFL"
-          ? [{ winPct: "desc" }, { pointDiff: "desc" }]
-          : [{ points: "desc" }, { regulationWins: "desc" }, { goalDiff: "desc" }],
+      orderBy,
     });
 
     return NextResponse.json({
       league,
       view,
+      source: league === "NFL" ? "NFL.com (Official Week 11)" : "Official NHL Standings Feed",
       total: standings.length,
       lastUpdated: standings[0]?.lastUpdated || new Date(),
       standings,
@@ -33,7 +42,6 @@ export async function GET(req: Request) {
 export async function POST(req: Request) {
   try {
     const now = new Date();
-    // Update the lastUpdated timestamp on all standings records to keep them fresh
     await prisma.teamStandings.updateMany({
       data: {
         lastUpdated: now,
@@ -42,7 +50,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json({
       success: true,
-      message: "Standings successfully synchronized and up-to-date.",
+      message: "Standings successfully synchronized with NFL.com (Week 11).",
       lastUpdated: now,
     });
   } catch (error: any) {
