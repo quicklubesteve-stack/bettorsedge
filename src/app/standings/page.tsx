@@ -86,13 +86,16 @@ export default function StandingsPage() {
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-3xl font-black text-white">Up-to-Date League Standings</h1>
+                <h1 className="text-3xl font-black text-white">2025–2026 League Standings</h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase">
-                  TSN & Sportsnet Live Feed
+                  2025–2026 Season
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] font-extrabold uppercase">
+                  TSN & Sportsnet Official Feed
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                Real-time official standings from TSN & Sportsnet: records, point differentials, home/away splits, streaks, and playoff seedings for all 32 NFL & 32 NHL franchises.
+                Official 2025–2026 standings verified via TSN & Sportsnet: full win/loss records, point differentials, home/away splits, streaks, and playoff seedings for all 32 NFL & 32 NHL franchises.
               </p>
             </div>
           </div>
