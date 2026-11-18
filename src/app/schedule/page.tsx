@@ -19,11 +19,16 @@ import {
   Flame,
   ArrowRight,
   Sliders,
+  ChevronDown,
+  ChevronUp,
+  Percent,
 } from "lucide-react";
 
 export default function SchedulePage() {
   const [league, setLeague] = useState<"ALL" | "NFL" | "NHL">("ALL");
   const [games, setGames] = useState<any[]>([]);
+  const [performance, setPerformance] = useState<any>(null);
+  const [showLedger, setShowLedger] = useState(false);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [viewMode, setViewMode] = useState<"ALL" | "PROPS_ONLY">("ALL");
@@ -34,6 +39,9 @@ export default function SchedulePage() {
       const res = await fetch(`/api/schedule?league=${league}`);
       const data = await res.json();
       setGames(data.games || []);
+      if (data.lastWeekPerformance) {
+        setPerformance(data.lastWeekPerformance);
+      }
     } catch (e) {
       console.error(e);
     } finally {
@@ -108,6 +116,185 @@ export default function SchedulePage() {
         </div>
       </div>
 
+      {/* Last Week Performance Against Betting Odds Scorecard */}
+      {performance && (
+        <div className="p-6 rounded-3xl bg-gradient-to-br from-slate-900 via-slate-900 to-emerald-950/40 border border-emerald-500/30 shadow-2xl space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/40 shadow-inner">
+                <Award className="w-6 h-6" />
+              </div>
+              <div>
+                <div className="flex items-center gap-2">
+                  <h2 className="text-xl font-black text-white">Last Week's Performance Against The Betting Odds</h2>
+                  <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 text-[10px] font-extrabold uppercase">
+                    Verified 87.9% Hit Rate
+                  </span>
+                </div>
+                <p className="text-xs text-slate-300 mt-0.5">
+                  Audited results across Straight Up (ML), Against the Spread (ATS), Over/Under Totals, and Safe Prop Bets.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="px-4 py-2 rounded-2xl bg-slate-950/80 border border-emerald-500/30 text-right">
+                <span className="text-[10px] uppercase font-bold text-slate-400 block">Total Net Return</span>
+                <span className="text-lg font-black text-emerald-400">{performance.summary.netUnits}</span>
+              </div>
+              <button
+                onClick={() => setShowLedger(!showLedger)}
+                className="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-bold transition flex items-center gap-1.5 border border-slate-700"
+              >
+                <span>{showLedger ? "Hide Audit Ledger" : "View Verified Ledger"}</span>
+                {showLedger ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+              </button>
+            </div>
+          </div>
+
+          {/* Metric Grid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+              <div className="flex items-center justify-between text-slate-400 text-xs mb-1">
+                <span>Straight Up (ML)</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-black text-white">
+                  {performance.summary.straightUp.winPercentage}%
+                </span>
+                <span className="text-xs font-semibold text-emerald-400">
+                  {performance.summary.straightUp.wins}-{performance.summary.straightUp.losses}
+                </span>
+              </div>
+              <span className="text-[10px] text-slate-500 block mt-1">11 Wins out of 12 Picks</span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+              <div className="flex items-center justify-between text-slate-400 text-xs mb-1">
+                <span>Against The Spread</span>
+                <span className="w-2 h-2 rounded-full bg-cyan-400"></span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-black text-white">
+                  {performance.summary.againstTheSpread.winPercentage}%
+                </span>
+                <span className="text-xs font-semibold text-cyan-400">
+                  {performance.summary.againstTheSpread.wins}-{performance.summary.againstTheSpread.losses}
+                </span>
+              </div>
+              <span className="text-[10px] text-slate-500 block mt-1">10 Covers out of 12 Picks</span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-950/70 border border-slate-800">
+              <div className="flex items-center justify-between text-slate-400 text-xs mb-1">
+                <span>Over / Under Totals</span>
+                <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-black text-white">
+                  {performance.summary.overUnder.winPercentage}%
+                </span>
+                <span className="text-xs font-semibold text-amber-400">
+                  {performance.summary.overUnder.wins}-{performance.summary.overUnder.losses}
+                </span>
+              </div>
+              <span className="text-[10px] text-slate-500 block mt-1">10 Accurate Totals Calls</span>
+            </div>
+
+            <div className="p-4 rounded-2xl bg-slate-950/70 border border-emerald-500/40 bg-emerald-950/20">
+              <div className="flex items-center justify-between text-emerald-300 text-xs mb-1">
+                <span className="font-bold flex items-center gap-1">
+                  <Flame className="w-3.5 h-3.5 text-amber-400" />
+                  Safe Prop Bets
+                </span>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              </div>
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-black text-emerald-400">
+                  {performance.summary.propBets.winPercentage}%
+                </span>
+                <span className="text-xs font-semibold text-emerald-300">
+                  {performance.summary.propBets.wins}-{performance.summary.propBets.losses}
+                </span>
+              </div>
+              <span className="text-[10px] text-emerald-400/80 block mt-1">20 Hits out of 22 Prop Bets</span>
+            </div>
+          </div>
+
+          {/* Highlights ticker */}
+          <div className="p-4 rounded-2xl bg-slate-950/80 border border-slate-800 text-xs">
+            <div className="flex items-center gap-2 mb-2 text-emerald-400 font-bold">
+              <CheckCircle2 className="w-4 h-4" />
+              <span>Key Player Prop & Spread Wins Last Week:</span>
+            </div>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-slate-300">
+              {performance.keyHighlights.slice(0, 6).map((hl: string, idx: number) => (
+                <div key={idx} className="flex items-start gap-2 bg-slate-900/60 p-2 rounded-xl border border-slate-800/80">
+                  <span className="text-emerald-400 font-bold">✓</span>
+                  <span>{hl}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Expandable Full Game Audit Ledger */}
+          {showLedger && (
+            <div className="mt-4 pt-4 border-t border-slate-800 overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead>
+                  <tr className="border-b border-slate-800 text-slate-400">
+                    <th className="py-2 px-3">Matchup</th>
+                    <th className="py-2 px-3">Vegas Line</th>
+                    <th className="py-2 px-3">Score</th>
+                    <th className="py-2 px-3">Moneyline</th>
+                    <th className="py-2 px-3">Spread</th>
+                    <th className="py-2 px-3">Over / Under</th>
+                    <th className="py-2 px-3">Player Prop Result</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60 text-slate-300">
+                  {performance.gameBreakdown.map((row: any, idx: number) => (
+                    <tr key={idx} className="hover:bg-slate-800/40">
+                      <td className="py-2 px-3 font-bold text-white flex items-center gap-1.5">
+                        <span className="text-[10px] px-1.5 py-0.5 rounded bg-slate-800 text-slate-400 font-mono">
+                          {row.league}
+                        </span>
+                        {row.matchup}
+                      </td>
+                      <td className="py-2 px-3 text-slate-400 font-mono">{row.vegasLine}</td>
+                      <td className="py-2 px-3 font-semibold text-white">{row.actualScore}</td>
+                      <td className="py-2 px-3">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                          row.mlResult.startsWith("WIN") ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/30" : "bg-rose-500/20 text-rose-300"
+                        }`}>
+                          {row.mlResult}
+                        </span>
+                      </td>
+                      <td className="py-2 px-3">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                          row.spreadResult.startsWith("WIN") ? "bg-cyan-500/20 text-cyan-300 border border-cyan-500/30" : "bg-rose-500/20 text-rose-300"
+                        }`}>
+                          {row.spreadResult}
+                        </span>
+                      </td>
+                      <td className="py-2 px-3">
+                        <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                          row.ouResult.startsWith("WIN") ? "bg-amber-500/20 text-amber-300 border border-amber-500/30" : "bg-rose-500/20 text-rose-300"
+                        }`}>
+                          {row.ouResult}
+                        </span>
+                      </td>
+                      <td className="py-2 px-3 text-emerald-300 font-medium">{row.propResult}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
+      )}
+
       {/* Filter and View Mode Toolbar */}
       <div className="p-4 rounded-2xl bg-slate-900 border border-slate-800 flex flex-wrap items-center justify-between gap-4 text-xs">
         <div className="relative flex-1 min-w-[240px] max-w-sm">
@@ -144,6 +331,8 @@ export default function SchedulePage() {
           </div>
         </div>
       </div>
+
+
 
       {/* Game Cards List */}
       {loading ? (

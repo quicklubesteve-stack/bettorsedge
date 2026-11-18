@@ -20,10 +20,9 @@ export async function POST(req: Request) {
     const result = await syncRosters(league, force);
 
     return NextResponse.json({
-      success: true,
+      ...result,
       message: "Weekly team rosters successfully synchronized and verified.",
       triggeredBy: isAdmin ? `ADMIN (${user?.email})` : "AUTOMATED_CRON",
-      ...result,
     });
   } catch (error: any) {
     console.error("POST /api/rosters/sync error:", error);

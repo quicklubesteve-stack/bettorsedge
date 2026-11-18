@@ -72,22 +72,39 @@ describe("Weekly Team Rosters & Depth Charts System", () => {
     expect(hunt?.position).toBe("RB");
   });
 
-  it("fetches team roster for Toronto Maple Leafs with Matthews, Marner, and Nylander", async () => {
-    const data = await getTeamRoster("NHL", "TOR");
+  it("verifies 2025-2026 roster accuracy: Mitch Marner on Vegas Golden Knights (not Toronto) and Zach Hyman on Edmonton", async () => {
+    const torData = await getTeamRoster("NHL", "TOR");
+    expect(torData.team).toBe("TOR");
+    expect(torData.players.length).toBeGreaterThanOrEqual(7);
 
-    expect(data.team).toBe("TOR");
-    expect(data.players.length).toBeGreaterThanOrEqual(7);
-
-    const matthews = data.players.find((p) => p.name === "Auston Matthews");
-    const nylander = data.players.find((p) => p.name === "William Nylander");
-    const marner = data.players.find((p) => p.name === "Mitch Marner");
+    const matthews = torData.players.find((p) => p.name === "Auston Matthews");
+    const nylander = torData.players.find((p) => p.name === "William Nylander");
+    const torMarner = torData.players.find((p) => p.name === "Mitch Marner");
 
     expect(matthews).toBeDefined();
     expect(matthews?.position).toBe("C");
     expect(matthews?.goalWeight).toBeGreaterThan(0.2);
 
     expect(nylander).toBeDefined();
-    expect(marner).toBeDefined();
+    // In 2025-2026, Mitch Marner is no longer on the Toronto Maple Leafs
+    expect(torMarner).toBeUndefined();
+
+    // Verify Mitch Marner is on Vegas Golden Knights (VGK)
+    const vgkData = await getTeamRoster("NHL", "VGK");
+    expect(vgkData.team).toBe("VGK");
+    const vgkMarner = vgkData.players.find((p) => p.name === "Mitch Marner");
+    expect(vgkMarner).toBeDefined();
+    expect(vgkMarner?.position).toBe("RW");
+    expect(vgkMarner?.status).toBe("ACTIVE");
+
+    // Verify Zach Hyman is on Edmonton Oilers (EDM)
+    const edmData = await getTeamRoster("NHL", "EDM");
+    expect(edmData.team).toBe("EDM");
+    const edmHyman = edmData.players.find((p) => p.name === "Zach Hyman");
+    const edmMcDavid = edmData.players.find((p) => p.name === "Connor McDavid");
+    expect(edmHyman).toBeDefined();
+    expect(edmHyman?.position).toBe("LW");
+    expect(edmMcDavid).toBeDefined();
   });
 
   it("excludes injured/IR players from active simulation pool", async () => {

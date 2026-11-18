@@ -117,11 +117,18 @@ export const NHL_TEAM_STARS: Record<
     { name: "Ryan Nugent-Hopkins", pos: "C", goalWeight: 0.10, assistWeight: 0.25, isPP1: true },
   ],
   TOR: [
-    { name: "Auston Matthews", pos: "C", goalWeight: 0.32, assistWeight: 0.20, isPP1: true },
-    { name: "William Nylander", pos: "RW", goalWeight: 0.24, assistWeight: 0.30, isPP1: true },
-    { name: "Mitch Marner", pos: "RW", goalWeight: 0.16, assistWeight: 0.44, isPP1: true },
-    { name: "John Tavares", pos: "C", goalWeight: 0.18, assistWeight: 0.22, isPP1: true },
-    { name: "Morgan Rielly", pos: "D", goalWeight: 0.08, assistWeight: 0.35, isPP1: true },
+    { name: "Auston Matthews", pos: "C", goalWeight: 0.35, assistWeight: 0.22, isPP1: true },
+    { name: "William Nylander", pos: "RW", goalWeight: 0.30, assistWeight: 0.34, isPP1: true },
+    { name: "Matthew Knies", pos: "LW", goalWeight: 0.18, assistWeight: 0.20, isPP1: true },
+    { name: "John Tavares", pos: "C", goalWeight: 0.20, assistWeight: 0.22, isPP1: true },
+    { name: "Morgan Rielly", pos: "D", goalWeight: 0.08, assistWeight: 0.38, isPP1: true },
+  ],
+  VGK: [
+    { name: "Mitch Marner", pos: "RW", goalWeight: 0.24, assistWeight: 0.44, isPP1: true },
+    { name: "Jack Eichel", pos: "C", goalWeight: 0.28, assistWeight: 0.38, isPP1: true },
+    { name: "Mark Stone", pos: "RW", goalWeight: 0.22, assistWeight: 0.30, isPP1: true },
+    { name: "Tomas Hertl", pos: "C", goalWeight: 0.18, assistWeight: 0.22, isPP1: true },
+    { name: "Shea Theodore", pos: "D", goalWeight: 0.10, assistWeight: 0.36, isPP1: true },
   ],
   FLA: [
     { name: "Sam Reinhart", pos: "C", goalWeight: 0.29, assistWeight: 0.22, isPP1: true },

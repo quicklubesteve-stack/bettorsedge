@@ -3,9 +3,9 @@ const prisma = new PrismaClient();
 
 const NFL_GAMES = [
   {
-    gameId: "NFL-2024-W11-KC-BUF",
+    gameId: "NFL-2025-W11-KC-BUF",
     league: "NFL",
-    date: new Date("2024-11-17T21:25:00Z"),
+    date: new Date("2026-11-22T21:25:00Z"),
     week: 11,
     homeTeam: "BUF",
     awayTeam: "KC",
@@ -21,7 +21,7 @@ const NFL_GAMES = [
     homeWinProbability: 56.5,
     awayWinProbability: 43.5,
     predictedWinner: "BUF",
-    predictedScore: "26 - 23",
+    predictedScore: "27 - 24",
     predictedSpreadPick: "BUF -2.5",
     spreadConfidence: "HIGH",
     predictedOverUnder: "OVER",
@@ -34,7 +34,7 @@ const NFL_GAMES = [
     homeFirstScorer: "Josh Allen (BUF)",
     homeFirstScorerOdds: "+550",
     homeFirstScorerReason:
-      "Josh Allen commands 44% of Buffalo's red-zone goal-line carries inside the 5-yard line with 8 rushing TDs this season.",
+      "Josh Allen commands 44% of Buffalo's red-zone goal-line carries inside the 5-yard line with 6 rushing TDs this season.",
     awayFirstScorer: "Travis Kelce (KC)",
     awayFirstScorerOdds: "+600",
     awayFirstScorerReason:
@@ -52,7 +52,7 @@ const NFL_GAMES = [
         prop: "Over 248.5 Passing Yards",
         odds: "-115",
         conviction: "91% Safe Bet",
-        reason: "Averaging 282 passing yards when trailing or in one-score games; Buffalo secondary missing two starting safeties.",
+        reason: "Averaging 278 passing yards when trailing or in one-score games; Buffalo secondary missing two starting safeties.",
       },
       {
         player: "Kareem Hunt",
@@ -64,9 +64,9 @@ const NFL_GAMES = [
     ],
   },
   {
-    gameId: "NFL-2024-W11-BAL-PIT",
+    gameId: "NFL-2025-W11-BAL-PIT",
     league: "NFL",
-    date: new Date("2024-11-17T18:00:00Z"),
+    date: new Date("2026-11-22T18:00:00Z"),
     week: 11,
     homeTeam: "PIT",
     awayTeam: "BAL",
@@ -95,7 +95,7 @@ const NFL_GAMES = [
     homeFirstScorer: "George Pickens (PIT)",
     homeFirstScorerOdds: "+750",
     homeFirstScorerReason:
-      "Accounts for 48% of Pittsburgh's air yards and primary deep-ball target against Baltimore's 32nd ranked pass defense.",
+      "Accounts for 48% of Pittsburgh's air yards and primary deep-ball target against Baltimore's pass defense.",
     awayFirstScorer: "Derrick Henry (BAL)",
     awayFirstScorerOdds: "+320",
     awayFirstScorerReason:
@@ -106,7 +106,7 @@ const NFL_GAMES = [
         prop: "Over 84.5 Rushing Yards",
         odds: "-115",
         conviction: "94% Safe Bet",
-        reason: "Has cleared 85 yards in 8 of 10 games this season; averaging 6.1 yards per carry.",
+        reason: "Has cleared 85 yards in 8 of 10 games this season; averaging 6.0 yards per carry.",
       },
       {
         player: "Lamar Jackson",
@@ -125,9 +125,9 @@ const NFL_GAMES = [
     ],
   },
   {
-    gameId: "NFL-2024-W11-SF-SEA",
+    gameId: "NFL-2025-W11-SF-SEA",
     league: "NFL",
-    date: new Date("2024-11-17T21:05:00Z"),
+    date: new Date("2026-11-22T21:05:00Z"),
     week: 11,
     homeTeam: "SF",
     awayTeam: "SEA",
@@ -148,7 +148,7 @@ const NFL_GAMES = [
     spreadConfidence: "HIGH",
     predictedOverUnder: "OVER",
     predictionReasoning:
-      "San Francisco has defeated Seattle in 6 consecutive meetings by an average margin of 14 points. Christian McCaffrey's return provides dual-threat red zone dominance.",
+      "San Francisco has defeated Seattle in 6 consecutive meetings by an average margin of 14 points. Christian McCaffrey's dual-threat red zone dominance balances out Brandon Aiyuk's absence on IR.",
     firstTeamToScore: "SF",
     firstTeamOdds: -160,
     firstTeamReasoning:
@@ -158,37 +158,30 @@ const NFL_GAMES = [
     homeFirstScorerReason:
       "Consistently commands 82% of red-zone touches when active with 18 career multi-TD games in San Francisco.",
     awayFirstScorer: "DK Metcalf (SEA)",
-    awayFirstScorerOdds: "+800",
+    awayFirstScorerOdds: "+750",
     awayFirstScorerReason:
-      "Leading red-zone target with 38% target share in 1-on-1 boundary matchups.",
+      "Leads Seattle with 28% first-quarter target share and 5 red-zone catches.",
     safeProps: [
       {
         player: "Christian McCaffrey",
         prop: "Over 105.5 Scrimmage Yards",
-        odds: "-120",
+        odds: "-115",
         conviction: "93% Safe Bet",
-        reason: "Averaging 124 total scrimmage yards per game in career vs Seattle.",
+        reason: "Averaging 124 scrimmage yards against Seattle defense over his career.",
       },
       {
-        player: "Brock Purdy",
-        prop: "Over 1.5 Passing Touchdowns",
-        odds: "-125",
-        conviction: "91% Safe Bet",
-        reason: "Passed for 2+ TDs in 4 of his last 5 home games.",
-      },
-      {
-        player: "Nick Bosa",
-        prop: "Over 0.75 Sacks",
-        odds: "-110",
-        conviction: "90% Safe Bet",
-        reason: "Seattle offensive line allows pressure on 39% of dropbacks (bottom 4 in NFL).",
+        player: "George Kittle",
+        prop: "Over 52.5 Receiving Yards",
+        odds: "-120",
+        conviction: "92% Safe Bet",
+        reason: "Seattle ranks 27th in defending tight ends across the middle.",
       },
     ],
   },
   {
-    gameId: "NFL-2024-W11-PHI-WAS",
+    gameId: "NFL-2025-W11-PHI-WAS",
     league: "NFL",
-    date: new Date("2024-11-15T01:15:00Z"),
+    date: new Date("2026-11-23T01:15:00Z"),
     week: 11,
     homeTeam: "PHI",
     awayTeam: "WAS",
@@ -209,7 +202,7 @@ const NFL_GAMES = [
     spreadConfidence: "MODERATE",
     predictedOverUnder: "OVER",
     predictionReasoning:
-      "Philadelphia has won 5 consecutive games behind Saquon Barkley's 115.8 yds/g. Washington's defense allows 4.8 YPC on 1st down.",
+      "Philadelphia has won 5 consecutive games behind Saquon Barkley's 118.8 yds/g. Washington's defense allows 4.8 YPC on 1st down.",
     firstTeamToScore: "PHI",
     firstTeamOdds: -135,
     firstTeamReasoning:
@@ -217,18 +210,18 @@ const NFL_GAMES = [
     homeFirstScorer: "Saquon Barkley (PHI)",
     homeFirstScorerOdds: "+360",
     homeFirstScorerReason:
-      "Leads all NFL running backs in explosive 15+ yard runs (18) and handles 74% of goal line snaps.",
+      "Leads all NFL running backs in explosive 15+ yard runs and handles 74% of goal line snaps.",
     awayFirstScorer: "Brian Robinson Jr. (WAS)",
     awayFirstScorerOdds: "+650",
     awayFirstScorerReason:
-      "Has scored 6 touchdowns in 7 games and commands all inside-the-5 power carries for Washington.",
+      "Commands all inside-the-5 power carries for Washington.",
     safeProps: [
       {
         player: "Saquon Barkley",
         prop: "Over 88.5 Rushing Yards",
         odds: "-115",
         conviction: "92% Safe Bet",
-        reason: "Exceeded 90 yards in 6 of his last 7 games behind top-ranked run-block win rate.",
+        reason: "Exceeded 90 yards in 7 of his last 8 games behind top-ranked run-block win rate.",
       },
       {
         player: "Jalen Hurts",
@@ -240,9 +233,9 @@ const NFL_GAMES = [
     ],
   },
   {
-    gameId: "NFL-2024-W11-DET-JAX",
+    gameId: "NFL-2025-W11-DET-JAX",
     league: "NFL",
-    date: new Date("2024-11-17T18:00:00Z"),
+    date: new Date("2026-11-22T18:00:00Z"),
     week: 11,
     homeTeam: "DET",
     awayTeam: "JAX",
@@ -263,7 +256,7 @@ const NFL_GAMES = [
     spreadConfidence: "HIGH",
     predictedOverUnder: "OVER",
     predictionReasoning:
-      "Detroit leads the NFL in scoring differential (+110) and ranks #1 in offensive efficiency. Jacksonville defense allows 28.5 points/game on the road.",
+      "Detroit leads the NFL in offensive efficiency and scoring differential. Even with Aidan Hutchinson on IR, the offense carries supreme efficiency.",
     firstTeamToScore: "DET",
     firstTeamOdds: -210,
     firstTeamReasoning:
@@ -271,7 +264,7 @@ const NFL_GAMES = [
     homeFirstScorer: "David Montgomery (DET)",
     homeFirstScorerOdds: "+350",
     homeFirstScorerReason:
-      "Has scored a touchdown in 8 of 9 games this season; primary 1st quarter goal-line hammer.",
+      "Has scored a touchdown in 8 of 9 games; primary 1st quarter goal-line hammer.",
     awayFirstScorer: "Evan Engram (JAX)",
     awayFirstScorerOdds: "+900",
     awayFirstScorerReason:
@@ -282,7 +275,7 @@ const NFL_GAMES = [
         prop: "Anytime Touchdown",
         odds: "-165",
         conviction: "95% Safe Bet",
-        reason: "Detroit's dynamic duo has scored at least one combined touchdown in every game in 2024.",
+        reason: "Detroit's dynamic duo has scored at least one combined touchdown in every game this season.",
       },
       {
         player: "Jared Goff",
@@ -297,15 +290,136 @@ const NFL_GAMES = [
 
 const NHL_GAMES = [
   {
-    gameId: "NHL-2024-EDM-TOR",
+    gameId: "NHL-2025-VGK-TOR",
     league: "NHL",
-    date: new Date("2024-11-16T23:00:00Z"),
+    date: new Date("2026-11-21T00:00:00Z"),
+    homeTeam: "TOR",
+    awayTeam: "VGK",
+    homeTeamName: "Toronto Maple Leafs",
+    awayTeamName: "Vegas Golden Knights",
+    venue: "Scotiabank Arena, Toronto, ON",
+    broadcast: "TSN4 / SCRIPPS / ESPN+",
+    homeMoneyline: -115,
+    awayMoneyline: -105,
+    spread: 1.5,
+    spreadFavorite: "AWAY",
+    overUnder: 6.5,
+    homeWinProbability: 51.8,
+    awayWinProbability: 48.2,
+    predictedWinner: "VGK",
+    predictedScore: "4 - 3",
+    predictedSpreadPick: "VGK +1.5",
+    spreadConfidence: "HIGH",
+    predictedOverUnder: "OVER",
+    predictionReasoning:
+      "High-drama matchup as superstar Mitch Marner makes his return to Scotiabank Arena in a Vegas Golden Knights jersey. Vegas ranks #2 in transition expected goals (xGF) with Marner and Jack Eichel controlling 58.4% of high-danger chances. Toronto leans heavily on Matthews and Nylander to counter.",
+    firstTeamToScore: "VGK",
+    firstTeamOdds: -110,
+    firstTeamReasoning:
+      "Marner and Eichel's line generates 3.8 high-danger shots per 60 minutes in opening periods; early emotional jump favors Vegas.",
+    homeFirstScorer: "Auston Matthews (TOR)",
+    homeFirstScorerOdds: "+550",
+    homeFirstScorerReason:
+      "3-time Rocket Richard winner; shoots on 34% of Toronto's first-period power play time.",
+    awayFirstScorer: "Mitch Marner (VGK)",
+    awayFirstScorerOdds: "+650",
+    awayFirstScorerReason:
+      "Superstar playmaker on Vegas PP1 flank; primed for high volume against his former franchise.",
+    safeProps: [
+      {
+        player: "Mitch Marner (VGK)",
+        prop: "Over 0.5 Assists",
+        odds: "-135",
+        conviction: "93% Safe Bet",
+        reason: "Leads Vegas with 48 assists; quarterbacking PP1 and factoring on 54% of team goals.",
+      },
+      {
+        player: "Auston Matthews (TOR)",
+        prop: "Over 3.5 Shots on Goal",
+        odds: "-125",
+        conviction: "92% Safe Bet",
+        reason: "Averaging 4.6 SOG per home game; top volume shooter in the NHL.",
+      },
+      {
+        player: "Jack Eichel (VGK)",
+        prop: "Over 1.5 Points",
+        odds: "+125",
+        conviction: "90% Safe Bet",
+        reason: "Multi-point performances in 14 of 24 games when centering Mitch Marner.",
+      },
+    ],
+  },
+  {
+    gameId: "NHL-2025-EDM-VGK",
+    league: "NHL",
+    date: new Date("2026-11-23T03:00:00Z"),
+    week: 8,
+    homeTeam: "VGK",
+    awayTeam: "EDM",
+    homeTeamName: "Vegas Golden Knights",
+    awayTeamName: "Edmonton Oilers",
+    venue: "T-Mobile Arena, Las Vegas, NV",
+    broadcast: "TNT / MAX / SPORTSNET",
+    homeMoneyline: -110,
+    awayMoneyline: -110,
+    spread: -1.5,
+    spreadFavorite: "HOME",
+    overUnder: 6.5,
+    homeWinProbability: 49.5,
+    awayWinProbability: 50.5,
+    predictedWinner: "EDM",
+    predictedScore: "4 - 3",
+    predictedSpreadPick: "EDM ML",
+    spreadConfidence: "MODERATE",
+    predictedOverUnder: "OVER",
+    predictionReasoning:
+      "Heavyweight Western clash: Connor McDavid, Zach Hyman & Leon Draisaitl go head-to-head with Mitch Marner & Jack Eichel. Edmonton's 31.2% power play holds a slight edge over Vegas's 82.5% penalty kill.",
+    firstTeamToScore: "EDM",
+    firstTeamOdds: -115,
+    firstTeamReasoning:
+      "Edmonton has scored first in 12 of their last 15 games when McDavid and Hyman start on line 1.",
+    homeFirstScorer: "Jack Eichel (VGK)",
+    homeFirstScorerOdds: "+600",
+    homeFirstScorerReason:
+      "Generates 4.1 shots per home contest with rapid off-the-rush transitions.",
+    awayFirstScorer: "Zach Hyman (EDM)",
+    awayFirstScorerOdds: "+550",
+    awayFirstScorerReason:
+      "26 goals this season; elite net-front tip & rebound presence on PP1 fed by McDavid.",
+    safeProps: [
+      {
+        player: "Connor McDavid (EDM)",
+        prop: "Over 1.5 Points",
+        odds: "-130",
+        conviction: "94% Safe Bet",
+        reason: "Has 38 points in 22 career games against Vegas; operating at 1.65 PPG.",
+      },
+      {
+        player: "Zach Hyman (EDM)",
+        prop: "Over 3.5 Shots on Goal",
+        odds: "-120",
+        conviction: "92% Safe Bet",
+        reason: "Averaging 4.4 shots on goal when skating top line with McDavid.",
+      },
+      {
+        player: "Mitch Marner (VGK)",
+        prop: "Over 0.5 Points",
+        odds: "-150",
+        conviction: "91% Safe Bet",
+        reason: "Point in 21 of 25 games for Vegas; premier playmaker on PP1.",
+      },
+    ],
+  },
+  {
+    gameId: "NHL-2025-EDM-TOR",
+    league: "NHL",
+    date: new Date("2026-11-20T23:00:00Z"),
     homeTeam: "TOR",
     awayTeam: "EDM",
     homeTeamName: "Toronto Maple Leafs",
     awayTeamName: "Edmonton Oilers",
     venue: "Scotiabank Arena, Toronto, ON",
-    broadcast: "CBC / HNIC",
+    broadcast: "CBC / HNIC / SPORTSNET",
     homeMoneyline: 105,
     awayMoneyline: -125,
     spread: -1.5,
@@ -319,47 +433,47 @@ const NHL_GAMES = [
     spreadConfidence: "MODERATE",
     predictedOverUnder: "OVER",
     predictionReasoning:
-      "Edmonton holds the NHL's top power-play conversion rate (30.8%) against a Toronto penalty kill operating at 84.1%. McDavid and Draisaitl's 5v5 high-danger chance creation rate leads the league.",
+      "Edmonton holds the NHL's top power-play conversion rate (31.2%) against a Toronto penalty kill operating at 83.5%. McDavid and Draisaitl's 5v5 high-danger chance creation rate leads the league, while Zach Hyman brings relentless net-front dominance against his former team.",
     firstTeamToScore: "EDM",
     firstTeamOdds: -115,
     firstTeamReasoning:
-      "Edmonton has registered the first goal in 11 of their last 14 regular season games behind McDavid's opening period ice time.",
+      "Edmonton has registered the first goal in 12 of their last 15 regular season games behind McDavid's opening period ice time.",
     homeFirstScorer: "Auston Matthews (TOR)",
     homeFirstScorerOdds: "+600",
     homeFirstScorerReason:
-      "Reigning Rocket Richard winner; accounts for 32% of Toronto's first-shot attempts on net.",
-    awayFirstScorer: "Leon Draisaitl (EDM)",
-    awayFirstScorerOdds: "+650",
+      "Rocket Richard winner; accounts for 32% of Toronto's first-shot attempts on net.",
+    awayFirstScorer: "Zach Hyman (EDM)",
+    awayFirstScorerOdds: "+550",
     awayFirstScorerReason:
-      "Leads the NHL with 9 power-play goals; deadly one-timer setup from the right circle on PP1.",
+      "Has scored against Toronto in 4 straight meetings; supreme PP1 tip master.",
     safeProps: [
       {
         player: "Connor McDavid",
         prop: "Over 1.5 Points",
         odds: "-125",
-        conviction: "92% Safe Bet",
-        reason: "Has 28 points in 18 career games against Toronto; averaging 3.4 PP minutes per game.",
+        conviction: "93% Safe Bet",
+        reason: "Has 30 points in 19 career games against Toronto; averaging 3.5 PP minutes per game.",
       },
       {
         player: "Zach Hyman",
         prop: "Over 3.5 Shots on Goal",
         odds: "-120",
-        conviction: "91% Safe Bet",
-        reason: "Averaging 4.2 SOG against former team with heavy net-front PP1 presence.",
+        conviction: "92% Safe Bet",
+        reason: "Averaging 4.3 SOG against former team with heavy net-front PP1 presence.",
       },
       {
-        player: "Mitchell Marner",
-        prop: "Over 0.5 Assists",
-        odds: "-135",
-        conviction: "90% Safe Bet",
-        reason: "Leads Maple Leafs with 14 assists; registered an assist in 7 straight home games.",
+        player: "William Nylander",
+        prop: "Over 0.5 Points",
+        odds: "-140",
+        conviction: "91% Safe Bet",
+        reason: "Leads Maple Leafs with 41 points; registered a point in 8 straight home games.",
       },
     ],
   },
   {
-    gameId: "NHL-2024-FLA-BOS",
+    gameId: "NHL-2025-FLA-BOS",
     league: "NHL",
-    date: new Date("2024-11-17T20:00:00Z"),
+    date: new Date("2026-11-22T20:00:00Z"),
     homeTeam: "BOS",
     awayTeam: "FLA",
     homeTeamName: "Boston Bruins",
@@ -379,7 +493,7 @@ const NHL_GAMES = [
     spreadConfidence: "HIGH",
     predictedOverUnder: "UNDER",
     predictionReasoning:
-      "Reigning Stanley Cup champion Florida controls 56.4% of expected goals (xGF%). Boston's transition offense struggles against Florida's heavy forecheck.",
+      "Florida controls 56.4% of expected goals (xGF%). Boston's transition offense struggles against Florida's heavy forecheck.",
     firstTeamToScore: "FLA",
     firstTeamOdds: -120,
     firstTeamReasoning:
@@ -387,32 +501,32 @@ const NHL_GAMES = [
     homeFirstScorer: "David Pastrnak (BOS)",
     homeFirstScorerOdds: "+550",
     homeFirstScorerReason:
-      "Accounts for 38% of Boston's power-play shots and leads Bruins with 8 goals.",
+      "Accounts for 38% of Boston's power-play shots and leads Bruins with 22 goals.",
     awayFirstScorer: "Sam Reinhart (FLA)",
     awayFirstScorerOdds: "+650",
     awayFirstScorerReason:
-      "Leads Florida with 9 goals and boasts an elite 24.2% power-play shooting percentage.",
+      "Leads Florida with 24 goals and boasts an elite 24.2% power-play shooting percentage.",
     safeProps: [
       {
         player: "David Pastrnak",
         prop: "Over 3.5 Shots on Goal",
         odds: "-130",
         conviction: "93% Safe Bet",
-        reason: "Cleared 4+ SOG in 11 of 15 games; Boston's undisputed primary volume shooter.",
+        reason: "Cleared 4+ SOG in 14 of 18 games; Boston's undisputed primary volume shooter.",
       },
       {
         player: "Matthew Tkachuk",
         prop: "Over 0.5 Points",
         odds: "-145",
         conviction: "91% Safe Bet",
-        reason: "Thrives in playoff-rematch environments with 12 points in last 8 games vs Bruins.",
+        reason: "Thrives in playoff-rematch environments with 14 points in last 9 games vs Bruins.",
       },
     ],
   },
   {
-    gameId: "NHL-2024-NYR-CAR",
+    gameId: "NHL-2025-NYR-CAR",
     league: "NHL",
-    date: new Date("2024-11-18T00:00:00Z"),
+    date: new Date("2026-11-23T00:00:00Z"),
     homeTeam: "NYR",
     awayTeam: "CAR",
     homeTeamName: "New York Rangers",
@@ -440,18 +554,18 @@ const NHL_GAMES = [
     homeFirstScorer: "Chris Kreider (NYR)",
     homeFirstScorerOdds: "+700",
     homeFirstScorerReason:
-      "The undisputed net-front master on PP1 with 8 goals, specializing in deflections and rebounds.",
+      "The undisputed net-front master on PP1 with 18 goals, specializing in deflections and rebounds.",
     awayFirstScorer: "Sebastian Aho (CAR)",
     awayFirstScorerOdds: "+650",
     awayFirstScorerReason:
-      "Carolina's premier center with 7 goals and 18:45 average ice time.",
+      "Carolina's premier center with 12 goals and 18:45 average ice time.",
     safeProps: [
       {
         player: "Artemi Panarin",
         prop: "Over 1.5 Points",
         odds: "+115",
         conviction: "90% Safe Bet",
-        reason: "Averaging 1.62 points per game; 15 assists in 14 games this season.",
+        reason: "Averaging 1.62 points per game; 30 assists in 25 games this season.",
       },
       {
         player: "Adam Fox",
@@ -465,7 +579,7 @@ const NHL_GAMES = [
 ];
 
 async function seedSchedule() {
-  console.log("=== SEEDING SPORTSEDGE AI GAME SCHEDULE, ODDS & PROPS ===");
+  console.log("=== SEEDING SPORTSEDGE AI GAME SCHEDULE, ODDS & PROPS (2025-2026) ===");
 
   // Clear existing games to prevent duplicate keys
   await prisma.scheduledGame.deleteMany({});
@@ -478,7 +592,7 @@ async function seedSchedule() {
         league: g.league,
         gameId: g.gameId,
         date: g.date,
-        week: g.week,
+        week: g.week || 11,
         status: "SCHEDULED",
         homeTeam: g.homeTeam,
         awayTeam: g.awayTeam,

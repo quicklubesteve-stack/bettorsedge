@@ -54,7 +54,7 @@ export async function syncRosters(
       unit: string;
       depthOrder: number;
       status: string;
-      injuryDetails?: string;
+      injuryDetails?: string | null;
       roleDescription: string;
       statsSummary: string;
       simulationWeight: number;
@@ -77,13 +77,13 @@ export async function syncRosters(
           unit: p.unit,
           depthOrder: p.depthOrder,
           status: p.status,
-          injuryDetails: p.injuryDetails || null,
+          injuryDetails: p.injuryDetails || undefined,
           roleDescription: p.roleDescription,
           statsSummary: p.statsSummary,
           simulationWeight: p.simulationWeight,
           touchdownWeight: p.touchdownWeight || 0.0,
           goalWeight: p.goalWeight || 0.0,
-          season: league === "NFL" ? "2024" : "2024-2025",
+          season: "2025-2026",
         });
         playersCount++;
       }
@@ -108,7 +108,7 @@ export async function syncRosters(
         totalPlayers: playersCount,
         totalTeams: teamsList.length,
         status: "UP_TO_DATE",
-        syncNotes: `Weekly roster update completed. ${playersCount} active players synchronized across ${teamsList.length} franchises.`,
+        syncNotes: `Weekly roster update completed for 2025-2026 season. ${playersCount} active & reserve players synchronized across ${teamsList.length} franchises.`,
       },
       update: {
         lastSyncedAt: now,
@@ -116,7 +116,7 @@ export async function syncRosters(
         totalPlayers: playersCount,
         totalTeams: teamsList.length,
         status: "UP_TO_DATE",
-        syncNotes: `Weekly roster update completed. ${playersCount} active players synchronized across ${teamsList.length} franchises.`,
+        syncNotes: `Weekly roster update completed for 2025-2026 season. ${playersCount} active & reserve players synchronized across ${teamsList.length} franchises.`,
       },
     });
 
