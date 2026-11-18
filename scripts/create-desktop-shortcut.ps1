@@ -1,4 +1,4 @@
-﻿$desktopPaths = @(
+$desktopPaths = @(
     [Environment]::GetFolderPath("Desktop"),
     "C:\Users\steve\OneDrive\Desktop"
 ) | Select-Object -Unique
