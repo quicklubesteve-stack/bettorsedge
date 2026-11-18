@@ -20,6 +20,8 @@ import {
   Calendar,
   Users,
   Brain,
+  Flame,
+  ShieldCheck,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -52,6 +54,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { href: "/safe-bets", label: "Safe Bets 🔥", icon: Flame, pro: false },
     { href: "/rosters", label: "Team Rosters", icon: Users, pro: false },
     { href: "/standings", label: "Standings", icon: Trophy, pro: false },
     { href: "/schedule", label: "Game Odds & Props", icon: Calendar, pro: false },
