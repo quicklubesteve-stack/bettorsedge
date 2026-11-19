@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { getCurrentUser } from "@/lib/auth";
 import { prisma } from "@/lib/db";
 import { simulateNflMatchup, simulateNhlMatchup } from "@/lib/matchup-simulation";
+import { getHeadToHeadHistory } from "@/lib/head-to-head";
 
 export async function POST(req: Request) {
   try {
@@ -43,6 +44,8 @@ export async function POST(req: Request) {
         }
       : undefined;
 
+    const headToHead = getHeadToHeadHistory(league, teamA, teamB);
+
     if (league === "NHL") {
       const result = simulateNhlMatchup(teamA, teamB, simIterations, learnedFactorsA, learnedFactorsB);
       return NextResponse.json({
@@ -50,6 +53,7 @@ export async function POST(req: Request) {
         learnedCalibrationApplied: Boolean(weightsA || weightsB),
         teamACalibratedOffense: weightsA?.offensiveRating ?? 100.0,
         teamBCalibratedOffense: weightsB?.offensiveRating ?? 100.0,
+        headToHead,
         ...result,
       });
     } else {
@@ -59,6 +63,7 @@ export async function POST(req: Request) {
         learnedCalibrationApplied: Boolean(weightsA || weightsB),
         teamACalibratedOffense: weightsA?.offensiveRating ?? 100.0,
         teamBCalibratedOffense: weightsB?.offensiveRating ?? 100.0,
+        headToHead,
         ...result,
       });
     }

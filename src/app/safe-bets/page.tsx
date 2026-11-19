@@ -434,6 +434,36 @@ Verified 87.9% model win rate across 58 bets last week.`;
                       <p className="text-xs text-slate-300 leading-relaxed mt-2">
                         {item.reasoning}
                       </p>
+
+                      {/* Head-to-Head Series & Last Win Preview */}
+                      {item.h2h && (
+                        <div className="mt-3 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800/80 text-[11px] space-y-1.5">
+                          <div className="flex items-center justify-between text-slate-300">
+                            <span className="font-bold flex items-center gap-1 text-slate-200">
+                              ⚔️ H2H History: <span className="font-mono text-blue-400">{item.h2h.seriesRecord}</span>
+                            </span>
+                            <span className="text-[10px] text-slate-400 font-medium">{item.h2h.leaderText}</span>
+                          </div>
+                          {item.h2h.recentMeeting && (
+                            <div className="flex items-center justify-between text-slate-400 pt-1 border-t border-slate-800/60">
+                              <span>Recent Score:</span>
+                              <span className="font-bold text-white">{item.h2h.recentMeeting.score}</span>
+                            </div>
+                          )}
+                          {item.h2h.lastWinTeamA && (
+                            <div className="flex items-center justify-between text-[10px] text-slate-400">
+                              <span className="text-emerald-400 font-semibold">Last {item.h2h.lastWinTeamA.team} W:</span>
+                              <span className="text-slate-300">{item.h2h.lastWinTeamA.date} ({item.h2h.lastWinTeamA.score})</span>
+                            </div>
+                          )}
+                          {item.h2h.lastWinTeamB && (
+                            <div className="flex items-center justify-between text-[10px] text-slate-400">
+                              <span className="text-emerald-400 font-semibold">Last {item.h2h.lastWinTeamB.team} W:</span>
+                              <span className="text-slate-300">{item.h2h.lastWinTeamB.date} ({item.h2h.lastWinTeamB.score})</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">
@@ -513,6 +543,36 @@ Verified 87.9% model win rate across 58 bets last week.`;
                       <p className="text-xs text-slate-300 leading-relaxed mt-2 line-clamp-2">
                         {item.rationale}
                       </p>
+
+                      {/* Head-to-Head Series & Last Win Preview */}
+                      {item.h2h && (
+                        <div className="mt-3 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800/80 text-[11px] space-y-1">
+                          <div className="flex items-center justify-between text-slate-300">
+                            <span className="font-bold flex items-center gap-1 text-slate-200">
+                              ⚔️ H2H: <span className="font-mono text-emerald-400">{item.h2h.seriesRecord}</span>
+                            </span>
+                            <span className="text-[10px] text-slate-400 font-medium">{item.h2h.leaderText}</span>
+                          </div>
+                          {item.h2h.recentMeeting && (
+                            <div className="flex items-center justify-between text-slate-400 pt-1 border-t border-slate-800/60">
+                              <span>Recent Score:</span>
+                              <span className="font-bold text-white">{item.h2h.recentMeeting.score}</span>
+                            </div>
+                          )}
+                          {item.h2h.lastWinTeamA && (
+                            <div className="flex items-center justify-between text-[10px] text-slate-400">
+                              <span className="text-emerald-400 font-semibold">Last {item.h2h.lastWinTeamA.team} W:</span>
+                              <span className="text-slate-300">{item.h2h.lastWinTeamA.date} ({item.h2h.lastWinTeamA.score})</span>
+                            </div>
+                          )}
+                          {item.h2h.lastWinTeamB && (
+                            <div className="flex items-center justify-between text-[10px] text-slate-400">
+                              <span className="text-emerald-400 font-semibold">Last {item.h2h.lastWinTeamB.team} W:</span>
+                              <span className="text-slate-300">{item.h2h.lastWinTeamB.date} ({item.h2h.lastWinTeamB.score})</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between text-xs">
@@ -583,6 +643,36 @@ Verified 87.9% model win rate across 58 bets last week.`;
                       <p className="text-xs text-slate-300 leading-relaxed mt-2">
                         {item.reasoning}
                       </p>
+
+                      {/* Head-to-Head Series & Last Win Preview */}
+                      {item.h2h && (
+                        <div className="mt-3 p-2.5 rounded-xl bg-slate-950/80 border border-slate-800/80 text-[11px] space-y-1.5">
+                          <div className="flex items-center justify-between text-slate-300">
+                            <span className="font-bold flex items-center gap-1 text-slate-200">
+                              ⚔️ H2H History: <span className="font-mono text-blue-400">{item.h2h.seriesRecord}</span>
+                            </span>
+                            <span className="text-[10px] text-slate-400 font-medium">{item.h2h.leaderText}</span>
+                          </div>
+                          {item.h2h.recentMeeting && (
+                            <div className="flex items-center justify-between text-slate-400 pt-1 border-t border-slate-800/60">
+                              <span>Recent Score:</span>
+                              <span className="font-bold text-white">{item.h2h.recentMeeting.score}</span>
+                            </div>
+                          )}
+                          {item.h2h.lastWinTeamA && (
+                            <div className="flex items-center justify-between text-[10px] text-slate-400">
+                              <span className="text-emerald-400 font-semibold">Last {item.h2h.lastWinTeamA.team} W:</span>
+                              <span className="text-slate-300">{item.h2h.lastWinTeamA.date} ({item.h2h.lastWinTeamA.score})</span>
+                            </div>
+                          )}
+                          {item.h2h.lastWinTeamB && (
+                            <div className="flex items-center justify-between text-[10px] text-slate-400">
+                              <span className="text-emerald-400 font-semibold">Last {item.h2h.lastWinTeamB.team} W:</span>
+                              <span className="text-slate-300">{item.h2h.lastWinTeamB.date} ({item.h2h.lastWinTeamB.score})</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
                     </div>
 
                     <div className="mt-4 pt-3 border-t border-slate-800/60 flex items-center justify-between text-xs">

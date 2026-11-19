@@ -17,6 +17,10 @@ import {
   Lock,
   ArrowRight,
   CheckCircle2,
+  Calendar,
+  Clock,
+  Swords,
+  History,
 } from "lucide-react";
 import { NFL_ALL_TEAMS, NHL_ALL_TEAMS } from "@/lib/teams";
 
@@ -315,6 +319,201 @@ export default function MatchupSimulatorPage() {
               )}
             </div>
           </div>
+
+          {/* HEAD-TO-HEAD MATCHUPS & HISTORICAL SERIES BREAKDOWN */}
+          {result.headToHead && (
+            <div className="p-6 sm:p-8 rounded-3xl bg-slate-900 border border-slate-800 space-y-6 shadow-2xl">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-black">
+                    <Swords className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="text-xl font-black text-white flex items-center gap-2">
+                      Head-to-Head History & Series Records
+                    </h3>
+                    <p className="text-xs text-slate-400">
+                      Points scored, game winners, last win history, and betting trends between {result.teamAName} and {result.teamBName}.
+                    </p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <span className="px-3 py-1 rounded-full bg-purple-500/10 text-purple-300 border border-purple-500/30 text-xs font-bold">
+                    {result.headToHead.seriesLeaderText}
+                  </span>
+                  <span className="px-3 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700 text-xs font-semibold">
+                    {result.headToHead.currentStreak}
+                  </span>
+                </div>
+              </div>
+
+              {/* H2H Stat Metrics */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center">
+                  <span className="text-slate-400 font-medium">Head-to-Head Record</span>
+                  <p className="text-xl font-mono font-black text-white mt-1">
+                    {result.headToHead.recordTeamA.wins} - {result.headToHead.recordTeamA.losses}
+                  </p>
+                  <span className="text-[10px] text-slate-500">{result.teamA} vs {result.teamB}</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center">
+                  <span className="text-slate-400 font-medium">Avg Points Scored</span>
+                  <p className="text-xl font-mono font-black text-emerald-400 mt-1">
+                    {result.headToHead.avgPointsTeamA} vs {result.headToHead.avgPointsTeamB}
+                  </p>
+                  <span className="text-[10px] text-slate-500">{result.teamA} PPG vs {result.teamB} PPG</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center">
+                  <span className="text-slate-400 font-medium">Over / Under Trend</span>
+                  <p className="text-sm font-mono font-black text-purple-400 mt-2">
+                    {result.headToHead.overUnderTrend}
+                  </p>
+                  <span className="text-[10px] text-slate-500">Avg Total: {result.headToHead.avgTotalPoints}</span>
+                </div>
+
+                <div className="p-4 rounded-xl bg-slate-950 border border-slate-800 text-center">
+                  <span className="text-slate-400 font-medium">Spread (ATS) Trend</span>
+                  <p className="text-sm font-mono font-black text-blue-400 mt-2">
+                    {result.headToHead.atsTrend}
+                  </p>
+                  <span className="text-[10px] text-slate-500">Cover Performance</span>
+                </div>
+              </div>
+
+              {/* LAST WIN FOR EACH TEAM HIGHLIGHT BOXES */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Team A Last Win */}
+                <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800/80 space-y-2">
+                  <div className="flex items-center justify-between text-xs border-b border-slate-800/80 pb-2">
+                    <span className="font-extrabold text-emerald-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4" /> Last Win for {result.teamAName}
+                    </span>
+                    <span className="font-mono text-slate-400">{result.headToHead.lastWinTeamA?.date || "N/A"}</span>
+                  </div>
+                  {result.headToHead.lastWinTeamA ? (
+                    <>
+                      <div className="flex items-baseline justify-between mt-1">
+                        <span className="text-2xl font-black font-mono text-white">
+                          Score: {result.headToHead.lastWinTeamA.score}
+                        </span>
+                        <span className="text-[11px] font-bold text-slate-400">
+                          {result.headToHead.lastWinTeamA.venue}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed pt-1">
+                        {result.headToHead.lastWinTeamA.summary}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-xs text-slate-500 italic">No recorded victory in tracked recent meetings.</p>
+                  )}
+                </div>
+
+                {/* Team B Last Win */}
+                <div className="p-5 rounded-2xl bg-slate-950 border border-slate-800/80 space-y-2">
+                  <div className="flex items-center justify-between text-xs border-b border-slate-800/80 pb-2">
+                    <span className="font-extrabold text-blue-400 uppercase tracking-wider flex items-center gap-1.5">
+                      <CheckCircle2 className="w-4 h-4" /> Last Win for {result.teamBName}
+                    </span>
+                    <span className="font-mono text-slate-400">{result.headToHead.lastWinTeamB?.date || "N/A"}</span>
+                  </div>
+                  {result.headToHead.lastWinTeamB ? (
+                    <>
+                      <div className="flex items-baseline justify-between mt-1">
+                        <span className="text-2xl font-black font-mono text-white">
+                          Score: {result.headToHead.lastWinTeamB.score}
+                        </span>
+                        <span className="text-[11px] font-bold text-slate-400">
+                          {result.headToHead.lastWinTeamB.venue}
+                        </span>
+                      </div>
+                      <p className="text-xs text-slate-300 leading-relaxed pt-1">
+                        {result.headToHead.lastWinTeamB.summary}
+                      </p>
+                    </>
+                  ) : (
+                    <p className="text-xs text-slate-500 italic">No recorded victory in tracked recent meetings.</p>
+                  )}
+                </div>
+              </div>
+
+              {/* GAME-BY-GAME HISTORICAL MEETINGS TABLE */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-extrabold text-white flex items-center gap-1.5">
+                    <History className="w-4 h-4 text-purple-400" />
+                    Past Meetings & Points Scored Breakdown
+                  </h4>
+                  <span className="text-xs text-slate-500">
+                    Showing last {result.headToHead.historyList.length} meetings
+                  </span>
+                </div>
+
+                <div className="overflow-x-auto rounded-xl border border-slate-800">
+                  <table className="w-full text-left text-xs">
+                    <thead>
+                      <tr className="bg-slate-950 text-slate-400 font-bold border-b border-slate-800">
+                        <th className="py-2.5 px-3">Date</th>
+                        <th className="py-2.5 px-3">Season</th>
+                        <th className="py-2.5 px-3">Matchup</th>
+                        <th className="py-2.5 px-3 text-center">Score</th>
+                        <th className="py-2.5 px-3 text-center">Winner</th>
+                        <th className="py-2.5 px-3 text-center">Margin</th>
+                        <th className="py-2.5 px-3 text-center">ATS Cover</th>
+                        <th className="py-2.5 px-3 text-center">O/U Result</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-slate-800/50 bg-slate-900/50">
+                      {result.headToHead.historyList.map((g: any, idx: number) => {
+                        const isWinA = g.winner === result.teamA;
+                        return (
+                          <tr key={idx} className="hover:bg-slate-800/40 transition">
+                            <td className="py-2 px-3 text-slate-300 whitespace-nowrap">{g.date}</td>
+                            <td className="py-2 px-3 text-slate-500 whitespace-nowrap">{g.season}</td>
+                            <td className="py-2 px-3 text-white font-medium">
+                              {g.awayTeam} @ {g.homeTeam}
+                            </td>
+                            <td className="py-2 px-3 text-center font-mono font-bold text-white">
+                              <span className={isWinA ? "text-emerald-400" : "text-slate-300"}>{g.teamAScore}</span>
+                              <span className="text-slate-500 mx-1">-</span>
+                              <span className={!isWinA ? "text-blue-400" : "text-slate-300"}>{g.teamBScore}</span>
+                            </td>
+                            <td className="py-2 px-3 text-center">
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-black ${
+                                isWinA
+                                  ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/30"
+                                  : "bg-blue-500/10 text-blue-400 border border-blue-500/30"
+                              }`}>
+                                {g.winner} WIN
+                              </span>
+                            </td>
+                            <td className="py-2 px-3 text-center font-mono text-slate-400">
+                              +{g.margin} pts
+                            </td>
+                            <td className="py-2 px-3 text-center font-mono text-slate-300 text-[11px]">
+                              {g.atsResult}
+                            </td>
+                            <td className="py-2 px-3 text-center">
+                              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                                g.overUnderResult === "OVER"
+                                  ? "bg-purple-500/10 text-purple-400 border border-purple-500/30"
+                                  : "bg-slate-800 text-slate-400"
+                              }`}>
+                                {g.overUnderResult} ({g.totalPoints})
+                              </span>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          )}
 
           {/* TOUCHDOWN SCORERS (NFL) OR GOAL SCORERS (NHL) */}
           {league === "NFL" ? (

@@ -298,7 +298,7 @@ export default function BettingExplainedPage() {
                     The Bills start with <strong>-2.5 points</strong>. For your bet to win, Buffalo must win by <strong>3 points or more</strong>!
                   </p>
                   <p className="text-xs text-emerald-400 mt-2 font-mono">
-                    Score: Bills 27, Chiefs 24 → 27 - 2.5 = 24.5 > 24 (YOU WIN!)
+                    Score: Bills 27, Chiefs 24 → 27 - 2.5 = 24.5 &gt; 24 (YOU WIN!)
                   </p>
                 </div>
 
@@ -308,7 +308,7 @@ export default function BettingExplainedPage() {
                     The Chiefs start with <strong>+2.5 points</strong>. They can win the game OR lose by 1 or 2 points, and your bet still wins!
                   </p>
                   <p className="text-xs text-blue-400 mt-2 font-mono">
-                    Score: Bills 27, Chiefs 26 → 26 + 2.5 = 28.5 > 27 (YOU WIN!)
+                    Score: Bills 27, Chiefs 26 → 26 + 2.5 = 28.5 &gt; 27 (YOU WIN!)
                   </p>
                 </div>
               </div>
