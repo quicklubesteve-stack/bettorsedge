@@ -226,53 +226,56 @@ export default function StandingsPage() {
                       return (
                         <div
                           key={divName}
-                          className="p-5 rounded-2xl bg-slate-900 border border-slate-800 space-y-3 overflow-hidden shadow-xl"
+                          className="p-6 sm:p-7 rounded-3xl bg-slate-900/95 border border-slate-750 space-y-4 overflow-hidden shadow-2xl"
                         >
-                          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-                            <h3 className="font-bold text-white text-sm">{divName}</h3>
-                            <span className="text-[10px] text-emerald-400 uppercase font-mono font-bold">
-                              {league === "NFL" ? "2025–2026 Season" : "NHL 2025-2026"}
+                          <div className="flex items-center justify-between border-b border-slate-800 pb-3">
+                            <h3 className="font-black text-white text-base sm:text-lg flex items-center gap-2">
+                              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+                              {divName}
+                            </h3>
+                            <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 text-xs font-mono font-bold uppercase">
+                              {league === "NFL" ? "NFL.com 2026" : "NHL.com Nov 18"}
                             </span>
                           </div>
 
                           <div className="overflow-x-auto">
-                            <table className="w-full text-left text-xs">
+                            <table className="w-full text-left text-sm">
                               <thead>
-                                <tr className="text-slate-500 border-b border-slate-800/60 pb-1 text-[11px]">
-                                  <th className="pb-2 font-semibold">Team</th>
-                                  <th className="pb-2 font-mono text-center">{league === "NFL" ? "W-L-T" : "W-L-OT"}</th>
-                                  <th className="pb-2 font-mono text-center">{league === "NFL" ? "PCT" : "PTS"}</th>
-                                  <th className="pb-2 font-mono text-center">{league === "NFL" ? "DIFF" : "DIFF"}</th>
-                                  <th className="pb-2 font-mono text-center">STRK</th>
-                                  <th className="pb-2 text-right">Intel</th>
+                                <tr className="text-slate-400 border-b border-slate-800 pb-2 text-xs uppercase tracking-wider">
+                                  <th className="pb-2.5 font-bold">Team</th>
+                                  <th className="pb-2.5 font-mono text-center font-bold">{league === "NFL" ? "W-L-T" : "W-L-OT"}</th>
+                                  <th className="pb-2.5 font-mono text-center font-bold">{league === "NFL" ? "PCT" : "PTS"}</th>
+                                  <th className="pb-2.5 font-mono text-center font-bold">{league === "NFL" ? "DIFF" : "DIFF"}</th>
+                                  <th className="pb-2.5 font-mono text-center font-bold">STRK</th>
+                                  <th className="pb-2.5 text-right font-bold">Intel</th>
                                 </tr>
                               </thead>
-                              <tbody className="divide-y divide-slate-800/40">
+                              <tbody className="divide-y divide-slate-800/60">
                                 {teamsInDiv.map((t) => (
-                                  <tr key={t.team} className="hover:bg-slate-850/60 transition">
-                                    <td className="py-2.5 font-bold text-white flex items-center gap-2">
-                                      <span className="font-mono text-slate-500 text-xs w-4">#{t.rankDivision}</span>
-                                      <span className="font-mono text-emerald-400 text-xs w-8">{t.team}</span>
-                                      <span className="truncate">{t.name}</span>
+                                  <tr key={t.team} className="hover:bg-slate-800/50 transition">
+                                    <td className="py-3.5 font-black text-white flex items-center gap-2.5">
+                                      <span className="font-mono text-slate-500 font-bold text-sm w-5">#{t.rankDivision}</span>
+                                      <span className="px-1.5 py-0.5 rounded bg-slate-800 text-emerald-400 font-mono font-bold text-xs">{t.team}</span>
+                                      <span className="text-sm sm:text-base font-extrabold text-white">{t.name}</span>
                                       {t.rankDivision === 1 && (
-                                        <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-400 text-[9px] font-extrabold uppercase border border-amber-500/20">
+                                        <span className="px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400 text-[10px] font-black uppercase border border-amber-500/30">
                                           1st
                                         </span>
                                       )}
                                       {t.playoffSeed && (
-                                        <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 text-[9px] font-extrabold uppercase border border-emerald-500/20">
+                                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 text-[10px] font-black uppercase border border-emerald-500/30">
                                           Seed {t.playoffSeed}
                                         </span>
                                       )}
                                     </td>
-                                    <td className="py-2.5 font-mono text-slate-300 text-center font-bold">
+                                    <td className="py-3.5 font-mono text-white text-center font-black text-sm sm:text-base">
                                       {league === "NFL" ? `${t.wins}-${t.losses}-${t.ties}` : `${t.wins}-${t.losses}-${t.otLosses}`}
                                     </td>
-                                    <td className="py-2.5 font-mono font-bold text-emerald-400 text-center">
+                                    <td className="py-3.5 font-mono font-black text-emerald-400 text-center text-sm sm:text-base">
                                       {league === "NFL" ? t.winPct.toFixed(3) : t.points}
                                     </td>
                                     <td
-                                      className={`py-2.5 font-mono text-center font-bold ${(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
+                                      className={`py-3.5 font-mono text-center font-black text-sm ${(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
                                         ? "text-emerald-400"
                                         : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
                                           ? "text-red-400"
@@ -283,11 +286,15 @@ export default function StandingsPage() {
                                         ? `+${league === "NFL" ? t.pointDiff : t.goalDiff}`
                                         : (league === "NFL" ? t.pointDiff : t.goalDiff)}
                                     </td>
-                                    <td className="py-2.5 font-mono text-slate-300 text-center">{t.streak}</td>
-                                    <td className="py-2.5 text-right">
+                                    <td className="py-3.5 font-mono text-slate-200 text-center font-bold text-xs">
+                                      <span className={`px-2 py-0.5 rounded ${t.streak.startsWith('W') ? 'bg-emerald-500/10 text-emerald-300' : 'bg-slate-800 text-slate-300'}`}>
+                                        {t.streak}
+                                      </span>
+                                    </td>
+                                    <td className="py-3.5 text-right">
                                       <Link
                                         href={league === "NFL" ? `/nfl/defense?team=${t.team}` : `/nhl/power-play?team=${t.team}`}
-                                        className="text-[11px] text-emerald-400 hover:underline font-semibold"
+                                        className="text-xs text-emerald-400 hover:text-emerald-300 font-bold"
                                       >
                                         Intel →
                                       </Link>
@@ -317,39 +324,39 @@ export default function StandingsPage() {
                 return (
                   <div
                     key={confName}
-                    className="p-6 rounded-2xl bg-slate-900 border border-slate-800 space-y-4 shadow-xl overflow-hidden"
+                    className="p-6 sm:p-7 rounded-3xl bg-slate-900/95 border border-slate-750 space-y-4 shadow-2xl overflow-hidden"
                   >
                     <div className="flex items-center justify-between border-b border-slate-800 pb-3">
                       <div>
-                        <h3 className="font-bold text-white text-base">
+                        <h3 className="font-black text-white text-base sm:text-lg">
                           {confName === "AFC" ? "AFC Conference" : confName === "NFC" ? "NFC Conference" : `${confName} Conference`}
                         </h3>
-                        <p className="text-[11px] text-slate-400">
+                        <p className="text-xs text-slate-400 mt-0.5">
                           {league === "NFL"
                             ? "Seeds 1–4: Division Leaders. Seeds 5–7: Wild Cards. Ranks 8–16: In The Hunt."
                             : "Top 3 per division (Seeds 1-6) + 2 Wild Cards (Seeds 7-8) qualify for Stanley Cup Playoffs."}
                         </p>
                       </div>
-                      <span className="px-2.5 py-0.5 rounded bg-slate-800 text-slate-300 font-mono text-xs font-bold">
+                      <span className="px-3 py-1 rounded-full bg-slate-800 text-slate-300 font-mono text-xs font-bold border border-slate-700">
                         {confTeams.length} Teams
                       </span>
                     </div>
 
                     <div className="overflow-x-auto">
-                      <table className="w-full text-left text-xs">
+                      <table className="w-full text-left text-sm">
                         <thead>
-                          <tr className="text-slate-500 border-b border-slate-800 pb-2">
-                            <th className="pb-2 w-8">#</th>
-                            <th className="pb-2">Team</th>
-                            <th className="pb-2 font-mono text-center">{league === "NFL" ? "W-L-T" : "W-L-OT"}</th>
-                            <th className="pb-2 font-mono text-center">{league === "NFL" ? "PCT" : "PTS"}</th>
-                            <th className="pb-2 font-mono text-center">Home</th>
-                            <th className="pb-2 font-mono text-center">Away</th>
-                            <th className="pb-2 font-mono text-center">{league === "NFL" ? "DIFF" : "DIFF"}</th>
-                            <th className="pb-2 font-mono text-center">STRK</th>
+                          <tr className="text-slate-400 border-b border-slate-800 pb-2 text-xs uppercase tracking-wider">
+                            <th className="pb-2.5 w-8 font-bold">#</th>
+                            <th className="pb-2.5 font-bold">Team</th>
+                            <th className="pb-2.5 font-mono text-center font-bold">{league === "NFL" ? "W-L-T" : "W-L-OT"}</th>
+                            <th className="pb-2.5 font-mono text-center font-bold">{league === "NFL" ? "PCT" : "PTS"}</th>
+                            <th className="pb-2.5 font-mono text-center font-bold">Home</th>
+                            <th className="pb-2.5 font-mono text-center font-bold">Away</th>
+                            <th className="pb-2.5 font-mono text-center font-bold">{league === "NFL" ? "DIFF" : "DIFF"}</th>
+                            <th className="pb-2.5 font-mono text-center font-bold">STRK</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-slate-800/50">
+                        <tbody className="divide-y divide-slate-800/60">
                           {confTeams.map((t, idx) => {
                             const isPlayoffSpot = t.playoffSeed !== null;
                             const isDivLeader = t.playoffSeed !== null && t.playoffSeed <= 4;
@@ -358,34 +365,34 @@ export default function StandingsPage() {
                             return (
                               <tr
                                 key={t.team}
-                                className={`hover:bg-slate-850/60 transition ${isCutline ? "border-b-2 border-emerald-500/60" : ""
+                                className={`hover:bg-slate-800/50 transition ${isCutline ? "border-b-2 border-emerald-500/60" : ""
                                   }`}
                               >
-                                <td className="py-2.5 font-mono text-slate-500 font-bold">{t.rankConference}</td>
-                                <td className="py-2.5 font-bold text-white flex items-center gap-2">
-                                  <span className="font-mono text-emerald-400">{t.team}</span>
-                                  <span className="truncate">{t.name}</span>
+                                <td className="py-3 font-mono text-slate-400 font-bold text-sm">#{t.rankConference}</td>
+                                <td className="py-3 font-black text-white flex items-center gap-2">
+                                  <span className="px-1.5 py-0.5 rounded bg-slate-800 text-emerald-400 font-mono font-bold text-xs">{t.team}</span>
+                                  <span className="text-sm font-extrabold">{t.name}</span>
                                   {isDivLeader && (
-                                    <span className="px-1.5 py-0.2 rounded bg-amber-500/10 text-amber-400 text-[9px] font-extrabold uppercase border border-amber-500/20">
-                                      Seed {t.playoffSeed} (Div Leader)
+                                    <span className="px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-400 text-[10px] font-black uppercase border border-amber-500/30">
+                                      Seed {t.playoffSeed} (Leader)
                                     </span>
                                   )}
                                   {isPlayoffSpot && !isDivLeader && (
-                                    <span className="px-1.5 py-0.2 rounded bg-emerald-500/10 text-emerald-400 text-[9px] font-extrabold uppercase border border-emerald-500/20">
+                                    <span className="px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-400 text-[10px] font-black uppercase border border-emerald-500/30">
                                       Seed {t.playoffSeed} (Wild Card)
                                     </span>
                                   )}
                                 </td>
-                                <td className="py-2.5 font-mono text-slate-300 text-center font-bold">
+                                <td className="py-3 font-mono text-white text-center font-black text-sm">
                                   {league === "NFL" ? `${t.wins}-${t.losses}-${t.ties}` : `${t.wins}-${t.losses}-${t.otLosses}`}
                                 </td>
-                                <td className="py-2.5 font-mono font-bold text-emerald-400 text-center">
+                                <td className="py-3 font-mono font-black text-emerald-400 text-center text-sm">
                                   {league === "NFL" ? t.winPct.toFixed(3) : t.points}
                                 </td>
-                                <td className="py-2.5 font-mono text-slate-400 text-center">{t.homeRecord}</td>
-                                <td className="py-2.5 font-mono text-slate-400 text-center">{t.awayRecord}</td>
+                                <td className="py-3 font-mono text-slate-300 text-center text-xs">{t.homeRecord}</td>
+                                <td className="py-3 font-mono text-slate-300 text-center text-xs">{t.awayRecord}</td>
                                 <td
-                                  className={`py-2.5 font-mono text-center font-bold ${(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
+                                  className={`py-3 font-mono text-center font-bold text-xs ${(league === "NFL" ? t.pointDiff : t.goalDiff) > 0
                                     ? "text-emerald-400"
                                     : (league === "NFL" ? t.pointDiff : t.goalDiff) < 0
                                       ? "text-red-400"
@@ -396,7 +403,7 @@ export default function StandingsPage() {
                                     ? `+${league === "NFL" ? t.pointDiff : t.goalDiff}`
                                     : (league === "NFL" ? t.pointDiff : t.goalDiff)}
                                 </td>
-                                <td className="py-2.5 font-mono text-slate-300 text-center">{t.streak}</td>
+                                <td className="py-3 font-mono text-slate-200 text-center text-xs font-bold">{t.streak}</td>
                               </tr>
                             );
                           })}

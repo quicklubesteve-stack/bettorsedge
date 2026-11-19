@@ -87,7 +87,7 @@ const jsSnippet = `
           html += '    ' + confHeader;
           html += '  </div>';
 
-          html += '  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px;">';
+          html += '  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(460px, 1fr)); gap: 20px;">';
 
           divs.forEach(function(divName) {
             var teamsInDiv = filtered.filter(function(t) {
@@ -96,34 +96,36 @@ const jsSnippet = `
 
             if (teamsInDiv.length === 0) return;
 
-            html += '    <div class="card" style="padding: 14px;">';
-            html += '      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; border-bottom: 1px solid var(--card-border); padding-bottom: 6px;">';
-            html += '        <span style="font-weight: 900; font-size: 12px; color: white;">' + (isNfl ? confKey + ' ' + divName : divName + ' Division') + '</span>';
-            html += '        <span class="badge-pill badge-green" style="font-size: 9px;">' + (isNfl ? 'NFL.com 2026' : 'NHL.com Nov 18') + '</span>';
+            html += '    <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid rgba(255,255,255,0.12); border-radius: 20px; padding: 22px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">';
+            html += '      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 10px;">';
+            html += '        <div style="display: flex; align-items: center; gap: 8px;">';
+            html += '          <span style="font-size: 18px;">' + (isNfl ? '🏈' : '🏒') + '</span>';
+            html += '          <span style="font-weight: 900; font-size: 16px; color: white; letter-spacing: -0.3px;">' + (isNfl ? confKey + ' ' + divName : divName + ' Division') + '</span>';
+            html += '        </div>';
+            html += '        <span class="badge-pill badge-green" style="font-size: 11px; padding: 4px 10px;">' + (isNfl ? 'NFL.com Official' : 'NHL.com Official') + '</span>';
             html += '      </div>';
 
             html += '      <div style="overflow-x: auto;">';
-            html += '        <table style="font-size: 11px;">';
+            html += '        <table style="width: 100%; font-size: 13px; border-collapse: collapse;">';
             html += '          <thead>';
-            html += '            <tr>';
-            html += '              <th>#</th>';
-            html += '              <th>Team</th>';
+            html += '            <tr style="border-bottom: 1px solid rgba(255,255,255,0.1);">';
+            html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase;">#</th>';
+            html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase;">Team</th>';
             if (isNfl) {
-              html += '              <th>W-L-T</th>';
-              html += '              <th>PCT</th>';
-              html += '              <th>DIFF</th>';
-              html += '              <th>HOME</th>';
-              html += '              <th>ROAD</th>';
-              html += '              <th>DIV</th>';
-              html += '              <th>STRK</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">W-L-T</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">PCT</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">DIFF</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">HOME</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">ROAD</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">STRK</th>';
             } else {
-              html += '              <th>GP</th>';
-              html += '              <th>W-L-OTL</th>';
-              html += '              <th>PTS</th>';
-              html += '              <th>DIFF</th>';
-              html += '              <th>HOME</th>';
-              html += '              <th>AWAY</th>';
-              html += '              <th>STRK</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">GP</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">W-L-OTL</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">PTS</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">DIFF</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">HOME</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">AWAY</th>';
+              html += '              <th style="padding: 10px 10px; font-size: 11px; color: #94a3b8; font-weight: 800; text-transform: uppercase; text-align: center;">STRK</th>';
             }
             html += '            </tr>';
             html += '          </thead>';
@@ -132,30 +134,29 @@ const jsSnippet = `
             teamsInDiv.forEach(function(t) {
               var isLeader = t.divRank === 1;
               var rankBadge = isLeader
-                ? '<span class="badge-pill badge-green" style="font-size: 9px;">#1</span>'
-                : '<span style="color: var(--text-muted); font-size: 10px;">#' + t.divRank + '</span>';
+                ? '<span class="badge-pill badge-green" style="font-size: 11px; font-weight: 900; padding: 3px 8px;">#1</span>'
+                : '<span style="color: #94a3b8; font-size: 13px; font-weight: 700; padding-left: 4px;">#' + t.divRank + '</span>';
 
-              html += '            <tr>';
-              html += '              <td>' + rankBadge + '</td>';
-              html += '              <td><strong style="color: ' + (isLeader ? '#34d399' : 'white') + ';">' + t.name + '</strong> <span style="color: var(--text-muted); font-size: 9px;">(' + t.team + ')</span></td>';
+              html += '            <tr style="border-bottom: 1px solid rgba(255,255,255,0.04);">';
+              html += '              <td style="padding: 13px 10px;">' + rankBadge + '</td>';
+              html += '              <td style="padding: 13px 10px;"><div style="display: flex; align-items: baseline; gap: 6px;"><strong style="font-size: 15px; color: ' + (isLeader ? '#34d399' : 'white') + '; font-weight: 900;">' + t.name + '</strong> <span style="color: #60a5fa; font-weight: 800; font-size: 11px;">(' + t.team + ')</span></div></td>';
               if (isNfl) {
                 var rec = t.w + '-' + t.l + '-' + t.t;
-                html += '              <td><span style="font-family: monospace; font-weight: 700;">' + rec + '</span></td>';
-                html += '              <td><span style="font-family: monospace;">' + t.pct.toFixed(3).replace(/^0+/, '') + '</span></td>';
-                html += '              <td><span style="font-family: monospace; color: ' + (t.net > 0 ? '#34d399' : t.net < 0 ? '#f87171' : 'white') + ';">' + (t.net > 0 ? '+' : '') + t.net + '</span></td>';
-                html += '              <td style="color: var(--text-muted);">' + t.home + '</td>';
-                html += '              <td style="color: var(--text-muted);">' + t.away + '</td>';
-                html += '              <td style="color: var(--text-muted);">' + t.divRec + '</td>';
-                html += '              <td><span class="badge-pill ' + (t.strk.startsWith('W') ? 'badge-green' : 'badge-amber') + '" style="font-size: 9px;">' + t.strk + '</span></td>';
+                html += '              <td style="padding: 13px 10px; text-align: center;"><span style="font-family: monospace; font-weight: 900; font-size: 15px; color: white;">' + rec + '</span></td>';
+                html += '              <td style="padding: 13px 10px; text-align: center;"><span style="font-family: monospace; font-weight: 800; font-size: 14px; color: #34d399;">' + t.pct.toFixed(3).replace(/^0+/, '') + '</span></td>';
+                html += '              <td style="padding: 13px 10px; text-align: center;"><span style="font-family: monospace; font-size: 14px; font-weight: 800; color: ' + (t.net > 0 ? '#34d399' : t.net < 0 ? '#f87171' : 'white') + ';">' + (t.net > 0 ? '+' : '') + t.net + '</span></td>';
+                html += '              <td style="padding: 13px 10px; text-align: center; color: #cbd5e1; font-size: 13px;">' + t.home + '</td>';
+                html += '              <td style="padding: 13px 10px; text-align: center; color: #cbd5e1; font-size: 13px;">' + t.away + '</td>';
+                html += '              <td style="padding: 13px 10px; text-align: center;"><span class="badge-pill ' + (t.strk.startsWith('W') ? 'badge-green' : 'badge-amber') + '" style="font-size: 11px; font-weight: 800; padding: 3px 8px;">' + t.strk + '</span></td>';
               } else {
                 var recNhl = t.w + '-' + t.l + '-' + t.otl;
-                html += '              <td>' + t.gp + '</td>';
-                html += '              <td><span style="font-family: monospace; font-weight: 700;">' + recNhl + '</span></td>';
-                html += '              <td><strong style="color: #34d399; font-size: 12px; font-family: monospace;">' + t.pts + '</strong></td>';
-                html += '              <td><span style="font-family: monospace; color: ' + (t.diff > 0 ? '#34d399' : t.diff < 0 ? '#f87171' : 'white') + ';">' + (t.diff > 0 ? '+' : '') + t.diff + '</span></td>';
-                html += '              <td style="color: var(--text-muted);">' + t.home + '</td>';
-                html += '              <td style="color: var(--text-muted);">' + t.away + '</td>';
-                html += '              <td><span class="badge-pill ' + (t.strk.startsWith('W') ? 'badge-green' : 'badge-amber') + '" style="font-size: 9px;">' + t.strk + '</span></td>';
+                html += '              <td style="padding: 13px 10px; text-align: center; font-size: 14px; color: #cbd5e1;">' + t.gp + '</td>';
+                html += '              <td style="padding: 13px 10px; text-align: center;"><span style="font-family: monospace; font-weight: 900; font-size: 15px; color: white;">' + recNhl + '</span></td>';
+                html += '              <td style="padding: 13px 10px; text-align: center;"><strong style="color: #34d399; font-size: 16px; font-family: monospace; font-weight: 900;">' + t.pts + '</strong></td>';
+                html += '              <td style="padding: 13px 10px; text-align: center;"><span style="font-family: monospace; font-size: 14px; font-weight: 800; color: ' + (t.diff > 0 ? '#34d399' : t.diff < 0 ? '#f87171' : 'white') + ';">' + (t.diff > 0 ? '+' : '') + t.diff + '</span></td>';
+                html += '              <td style="padding: 13px 10px; text-align: center; color: #cbd5e1; font-size: 13px;">' + t.home + '</td>';
+                html += '              <td style="padding: 13px 10px; text-align: center; color: #cbd5e1; font-size: 13px;">' + t.away + '</td>';
+                html += '              <td style="padding: 13px 10px; text-align: center;"><span class="badge-pill ' + (t.strk.startsWith('W') ? 'badge-green' : 'badge-amber') + '" style="font-size: 11px; font-weight: 800; padding: 3px 8px;">' + t.strk + '</span></td>';
               }
               html += '            </tr>';
             });
