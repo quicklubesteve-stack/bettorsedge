@@ -393,6 +393,7 @@
     </div>
     <nav class="nav-tabs">
       <button class="nav-btn active" data-tab="safebets" onclick="switchTab('safebets')">🔥 Safe Bets</button>
+      <button class="nav-btn" data-tab="simulator" onclick="switchTab('simulator')">🎮 2,000-Game Simulator</button>
       <button class="nav-btn" data-tab="explained" onclick="switchTab('explained')">💡 Betting Explained</button>
       <button class="nav-btn" data-tab="h2h" onclick="switchTab('h2h')">⚔️ Head-to-Head</button>
       <button class="nav-btn" data-tab="spreads" data-target="spreads" onclick="switchTab('spreads')">🛡️ Beat The Spread</button>
@@ -474,6 +475,11 @@
       <div style="margin-bottom: 24px;">
         <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 10px;">Select a Screen to Explore:</div>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px;">
+          <button onclick="switchTab('simulator')" class="btn" style="background: #1e293b; text-align: left; padding: 12px; border: 1px solid rgba(16, 185, 129, 0.4);">
+            <div style="font-size: 16px;">🎮</div>
+            <div style="font-size: 12px; font-weight: 800; color: #34d399; margin-top: 4px;">2,000-Game Simulator</div>
+            <div style="font-size: 10px; color: var(--text-muted);">Pick any 2 teams & simulate</div>
+          </button>
           <button onclick="switchTab('explained')" class="btn" style="background: #1e293b; text-align: left; padding: 12px;">
             <div style="font-size: 16px;">💡</div>
             <div style="font-size: 12px; font-weight: 800; color: white; margin-top: 4px;">Betting Explained</div>
@@ -541,6 +547,73 @@
             <span style="color: var(--text-muted);">Edmonton Oilers</span>
           </div>
         </div>
+      </div>
+    </div>
+
+
+    <!-- ==================================================== -->
+    <!-- TAB: 2,000-GAME MATCHUP SIMULATOR                    -->
+    <!-- ==================================================== -->
+    <div id="tab-simulator" class="tab-content">
+      <div class="hero">
+        <div class="badge" style="color: #34d399; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1);">🎮 2,000-Game Monte Carlo Match Engine</div>
+        <h1>Pro Team vs Team Game Simulator</h1>
+        <p>Put any two teams against each other, simulate up to <strong>2,000 match games</strong>, and watch the AI calculate who wins the % of the time and the projected final score.</p>
+      </div>
+
+      <!-- Simulator Control Panel -->
+      <div style="background: rgba(15, 23, 42, 0.95); border: 1px solid var(--card-border); border-radius: 18px; padding: 20px; margin-bottom: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">
+        <!-- Sport Selector -->
+        <div style="display: flex; gap: 8px; margin-bottom: 16px;">
+          <button id="simSportNfl" class="btn" onclick="setSimSport('NFL')" style="background: var(--primary); color: black; font-weight: 800; font-size: 12px; padding: 8px 16px; border-radius: 10px;">🏈 NFL Football</button>
+          <button id="simSportNhl" class="btn" onclick="setSimSport('NHL')" style="background: #0f172a; color: #94a3b8; font-weight: 800; font-size: 12px; padding: 8px 16px; border-radius: 10px; border: 1px solid var(--card-border);">🏒 NHL Hockey</button>
+        </div>
+
+        <!-- Team A vs Team B Selectors -->
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 12px; align-items: center; margin-bottom: 16px;">
+          <div>
+            <label style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #34d399; display: block; margin-bottom: 4px;">Team 1 (Designated A):</label>
+            <select id="simTeamSelectA" onchange="runClientSimulation()" style="width: 100%; padding: 10px 12px; border-radius: 10px; background: #030712; border: 1px solid #334155; color: #34d399; font-weight: 800; font-size: 13px;">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+
+          <div style="font-weight: 900; font-size: 14px; color: var(--text-muted); padding: 8px 12px; background: #030712; border-radius: 50%; border: 1px solid #334155; text-align: center;">
+            VS
+          </div>
+
+          <div>
+            <label style="font-size: 10px; font-weight: 800; text-transform: uppercase; color: #60a5fa; display: block; margin-bottom: 4px;">Team 2 (Designated B):</label>
+            <select id="simTeamSelectB" onchange="runClientSimulation()" style="width: 100%; padding: 10px 12px; border-radius: 10px; background: #030712; border: 1px solid #334155; color: #60a5fa; font-weight: 800; font-size: 13px;">
+              <!-- Populated by JS -->
+            </select>
+          </div>
+        </div>
+
+        <!-- Number of Games Slider (Up to 2,000 Match Games) -->
+        <div style="background: #090d16; padding: 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 16px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted);">Simulated Match Games:</span>
+            <span id="simCountBadge" style="font-size: 13px; font-weight: 900; color: #34d399; font-family: monospace;">2,000 Games</span>
+          </div>
+          <input type="range" id="simSlider" min="50" max="2000" step="50" value="2000" oninput="updateSimCount(this.value)" style="width: 100%; cursor: pointer;">
+          <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px; margin-top: 8px;">
+            <button onclick="setSimCount(100)" class="btn" style="background: #1e293b; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 8px; color: #94a3b8;">100 Games</button>
+            <button onclick="setSimCount(500)" class="btn" style="background: #1e293b; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 8px; color: #94a3b8;">500 Games</button>
+            <button onclick="setSimCount(1000)" class="btn" style="background: #1e293b; font-size: 11px; font-weight: 700; padding: 6px 12px; border-radius: 8px; color: #94a3b8;">1,000 Games</button>
+            <button onclick="setSimCount(2000)" id="presetBtn2000" class="btn" style="background: var(--primary); font-size: 11px; padding: 6px 14px; border-radius: 8px; color: black; font-weight: 900;">2,000 Games (Full Run)</button>
+          </div>
+        </div>
+
+        <!-- Action Run Button -->
+        <button onclick="runClientSimulation()" class="btn" style="width: 100%; background: linear-gradient(135deg, #10b981, #06b6d4); color: black; font-weight: 900; font-size: 14px; padding: 14px; border-radius: 12px; text-transform: uppercase; letter-spacing: 0.5px; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.3);">
+          ⚡ Run 2,000-Game Simulation
+        </button>
+      </div>
+
+      <!-- Simulation Output Area -->
+      <div id="simOutputArea">
+        <!-- Rendered live by runClientSimulation() -->
       </div>
     </div>
 
@@ -1487,10 +1560,316 @@
       document.getElementById('h2hDisplayArea').innerHTML = html;
     }
 
+    // ========================================================
+    // 2,000-GAME MONTE CARLO MATCHUP SIMULATOR ENGINE
+    // ========================================================
+    var SIM_NFL_TEAMS = [
+      { abbr: "BUF", name: "Buffalo Bills", off: 114, def: 108, pass: 254, rush: 130, stars: [{name: "Josh Allen (QB Rush)", share: 0.38}, {name: "James Cook (RB)", share: 0.35}, {name: "Khalil Shakir (WR)", share: 0.27}] },
+      { abbr: "KC", name: "Kansas City Chiefs", off: 110, def: 112, pass: 268, rush: 115, stars: [{name: "Patrick Mahomes (QB)", share: 0.15}, {name: "Travis Kelce (TE)", share: 0.42}, {name: "Kareem Hunt (RB)", share: 0.43}] },
+      { abbr: "BAL", name: "Baltimore Ravens", off: 116, def: 104, pass: 270, rush: 195, stars: [{name: "Derrick Henry (RB)", share: 0.58}, {name: "Lamar Jackson (QB Rush)", share: 0.25}, {name: "Zay Flowers (WR)", share: 0.22}] },
+      { abbr: "DET", name: "Detroit Lions", off: 118, def: 106, pass: 265, rush: 155, stars: [{name: "David Montgomery (RB)", share: 0.45}, {name: "Jahmyr Gibbs (RB)", share: 0.42}, {name: "Amon-Ra St. Brown (WR)", share: 0.38}] },
+      { abbr: "PHI", name: "Philadelphia Eagles", off: 112, def: 107, pass: 235, rush: 175, stars: [{name: "Saquon Barkley (RB)", share: 0.52}, {name: "Jalen Hurts (QB Rush)", share: 0.35}, {name: "A.J. Brown (WR)", share: 0.35}] },
+      { abbr: "SF", name: "San Francisco 49ers", off: 111, def: 106, pass: 275, rush: 140, stars: [{name: "Christian McCaffrey (RB)", share: 0.55}, {name: "George Kittle (TE)", share: 0.35}, {name: "Deebo Samuel (WR)", share: 0.25}] },
+      { abbr: "PIT", name: "Pittsburgh Steelers", off: 101, def: 112, pass: 215, rush: 135, stars: [{name: "Najee Harris (RB)", share: 0.45}, {name: "George Pickens (WR)", share: 0.38}, {name: "Russell Wilson (QB)", share: 0.15}] },
+      { abbr: "SEA", name: "Seattle Seahawks", off: 105, def: 99, pass: 255, rush: 100, stars: [{name: "Kenneth Walker III (RB)", share: 0.48}, {name: "DK Metcalf (WR)", share: 0.38}, {name: "Jaxon Smith-Njigba (WR)", share: 0.25}] },
+      { abbr: "JAX", name: "Jacksonville Jaguars", off: 98, def: 92, pass: 220, rush: 105, stars: [{name: "Travis Etienne (RB)", share: 0.45}, {name: "Brian Thomas Jr. (WR)", share: 0.35}, {name: "Evan Engram (TE)", share: 0.25}] },
+      { abbr: "GB", name: "Green Bay Packers", off: 108, def: 105, pass: 250, rush: 140, stars: [{name: "Josh Jacobs (RB)", share: 0.50}, {name: "Jayden Reed (WR)", share: 0.35}, {name: "Romeo Doubs (WR)", share: 0.25}] },
+      { abbr: "MIN", name: "Minnesota Vikings", off: 109, def: 110, pass: 255, rush: 120, stars: [{name: "Justin Jefferson (WR)", share: 0.48}, {name: "Aaron Jones (RB)", share: 0.42}, {name: "Jordan Addison (WR)", share: 0.25}] },
+      { abbr: "CIN", name: "Cincinnati Bengals", off: 111, def: 95, pass: 275, rush: 95, stars: [{name: "Ja'Marr Chase (WR)", share: 0.52}, {name: "Chase Brown (RB)", share: 0.40}, {name: "Tee Higgins (WR)", share: 0.30}] },
+      { abbr: "HOU", name: "Houston Texans", off: 106, def: 107, pass: 245, rush: 115, stars: [{name: "Joe Mixon (RB)", share: 0.55}, {name: "Nico Collins (WR)", share: 0.42}, {name: "Tank Dell (WR)", share: 0.25}] },
+      { abbr: "WAS", name: "Washington Commanders", off: 110, def: 98, pass: 240, rush: 155, stars: [{name: "Jayden Daniels (QB Rush)", share: 0.35}, {name: "Brian Robinson Jr. (RB)", share: 0.45}, {name: "Terry McLaurin (WR)", share: 0.38}] },
+      { abbr: "TB", name: "Tampa Bay Buccaneers", off: 109, def: 96, pass: 260, rush: 125, stars: [{name: "Bucky Irving (RB)", share: 0.42}, {name: "Mike Evans (WR)", share: 0.45}, {name: "Cade Otton (TE)", share: 0.25}] },
+      { abbr: "DAL", name: "Dallas Cowboys", off: 97, def: 94, pass: 235, rush: 85, stars: [{name: "CeeDee Lamb (WR)", share: 0.52}, {name: "Rico Dowdle (RB)", share: 0.35}, {name: "Jake Ferguson (TE)", share: 0.22}] },
+      { abbr: "MIA", name: "Miami Dolphins", off: 103, def: 101, pass: 230, rush: 120, stars: [{name: "De'Von Achane (RB)", share: 0.50}, {name: "Tyreek Hill (WR)", share: 0.45}, {name: "Jaylen Waddle (WR)", share: 0.25}] },
+      { abbr: "DEN", name: "Denver Broncos", off: 100, def: 109, pass: 220, rush: 115, stars: [{name: "Bo Nix (QB Rush)", share: 0.30}, {name: "Courtland Sutton (WR)", share: 0.42}, {name: "Javonte Williams (RB)", share: 0.35}] },
+      { abbr: "LAC", name: "Los Angeles Chargers", off: 104, def: 111, pass: 225, rush: 130, stars: [{name: "J.K. Dobbins (RB)", share: 0.55}, {name: "Ladd McConkey (WR)", share: 0.38}, {name: "Quentin Johnston (WR)", share: 0.25}] },
+      { abbr: "LAR", name: "Los Angeles Rams", off: 105, def: 98, pass: 250, rush: 110, stars: [{name: "Kyren Williams (RB)", share: 0.65}, {name: "Cooper Kupp (WR)", share: 0.40}, {name: "Puka Nacua (WR)", share: 0.40}] },
+      { abbr: "ARI", name: "Arizona Cardinals", off: 106, def: 99, pass: 230, rush: 145, stars: [{name: "James Conner (RB)", share: 0.52}, {name: "Marvin Harrison Jr. (WR)", share: 0.38}, {name: "Kyler Murray (QB Rush)", share: 0.28}] },
+      { abbr: "ATL", name: "Atlanta Falcons", off: 105, def: 100, pass: 245, rush: 125, stars: [{name: "Bijan Robinson (RB)", share: 0.52}, {name: "Drake London (WR)", share: 0.40}, {name: "Darnell Mooney (WR)", share: 0.25}] },
+      { abbr: "CHI", name: "Chicago Bears", off: 97, def: 104, pass: 220, rush: 110, stars: [{name: "D'Andre Swift (RB)", share: 0.45}, {name: "DJ Moore (WR)", share: 0.38}, {name: "Rome Odunze (WR)", share: 0.25}] },
+      { abbr: "IND", name: "Indianapolis Colts", off: 102, def: 99, pass: 215, rush: 145, stars: [{name: "Jonathan Taylor (RB)", share: 0.62}, {name: "Michael Pittman Jr. (WR)", share: 0.35}, {name: "Josh Downs (WR)", share: 0.25}] },
+      { abbr: "NYJ", name: "New York Jets", off: 99, def: 105, pass: 235, rush: 105, stars: [{name: "Breece Hall (RB)", share: 0.52}, {name: "Garrett Wilson (WR)", share: 0.45}, {name: "Davante Adams (WR)", share: 0.40}] },
+      { abbr: "CLE", name: "Cleveland Browns", off: 93, def: 101, pass: 220, rush: 95, stars: [{name: "Nick Chubb (RB)", share: 0.45}, {name: "Jerry Jeudy (WR)", share: 0.35}, {name: "David Njoku (TE)", share: 0.32}] },
+      { abbr: "NO", name: "New Orleans Saints", off: 101, def: 97, pass: 225, rush: 120, stars: [{name: "Alvin Kamara (RB)", share: 0.58}, {name: "Chris Olave (WR)", share: 0.35}, {name: "Taysom Hill (TE/QB)", share: 0.30}] },
+      { abbr: "NYG", name: "New York Giants", off: 92, def: 102, pass: 210, rush: 115, stars: [{name: "Malik Nabers (WR)", share: 0.52}, {name: "Tyrone Tracy Jr. (RB)", share: 0.42}, {name: "Wan'Dale Robinson (WR)", share: 0.25}] },
+      { abbr: "LV", name: "Las Vegas Raiders", off: 93, def: 97, pass: 215, rush: 85, stars: [{name: "Brock Bowers (TE)", share: 0.48}, {name: "Alexander Mattison (RB)", share: 0.38}, {name: "Jakobi Meyers (WR)", share: 0.32}] },
+      { abbr: "TEN", name: "Tennessee Titans", off: 94, def: 103, pass: 205, rush: 115, stars: [{name: "Tony Pollard (RB)", share: 0.50}, {name: "Calvin Ridley (WR)", share: 0.42}, {name: "Nick Westbrook-Ikhine (WR)", share: 0.28}] },
+      { abbr: "NE", name: "New England Patriots", off: 93, def: 98, pass: 200, rush: 115, stars: [{name: "Rhamondre Stevenson (RB)", share: 0.52}, {name: "Drake Maye (QB Rush)", share: 0.25}, {name: "Hunter Henry (TE)", share: 0.30}] },
+      { abbr: "CAR", name: "Carolina Panthers", off: 93, def: 90, pass: 205, rush: 110, stars: [{name: "Chuba Hubbard (RB)", share: 0.58}, {name: "Xavier Legette (WR)", share: 0.35}, {name: "Adam Thielen (WR)", share: 0.25}] }
+    ];
+
+    var SIM_NHL_TEAMS = [
+      { abbr: "EDM", name: "Edmonton Oilers", off: 116, def: 102, gpg: 3.6, ga: 2.8, stars: [{name: "Zach Hyman (LW)", share: 0.38}, {name: "Connor McDavid (C)", share: 0.35}, {name: "Leon Draisaitl (C)", share: 0.35}] },
+      { abbr: "VGK", name: "Vegas Golden Knights", off: 112, def: 109, gpg: 3.5, ga: 2.7, stars: [{name: "Mitch Marner (RW)", share: 0.36}, {name: "Jack Eichel (C)", share: 0.34}, {name: "Mark Stone (RW)", share: 0.28}] },
+      { abbr: "TOR", name: "Toronto Maple Leafs", off: 110, def: 105, gpg: 3.3, ga: 2.8, stars: [{name: "Auston Matthews (C)", share: 0.42}, {name: "William Nylander (RW)", share: 0.36}, {name: "John Tavares (C)", share: 0.28}] },
+      { abbr: "FLA", name: "Florida Panthers", off: 113, def: 110, gpg: 3.4, ga: 2.6, stars: [{name: "Sam Reinhart (RW)", share: 0.40}, {name: "Aleksander Barkov (C)", share: 0.32}, {name: "Matthew Tkachuk (LW)", share: 0.30}] },
+      { abbr: "CAR", name: "Carolina Hurricanes", off: 114, def: 112, gpg: 3.5, ga: 2.4, stars: [{name: "Sebastian Aho (C)", share: 0.35}, {name: "Martin Necas (C)", share: 0.36}, {name: "Andrei Svechnikov (RW)", share: 0.28}] },
+      { abbr: "MIN", name: "Minnesota Wild", off: 111, def: 111, gpg: 3.4, ga: 2.5, stars: [{name: "Kirill Kaprizov (LW)", share: 0.46}, {name: "Matt Boldy (RW)", share: 0.32}, {name: "Joel Eriksson Ek (C)", share: 0.26}] },
+      { abbr: "TBL", name: "Tampa Bay Lightning", off: 112, def: 104, gpg: 3.5, ga: 2.9, stars: [{name: "Nikita Kucherov (RW)", share: 0.40}, {name: "Brayden Point (C)", share: 0.36}, {name: "Jake Guentzel (LW)", share: 0.30}] },
+      { abbr: "COL", name: "Colorado Avalanche", off: 113, def: 100, gpg: 3.4, ga: 3.2, stars: [{name: "Nathan MacKinnon (C)", share: 0.42}, {name: "Mikko Rantanen (RW)", share: 0.40}, {name: "Cale Makar (D)", share: 0.24}] },
+      { abbr: "DAL", name: "Dallas Stars", off: 110, def: 112, gpg: 3.3, ga: 2.4, stars: [{name: "Jason Robertson (LW)", share: 0.35}, {name: "Roope Hintz (C)", share: 0.32}, {name: "Wyatt Johnston (C)", share: 0.30}] },
+      { abbr: "NYR", name: "New York Rangers", off: 109, def: 108, gpg: 3.3, ga: 2.6, stars: [{name: "Artemi Panarin (LW)", share: 0.40}, {name: "Chris Kreider (LW)", share: 0.34}, {name: "Mika Zibanejad (C)", share: 0.28}] },
+      { abbr: "BOS", name: "Boston Bruins", off: 104, def: 107, gpg: 2.9, ga: 2.8, stars: [{name: "David Pastrnak (RW)", share: 0.48}, {name: "Brad Marchand (LW)", share: 0.30}, {name: "Elias Lindholm (C)", share: 0.22}] },
+      { abbr: "WPG", name: "Winnipeg Jets", off: 115, def: 114, gpg: 3.7, ga: 2.3, stars: [{name: "Kyle Connor (LW)", share: 0.42}, {name: "Mark Scheifele (C)", share: 0.35}, {name: "Nikolaj Ehlers (LW)", share: 0.28}] },
+      { abbr: "LAK", name: "Los Angeles Kings", off: 106, def: 108, gpg: 3.1, ga: 2.6, stars: [{name: "Anze Kopitar (C)", share: 0.30}, {name: "Adrian Kempe (RW)", share: 0.35}, {name: "Kevin Fiala (LW)", share: 0.32}] },
+      { abbr: "VAN", name: "Vancouver Canucks", off: 107, def: 106, gpg: 3.2, ga: 2.7, stars: [{name: "Elias Pettersson (C)", share: 0.36}, {name: "J.T. Miller (C)", share: 0.34}, {name: "Brock Boeser (RW)", share: 0.32}] },
+      { abbr: "NJD", name: "New Jersey Devils", off: 111, def: 107, gpg: 3.4, ga: 2.7, stars: [{name: "Jack Hughes (C)", share: 0.38}, {name: "Jesper Bratt (LW)", share: 0.32}, {name: "Nico Hischier (C)", share: 0.30}] },
+      { abbr: "CGY", name: "Calgary Flames", off: 101, def: 103, gpg: 2.8, ga: 2.8, stars: [{name: "Nazem Kadri (C)", share: 0.35}, {name: "Jonathan Huberdeau (LW)", share: 0.28}, {name: "Yegor Sharangovich (C)", share: 0.28}] }
+    ];
+
+    var currentSimSport = 'NFL';
+    var currentSimCount = 2000;
+
+    function populateSimTeams() {
+      var teams = currentSimSport === 'NFL' ? SIM_NFL_TEAMS : SIM_NHL_TEAMS;
+      var selA = document.getElementById('simTeamSelectA');
+      var selB = document.getElementById('simTeamSelectB');
+      if (!selA || !selB) return;
+
+      var optA = '';
+      var optB = '';
+      teams.forEach(function(t, idx) {
+        optA += '<option value="' + t.abbr + '"' + (idx === 0 ? ' selected' : '') + '>' + t.name + ' (' + t.abbr + ')</option>';
+        optB += '<option value="' + t.abbr + '"' + (idx === 1 ? ' selected' : '') + '>' + t.name + ' (' + t.abbr + ')</option>';
+      });
+      selA.innerHTML = optA;
+      selB.innerHTML = optB;
+    }
+
+    function setSimSport(sport) {
+      currentSimSport = sport;
+      var btnNfl = document.getElementById('simSportNfl');
+      var btnNhl = document.getElementById('simSportNhl');
+      if (sport === 'NFL') {
+        if (btnNfl) { btnNfl.style.background = 'var(--primary)'; btnNfl.style.color = 'black'; }
+        if (btnNhl) { btnNhl.style.background = '#0f172a'; btnNhl.style.color = '#94a3b8'; }
+      } else {
+        if (btnNhl) { btnNhl.style.background = 'var(--primary)'; btnNhl.style.color = 'black'; }
+        if (btnNfl) { btnNfl.style.background = '#0f172a'; btnNfl.style.color = '#94a3b8'; }
+      }
+      populateSimTeams();
+      runClientSimulation();
+    }
+
+    function updateSimCount(val) {
+      currentSimCount = parseInt(val, 10);
+      var badge = document.getElementById('simCountBadge');
+      if (badge) badge.innerText = currentSimCount.toLocaleString() + ' Games';
+    }
+
+    function setSimCount(num) {
+      currentSimCount = num;
+      var slider = document.getElementById('simSlider');
+      if (slider) slider.value = num;
+      var badge = document.getElementById('simCountBadge');
+      if (badge) badge.innerText = num.toLocaleString() + ' Games';
+      runClientSimulation();
+    }
+
+    function runClientSimulation() {
+      var teams = currentSimSport === 'NFL' ? SIM_NFL_TEAMS : SIM_NHL_TEAMS;
+      var selA = document.getElementById('simTeamSelectA');
+      var selB = document.getElementById('simTeamSelectB');
+      if (!selA || !selB) return;
+
+      var abbrA = selA.value;
+      var abbrB = selB.value;
+      var teamA = teams.find(function(t) { return t.abbr === abbrA; }) || teams[0];
+      var teamB = teams.find(function(t) { return t.abbr === abbrB; }) || teams[1];
+
+      var iterations = currentSimCount || 2000;
+      var winsA = 0;
+      var winsB = 0;
+      var totalScoreA = 0;
+      var totalScoreB = 0;
+      var scorerCountsA = {};
+      var scorerCountsB = {};
+
+      teamA.stars.forEach(function(s) { scorerCountsA[s.name] = 0; });
+      teamB.stars.forEach(function(s) { scorerCountsB[s.name] = 0; });
+
+      var isNfl = currentSimSport === 'NFL';
+      var offModA = (teamA.off / 100) * (100 / teamB.def);
+      var offModB = (teamB.off / 100) * (100 / teamA.def);
+
+      for (var i = 0; i < iterations; i++) {
+        var scoreA = 0;
+        var scoreB = 0;
+
+        if (isNfl) {
+          // NFL possession simulation
+          var passYdsA = (teamA.pass + (Math.random() * 70 - 35)) * offModA;
+          var rushYdsA = (teamA.rush + (Math.random() * 50 - 25)) * offModA;
+          var tdsA = Math.max(1, Math.round((passYdsA / 110) + (rushYdsA / 85) + (Math.random() * 1.4 - 0.7)));
+          var fgsA = Math.floor(Math.random() * 3) + 1;
+          scoreA = (tdsA * 7) + (fgsA * 3);
+
+          var passYdsB = (teamB.pass + (Math.random() * 70 - 35)) * offModB;
+          var rushYdsB = (teamB.rush + (Math.random() * 50 - 25)) * offModB;
+          var tdsB = Math.max(1, Math.round((passYdsB / 115) + (rushYdsB / 90) + (Math.random() * 1.4 - 0.7)));
+          var fgsB = Math.floor(Math.random() * 3) + 1;
+          scoreB = (tdsB * 7) + (fgsB * 3);
+
+          if (scoreA > scoreB) winsA++;
+          else if (scoreB > scoreA) winsB++;
+          else { if (Math.random() < 0.5) winsA++; else winsB++; }
+
+          // Attribute TDs to stars
+          for (var t = 0; t < tdsA; t++) {
+            var chosenStar = teamA.stars[Math.floor(Math.random() * teamA.stars.length)];
+            if (chosenStar) scorerCountsA[chosenStar.name] = (scorerCountsA[chosenStar.name] || 0) + 1;
+          }
+          for (var tB = 0; tB < tdsB; tB++) {
+            var chosenStarB = teamB.stars[Math.floor(Math.random() * teamB.stars.length)];
+            if (chosenStarB) scorerCountsB[chosenStarB.name] = (scorerCountsB[chosenStarB.name] || 0) + 1;
+          }
+        } else {
+          // NHL goal simulation
+          var expectedA = teamA.gpg * offModA;
+          var expectedB = teamB.gpg * offModB;
+          scoreA = Math.max(0, Math.round(expectedA + (Math.random() * 2.6 - 1.3)));
+          scoreB = Math.max(0, Math.round(expectedB + (Math.random() * 2.6 - 1.3)));
+          if (scoreA === scoreB) {
+            // Overtime decider
+            if (Math.random() < 0.5) scoreA++;
+            else scoreB++;
+          }
+          if (scoreA > scoreB) winsA++;
+          else winsB++;
+
+          for (var g = 0; g < scoreA; g++) {
+            var starA = teamA.stars[Math.floor(Math.random() * teamA.stars.length)];
+            if (starA) scorerCountsA[starA.name] = (scorerCountsA[starA.name] || 0) + 1;
+          }
+          for (var gB = 0; gB < scoreB; gB++) {
+            var starB = teamB.stars[Math.floor(Math.random() * teamB.stars.length)];
+            if (starB) scorerCountsB[starB.name] = (scorerCountsB[starB.name] || 0) + 1;
+          }
+        }
+
+        totalScoreA += scoreA;
+        totalScoreB += scoreB;
+      }
+
+      var winPctA = Number(((winsA / iterations) * 100).toFixed(1));
+      var winPctB = Number(((winsB / iterations) * 100).toFixed(1));
+      var avgScoreA = Number((totalScoreA / iterations).toFixed(1));
+      var avgScoreB = Number((totalScoreB / iterations).toFixed(1));
+      var margin = Math.abs(avgScoreA - avgScoreB).toFixed(1);
+      var winner = winPctA >= winPctB ? teamA : teamB;
+      var winnerPct = winPctA >= winPctB ? winPctA : winPctB;
+      var winnerScore = winPctA >= winPctB ? avgScoreA : avgScoreB;
+      var loserScore = winPctA >= winPctB ? avgScoreB : avgScoreA;
+      var totalPts = (avgScoreA + avgScoreB).toFixed(1);
+
+      // Render output
+      var html = '';
+
+      // Big Winner Banner
+      html += '<div style="background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(6, 78, 59, 0.4)); border: 1px solid rgba(16, 185, 129, 0.5); border-radius: 18px; padding: 22px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.4);">';
+      html += '  <div style="font-size: 11px; font-weight: 800; color: #34d399; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 4px;">🏆 Simulation Winner Prediction</div>';
+      html += '  <div style="font-size: 1.6rem; font-weight: 900; color: white;">' + winner.name + ' Wins <span style="color: #34d399;">' + winnerPct + '% of the Time</span>!</div>';
+      html += '  <div style="font-size: 12px; color: #cbd5e1; margin-top: 6px;">Across <strong>' + iterations.toLocaleString() + ' simulated match games</strong>: <strong style="color: #34d399;">' + teamA.name + ' won ' + winsA.toLocaleString() + ' games (' + winPctA + '%)</strong> vs <strong style="color: #60a5fa;">' + teamB.name + ' won ' + winsB.toLocaleString() + ' games (' + winPctB + '%)</strong>.</div>';
+      html += '</div>';
+
+      // Big Scoreboard Card
+      html += '<div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 18px; padding: 22px; margin-bottom: 20px;">';
+      html += '  <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--text-muted); margin-bottom: 12px; text-align: center;">Projected Average Score Across ' + iterations.toLocaleString() + ' Matches</div>';
+      html += '  <div style="display: flex; justify-content: center; align-items: baseline; gap: 24px; margin-bottom: 16px;">';
+      html += '    <div style="text-align: right;">';
+      html += '      <div style="font-size: 1.1rem; font-weight: 900; color: #34d399;">' + teamA.name + '</div>';
+      html += '      <div style="font-size: 3rem; font-weight: 900; font-family: monospace; color: white; line-height: 1;">' + avgScoreA + '</div>';
+      html += '    </div>';
+      html += '    <div style="font-size: 1.5rem; font-weight: 900; color: var(--text-muted);">-</div>';
+      html += '    <div style="text-align: left;">';
+      html += '      <div style="font-size: 1.1rem; font-weight: 900; color: #60a5fa;">' + teamB.name + '</div>';
+      html += '      <div style="font-size: 3rem; font-weight: 900; font-family: monospace; color: white; line-height: 1;">' + avgScoreB + '</div>';
+      html += '    </div>';
+      html += '  </div>';
+
+      // Win Probability Bar
+      html += '  <div style="margin-top: 10px;">';
+      html += '    <div style="display: flex; justify-content: space-between; font-size: 12px; font-weight: 900; font-family: monospace; margin-bottom: 6px;">';
+      html += '      <span style="color: #34d399;">' + teamA.abbr + ': ' + winPctA + '%</span>';
+      html += '      <span style="color: var(--text-muted); font-size: 11px;">Margin: +' + margin + (isNfl ? ' pts' : ' goals') + '</span>';
+      html += '      <span style="color: #60a5fa;">' + teamB.abbr + ': ' + winPctB + '%</span>';
+      html += '    </div>';
+      html += '    <div style="width: 100%; height: 12px; background: #1e293b; border-radius: 9999px; overflow: hidden; display: flex;">';
+      html += '      <div style="width: ' + winPctA + '%; background: #10b981;"></div>';
+      html += '      <div style="width: ' + winPctB + '%; background: #3b82f6;"></div>';
+      html += '    </div>';
+      html += '  </div>';
+      html += '</div>';
+
+      // 4 Metric Breakdown Cards
+      html += '<div class="stats-bar" style="margin-bottom: 20px;">';
+      html += '  <div class="stat-card">';
+      html += '    <div class="stat-label">Simulated Games</div>';
+      html += '    <div class="stat-val" style="color: white;">' + iterations.toLocaleString() + '</div>';
+      html += '    <div class="stat-sub">Completed iterations</div>';
+      html += '  </div>';
+      html += '  <div class="stat-card">';
+      html += '    <div class="stat-label">Projected Total</div>';
+      html += '    <div class="stat-val" style="color: #c084fc;">' + totalPts + '</div>';
+      html += '    <div class="stat-sub">Combined score/game</div>';
+      html += '  </div>';
+      html += '  <div class="stat-card">';
+      html += '    <div class="stat-label">' + teamA.abbr + ' Match Wins</div>';
+      html += '    <div class="stat-val" style="color: #34d399;">' + winsA.toLocaleString() + '</div>';
+      html += '    <div class="stat-sub">' + winPctA + '% Win Frequency</div>';
+      html += '  </div>';
+      html += '  <div class="stat-card">';
+      html += '    <div class="stat-label">' + teamB.abbr + ' Match Wins</div>';
+      html += '    <div class="stat-val" style="color: #60a5fa;">' + winsB.toLocaleString() + '</div>';
+      html += '    <div class="stat-sub">' + winPctB + '% Win Frequency</div>';
+      html += '  </div>';
+      html += '  <div class="stat-card" style="grid-column: span 2;">';
+      html += '    <div class="stat-label">Model Recommendation</div>';
+      html += '    <div class="stat-val" style="font-size: 1.1rem; color: #fbbf24;">Bet ' + winner.abbr + ' ML (' + winnerPct + '% Win Rate)</div>';
+      html += '    <div class="stat-sub">High-conviction edge based on 2,000 Monte Carlo tests</div>';
+      html += '  </div>';
+      html += '</div>';
+
+      // Star Scorer Probabilities
+      html += '<div style="background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 16px; padding: 18px; margin-bottom: 20px;">';
+      html += '  <div style="font-weight: 900; font-size: 1.05rem; margin-bottom: 4px; color: white;">🎯 Star Scorer Rates (Across ' + iterations.toLocaleString() + ' Matches)</div>';
+      html += '  <p style="font-size: 11px; color: var(--text-muted); margin-bottom: 12px;">Simulated ' + (isNfl ? 'Anytime Touchdown' : 'Anytime Goal') + ' frequency per game.</p>';
+      html += '  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 10px;">';
+
+      teamA.stars.forEach(function(s) {
+        var count = scorerCountsA[s.name] || 0;
+        var avgPerGame = (count / iterations).toFixed(2);
+        var pct = Math.min(96, Math.round((count / iterations) * 100));
+        html += '    <div style="background: #090d16; padding: 12px; border-radius: 10px; border: 1px solid rgba(16, 185, 129, 0.2);">';
+        html += '      <div style="font-size: 11px; color: #34d399; font-weight: 800;">[' + teamA.abbr + '] ' + s.name + '</div>';
+        html += '      <div style="font-size: 1.1rem; font-weight: 900; color: white; margin-top: 2px;">' + pct + '% Anytime Chance</div>';
+        html += '      <div style="font-size: 10px; color: var(--text-muted);">' + avgPerGame + ' projected per game</div>';
+        html += '    </div>';
+      });
+
+      teamB.stars.forEach(function(s) {
+        var count = scorerCountsB[s.name] || 0;
+        var avgPerGame = (count / iterations).toFixed(2);
+        var pct = Math.min(96, Math.round((count / iterations) * 100));
+        html += '    <div style="background: #090d16; padding: 12px; border-radius: 10px; border: 1px solid rgba(59, 130, 246, 0.2);">';
+        html += '      <div style="font-size: 11px; color: #60a5fa; font-weight: 800;">[' + teamB.abbr + '] ' + s.name + '</div>';
+        html += '      <div style="font-size: 1.1rem; font-weight: 900; color: white; margin-top: 2px;">' + pct + '% Anytime Chance</div>';
+        html += '      <div style="font-size: 10px; color: var(--text-muted);">' + avgPerGame + ' projected per game</div>';
+        html += '    </div>';
+      });
+
+      html += '  </div>';
+      html += '</div>';
+
+      document.getElementById('simOutputArea').innerHTML = html;
+    }
+
     // Initial setup on load
     window.addEventListener('DOMContentLoaded', function() {
       runCalculator();
       renderH2H('BUF_KC');
+      populateSimTeams();
+      runClientSimulation();
     });
   </script>
 </body>

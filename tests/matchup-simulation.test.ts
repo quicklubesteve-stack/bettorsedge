@@ -71,4 +71,26 @@ describe("Pro Head-to-Head Monte Carlo Matchup Simulator", () => {
     expect(topScorerA.anytimeGoalPct).toBeGreaterThan(15);
     expect(topScorerB.anytimeGoalPct).toBeGreaterThan(15);
   });
+
+  it("simulates up to 2,000 match games and returns exact win counts and projected scores", () => {
+    // NFL 2,000 game simulation
+    const nflResult = simulateNflMatchup("DET", "JAX", 2000);
+    expect(nflResult.iterations).toBe(2000);
+    expect(nflResult.teamAWins).toBeDefined();
+    expect(nflResult.teamBWins).toBeDefined();
+    expect(nflResult.teamAWins! + nflResult.teamBWins!).toBe(2000);
+    expect(nflResult.teamAWinPct + nflResult.teamBWinPct).toBeCloseTo(100, 0);
+    expect(nflResult.projectedScoreA).toBeGreaterThan(20);
+    expect(nflResult.projectedScoreB).toBeGreaterThan(10);
+
+    // NHL 2,000 game simulation
+    const nhlResult = simulateNhlMatchup("VGK", "TOR", 2000);
+    expect(nhlResult.iterations).toBe(2000);
+    expect(nhlResult.teamAWins).toBeDefined();
+    expect(nhlResult.teamBWins).toBeDefined();
+    expect(nhlResult.teamAWins! + nhlResult.teamBWins!).toBe(2000);
+    expect(nhlResult.teamAWinPct + nhlResult.teamBWinPct).toBeCloseTo(100, 0);
+    expect(nhlResult.projectedGoalsA).toBeGreaterThan(2);
+    expect(nhlResult.projectedGoalsB).toBeGreaterThan(2);
+  });
 });

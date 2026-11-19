@@ -166,6 +166,8 @@ export interface NflMatchupSimulationResult {
   iterations: number;
   teamAWinPct: number;
   teamBWinPct: number;
+  teamAWins?: number;
+  teamBWins?: number;
   tiePct: number;
   projectedScoreA: number;
   projectedScoreB: number;
@@ -367,6 +369,8 @@ export function simulateNflMatchup(
     iterations,
     teamAWinPct,
     teamBWinPct,
+    teamAWins: winsA,
+    teamBWins: winsB,
     tiePct,
     projectedScoreA: projScoreA,
     projectedScoreB: projScoreB,
@@ -396,6 +400,8 @@ export interface NhlMatchupSimulationResult {
   iterations: number;
   teamAWinPct: number;
   teamBWinPct: number;
+  teamAWins?: number;
+  teamBWins?: number;
   overtimePct: number;
   projectedGoalsA: number;
   projectedGoalsB: number;
@@ -542,6 +548,8 @@ export function simulateNhlMatchup(
     iterations,
     teamAWinPct,
     teamBWinPct,
+    teamAWins: winsA,
+    teamBWins: winsB,
     overtimePct: Number(((otGames / iterations) * 100).toFixed(1)),
     projectedGoalsA: projA,
     projectedGoalsB: projB,

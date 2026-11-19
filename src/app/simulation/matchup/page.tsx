@@ -28,7 +28,7 @@ export default function MatchupSimulatorPage() {
   const [league, setLeague] = useState<"NFL" | "NHL">("NFL");
   const [teamA, setTeamA] = useState("BUF");
   const [teamB, setTeamB] = useState("KC");
-  const [iterations, setIterations] = useState(1000);
+  const [iterations, setIterations] = useState(2000);
   const [result, setResult] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [isPro, setIsPro] = useState(false);
@@ -86,7 +86,7 @@ export default function MatchupSimulatorPage() {
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                Simulate 1,000+ matchups between any two teams to determine win %, score margin, yards ran & thrown, and touchdown / goal scorers.
+                Simulate up to 2,000 match games between any two teams to determine who wins the % of the time, the projected final score, and yardage / goal scorers.
               </p>
             </div>
           </div>
@@ -178,18 +178,41 @@ export default function MatchupSimulatorPage() {
           </div>
 
           {/* Iterations selector */}
-          <div className="w-full md:w-48 space-y-1.5 text-xs">
-            <span className="text-slate-400 font-bold">Simulations:</span>
+          <div className="w-full md:w-56 space-y-1.5 text-xs">
+            <div className="flex items-center justify-between">
+              <span className="text-slate-400 font-bold">Simulations (Up to 2,000):</span>
+              <span className="text-emerald-400 font-mono font-bold">{iterations.toLocaleString()} Games</span>
+            </div>
             <select
               value={iterations}
               onChange={(e) => setIterations(Number(e.target.value))}
               className="w-full px-3 py-2.5 rounded-xl bg-slate-950 border border-slate-700 text-white font-mono font-bold text-sm"
             >
-              <option value={500}>500 Games</option>
-              <option value={1000}>1,000 Games</option>
-              <option value={2500}>2,500 Games</option>
-              <option value={5000}>5,000 Games</option>
+              <option value={100}>100 Match Games</option>
+              <option value={250}>250 Match Games</option>
+              <option value={500}>500 Match Games</option>
+              <option value={1000}>1,000 Match Games</option>
+              <option value={1500}>1,500 Match Games</option>
+              <option value={2000}>2,000 Match Games (Standard)</option>
+              <option value={5000}>5,000 Match Games (Max Precision)</option>
             </select>
+            {/* Quick Presets */}
+            <div className="flex items-center gap-1 pt-1">
+              {[100, 500, 1000, 2000].map((num) => (
+                <button
+                  key={num}
+                  type="button"
+                  onClick={() => setIterations(num)}
+                  className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold transition ${
+                    iterations === num
+                      ? "bg-emerald-600 text-white"
+                      : "bg-slate-950 text-slate-400 hover:text-white border border-slate-800"
+                  }`}
+                >
+                  {num === 2000 ? "2,000" : num}
+                </button>
+              ))}
+            </div>
           </div>
 
           {/* Run button */}
@@ -197,10 +220,10 @@ export default function MatchupSimulatorPage() {
             <button
               onClick={runSimulation}
               disabled={loading}
-              className="w-full md:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 font-bold text-slate-950 text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-50"
+              className="w-full md:w-auto px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 font-black text-slate-950 text-xs uppercase tracking-wider transition flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20 disabled:opacity-50"
             >
               <RefreshCw className={`w-4 h-4 ${loading ? "animate-spin" : ""}`} />
-              {loading ? "Simulating..." : "Run Simulation"}
+              {loading ? "Simulating Match Games..." : `Run ${iterations.toLocaleString()} Match Games`}
             </button>
           </div>
         </div>
@@ -214,16 +237,27 @@ export default function MatchupSimulatorPage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-800 pb-4">
               <div>
                 <span className="text-xs text-slate-400 font-mono">
-                  {result.iterations} Monte Carlo Simulations Completed
+                  {result.iterations.toLocaleString()} Monte Carlo Match Games Completed
                 </span>
-                <h2 className="text-2xl font-black text-white mt-0.5">
+                <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">
                   Projected Winner:{" "}
                   <span className="text-emerald-400">
-                    {result.favoredTeam === result.teamA ? result.teamAName : result.teamBName}
+                    {result.favoredTeam === result.teamA ? result.teamAName : result.teamBName} Wins{" "}
+                    {result.favoredTeam === result.teamA ? result.teamAWinPct : result.teamBWinPct}% of the Time!
                   </span>
                 </h2>
+                <div className="text-xs text-slate-300 font-mono mt-1">
+                  Across {result.iterations.toLocaleString()} match games:{" "}
+                  <strong className="text-emerald-400">
+                    {result.teamAName} won {result.teamAWins ?? Math.round((result.iterations * result.teamAWinPct) / 100)} games ({result.teamAWinPct}%)
+                  </strong>
+                  {" vs "}
+                  <strong className="text-blue-400">
+                    {result.teamBName} won {result.teamBWins ?? Math.round((result.iterations * result.teamBWinPct) / 100)} games ({result.teamBWinPct}%)
+                  </strong>
+                </div>
               </div>
-              <div className="text-right">
+              <div className="text-left sm:text-right">
                 <span className="text-xs text-slate-400 block">Average Margin of Victory</span>
                 <span className="text-2xl font-black font-mono text-white">
                   {league === "NFL" ? `+${Math.abs(result.avgScoreMargin)} Points` : `+${result.avgGoalMargin} Goals`}
