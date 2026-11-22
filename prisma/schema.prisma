@@ -418,3 +418,57 @@ model TeamAdaptiveWeights {
   @@unique([league, team])
   @@index([league, offensiveRating])
 }
+
+model PlayEvent {
+  id                String      @id @default(uuid())
+  league            String      // NHL or NFL
+  gameId            String
+  season            String
+  weekOrDate        String
+  periodOrQuarter   Int
+  clock             String
+  teamId            String
+  opponentId        String
+  playType          String      // e.g. "shot-on-goal", "goal", "hit", "faceoff", "penalty", "pass", "rush", "turnover"
+  xCoord            Float?
+  yCoord            Float?
+  situationCode     String?     // e.g. "1551" (5v5) or "3rd & 4"
+  epaOrXgValue      Float       @default(0.0)
+  primaryPlayerId   String?
+  secondaryPlayerId String?
+  createdAt         DateTime    @default(now())
+
+  @@index([league, gameId])
+  @@index([teamId, playType])
+}
+
+model TeamLatentProfile {
+  id                      String      @id @default(uuid())
+  teamId                  String
+  league                  String      // NHL or NFL
+  weekNumber              Int
+  offensiveRating         Float       @default(100.0)
+  defensiveRating         Float       @default(100.0)
+  specialTeamsRating      Float       @default(100.0)
+  paceOrTempo             Float       @default(1.0)
+  clutchVariance          Float       @default(0.0)
+  playerSynergyGraphScore Float       @default(1.0) // TacticAI-style relational score
+  updatedAt               DateTime    @updatedAt
+
+  @@unique([league, teamId, weekNumber])
+  @@index([league, teamId])
+}
+
+model ModelWeightSnapshot {
+  id                   String      @id @default(uuid())
+  league               String      // NHL, NFL, or COMBINED
+  weekNumber           Int
+  featureWeightsJson   String      // JSON of weights for xG/EPA, goalie/QB, rest, injury delta, line movement
+  trainingBrierScore   Float
+  validationBrierScore Float
+  atsAccuracy          Float
+  isActive             Boolean     @default(false)
+  createdAt            DateTime    @default(now())
+
+  @@index([league, isActive])
+}

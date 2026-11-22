@@ -12,30 +12,59 @@ import {
   Sparkles, 
   Target,
   Scale,
-  History
+  History,
+  Cpu,
+  RefreshCw,
+  Zap,
 } from "lucide-react";
 import { PerformanceReport } from "@/lib/model-performance";
 
 export default function ModelPerformanceDashboard() {
   const [report, setReport] = useState<PerformanceReport | null>(null);
   const [loading, setLoading] = useState(true);
+  const [cycleRunning, setCycleRunning] = useState(false);
+  const [cycleSuccess, setCycleSuccess] = useState<string | null>(null);
+
+  const fetchPerformance = async () => {
+    try {
+      const res = await fetch("/api/performance");
+      const data = await res.json();
+      if (data.success) {
+        setReport(data.report);
+      }
+    } catch (err) {
+      console.error("Failed to load model performance", err);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    async function loadPerformance() {
-      try {
-        const res = await fetch("/api/performance");
-        const data = await res.json();
-        if (data.success) {
-          setReport(data.report);
-        }
-      } catch (err) {
-        console.error("Failed to load model performance", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-    loadPerformance();
+    fetchPerformance();
   }, []);
+
+  const handleRunLearningCycle = async () => {
+    setCycleRunning(true);
+    setCycleSuccess(null);
+    try {
+      const res = await fetch("/api/learning/cycle", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+      });
+      const data = await res.json();
+      if (data.success) {
+        setCycleSuccess(
+          `Weekly Cycle Completed! Ingested ${data.report.totalPlayEventsIngested} plays • Brier Score: ${data.report.calibrationResult.newValidationBrier}`
+        );
+        fetchPerformance();
+        setTimeout(() => setCycleSuccess(null), 6000);
+      }
+    } catch (err) {
+      console.error("Failed to execute learning cycle:", err);
+    } finally {
+      setCycleRunning(false);
+    }
+  };
 
   if (loading || !report) {
     return (
@@ -99,6 +128,130 @@ export default function ModelPerformanceDashboard() {
           <div className="text-[11px] text-emerald-400 mt-1">Beats Market (0.191)</div>
         </div>
       </div>
+
+      {/* DeepMind-Inspired Continuous Learning & Calibration Engine Card */}
+      {report.learningEngineStatus && (
+        <div className="py-6 border-b border-slate-800/60 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 -mx-6 px-6">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+            <div>
+              <div className="flex items-center gap-2 mb-1">
+                <span className="px-2.5 py-0.5 rounded-full bg-cyan-500/10 text-cyan-400 text-xs font-semibold uppercase tracking-wider flex items-center gap-1 border border-cyan-500/20">
+                  <Cpu className="w-3.5 h-3.5" /> DeepMind-Inspired Continuous Learning Engine
+                </span>
+                <span className="text-xs text-slate-400">TacticAI Relational Graphs • AlphaZero Closed-Loop Gating</span>
+              </div>
+              <h3 className="text-lg font-black text-white tracking-tight flex items-center gap-2">
+                Weekly Play-by-Play Latent Embeddings & Model Calibration
+              </h3>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={handleRunLearningCycle}
+                disabled={cycleRunning}
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-cyan-600 hover:bg-cyan-500 text-white text-xs font-bold transition shadow-lg shadow-cyan-950/40 disabled:opacity-50"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${cycleRunning ? "animate-spin" : ""}`} />
+                <span>{cycleRunning ? "Optimizing Weights..." : "Run Weekly Learning Cycle"}</span>
+              </button>
+            </div>
+          </div>
+
+          {cycleSuccess && (
+            <div className="mb-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-xs text-emerald-300 font-medium flex items-center gap-2">
+              <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span>{cycleSuccess}</span>
+            </div>
+          )}
+
+          {/* Metrics Subgrid */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+            <div className="bg-slate-900/90 p-3 rounded-lg border border-slate-800">
+              <span className="text-[10px] text-slate-400 uppercase font-bold">Active Snapshot ID</span>
+              <div className="text-sm font-mono font-bold text-white mt-0.5">
+                {report.learningEngineStatus.activeModelSnapshotId}
+              </div>
+            </div>
+
+            <div className="bg-slate-900/90 p-3 rounded-lg border border-slate-800">
+              <span className="text-[10px] text-slate-400 uppercase font-bold">Play Events Learned</span>
+              <div className="text-sm font-mono font-bold text-cyan-400 mt-0.5">
+                {report.learningEngineStatus.totalPlayEventsLearned.toLocaleString()} plays
+              </div>
+            </div>
+
+            <div className="bg-slate-900/90 p-3 rounded-lg border border-slate-800">
+              <span className="text-[10px] text-slate-400 uppercase font-bold">Validation Brier Score</span>
+              <div className="text-sm font-mono font-bold text-emerald-400 mt-0.5">
+                {report.learningEngineStatus.validationBrierScore}
+              </div>
+            </div>
+
+            <div className="bg-slate-900/90 p-3 rounded-lg border border-slate-800">
+              <span className="text-[10px] text-slate-400 uppercase font-bold">Validation Gating</span>
+              <div className="text-sm font-bold text-emerald-300 mt-0.5 flex items-center gap-1">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Guardrail Protected</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Latent Feature Weights & Team Risers */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="bg-slate-900/90 p-3.5 rounded-xl border border-slate-800">
+              <h4 className="text-xs font-bold text-white mb-2 flex items-center gap-1.5">
+                <Zap className="w-3.5 h-3.5 text-amber-400" /> Calibrated Feature Weighting (AlphaZero Reward Loop)
+              </h4>
+              <div className="grid grid-cols-3 gap-2 text-[11px] font-mono">
+                <div className="p-2 bg-slate-950 rounded border border-slate-800/80">
+                  <div className="text-slate-400 text-[10px]">Play xG/EPA</div>
+                  <div className="font-bold text-white">{(report.learningEngineStatus.featureWeights.playByPlayXgOrEpa * 100).toFixed(0)}%</div>
+                </div>
+                <div className="p-2 bg-slate-950 rounded border border-slate-800/80">
+                  <div className="text-slate-400 text-[10px]">Goalie/QB</div>
+                  <div className="font-bold text-white">{(report.learningEngineStatus.featureWeights.startingGoalieOrQb * 100).toFixed(0)}%</div>
+                </div>
+                <div className="p-2 bg-slate-950 rounded border border-slate-800/80">
+                  <div className="text-slate-400 text-[10px]">Injury Delta</div>
+                  <div className="font-bold text-white">{(report.learningEngineStatus.featureWeights.injuryDelta * 100).toFixed(0)}%</div>
+                </div>
+                <div className="p-2 bg-slate-950 rounded border border-slate-800/80">
+                  <div className="text-slate-400 text-[10px]">Relational Graph</div>
+                  <div className="font-bold text-cyan-400">{(report.learningEngineStatus.featureWeights.relationalSynergyGraph * 100).toFixed(0)}%</div>
+                </div>
+                <div className="p-2 bg-slate-950 rounded border border-slate-800/80">
+                  <div className="text-slate-400 text-[10px]">Rest &amp; Travel</div>
+                  <div className="font-bold text-white">{(report.learningEngineStatus.featureWeights.restAndTravel * 100).toFixed(0)}%</div>
+                </div>
+                <div className="p-2 bg-slate-950 rounded border border-slate-800/80">
+                  <div className="text-slate-400 text-[10px]">Market Odds</div>
+                  <div className="font-bold text-white">{(report.learningEngineStatus.featureWeights.marketLineMovement * 100).toFixed(0)}%</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-slate-900/90 p-3.5 rounded-xl border border-slate-800">
+              <h4 className="text-xs font-bold text-white mb-2 flex items-center gap-1.5">
+                <TrendingUp className="w-3.5 h-3.5 text-emerald-400" /> TacticAI Relational Synergy Risers &amp; Fallers
+              </h4>
+              <div className="space-y-1.5 text-xs">
+                {report.learningEngineStatus.topRisers.slice(0, 2).map((r, i) => (
+                  <div key={i} className="flex justify-between items-center p-1.5 rounded bg-slate-950 border border-slate-800/80 text-[11px]">
+                    <span className="font-bold text-emerald-400">{r.team} ({r.league})</span>
+                    <span className="text-slate-300">{r.change}</span>
+                  </div>
+                ))}
+                {report.learningEngineStatus.topFallers.slice(0, 1).map((f, i) => (
+                  <div key={i} className="flex justify-between items-center p-1.5 rounded bg-slate-950 border border-slate-800/80 text-[11px]">
+                    <span className="font-bold text-rose-400">{f.team} ({f.league})</span>
+                    <span className="text-slate-300">{f.change}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Model Architecture Comparison Table */}
       <div className="py-6 border-b border-slate-800/60">

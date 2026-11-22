@@ -34,6 +34,8 @@ export default {
       jobType = "6_PM_EVENING_STARTING_LINEUP_SYNC";
     } else if (cron === "0 23 * * 5") {
       jobType = "FRIDAY_WEEKLY_MASTER_SYNC";
+    } else if (cron === "0 9 * * 2") {
+      jobType = "TUESDAY_DEEPMIND_WEEKLY_LEARNING_CYCLE";
     }
 
     try {
