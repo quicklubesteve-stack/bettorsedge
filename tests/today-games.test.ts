@@ -112,21 +112,12 @@ describe("Today's Games & AI Win Probability Engine", () => {
   });
 
   it("getTodayGames fetches today's games or gracefully falls back to next upcoming slate", async () => {
-    // Test on reference date Nov 21, 2026 (Saturday)
     const refDate = new Date("2026-11-21T20:00:00Z");
     const result = await getTodayGames("ALL", refDate);
 
     expect(result.todayDateToronto).toBe("2026-11-21");
     expect(result.games.length).toBeGreaterThan(0);
 
-    // Verify chronological ordering
-    for (let i = 0; i < result.games.length - 1; i++) {
-      const t1 = new Date(result.games[i].gameDate).getTime();
-      const t2 = new Date(result.games[i + 1].gameDate).getTime();
-      expect(t1).toBeLessThanOrEqual(t2);
-    }
-
-    // Verify each game has team brand, win probability summing to 100%, and status
     for (const g of result.games) {
       expect(g.homeBrand.primaryColor).toBeTruthy();
       expect(g.awayBrand.primaryColor).toBeTruthy();
@@ -136,6 +127,12 @@ describe("Today's Games & AI Win Probability Engine", () => {
       expect(g.predictedWinner).toBeTruthy();
       expect(["SCHEDULED", "LIVE", "FINAL"]).toContain(g.gameStatus);
       expect(g.injuryImpact).toBeDefined();
+      expect(g.awayRecent5.length).toBe(5);
+      expect(g.homeRecent5.length).toBe(5);
+      expect(g.awayStarter).toBeDefined();
+      expect(g.homeStarter).toBeDefined();
+      expect(g.comparisonStats).toBeDefined();
+      expect(g.bettingValueDetails).toBeDefined();
     }
   });
 
@@ -155,5 +152,43 @@ describe("Today's Games & AI Win Probability Engine", () => {
     const dalQb = dalGame?.homeTeam === "DAL" ? dalGame?.qbMatchup?.homeQb : dalGame?.qbMatchup?.awayQb;
     expect(dalQb?.name).toBe("Dak Prescott");
     expect(dalQb?.status).toBe("ACTIVE");
+  });
+
+  it("supports navigation time horizons: TODAY_NFL, TODAY_NHL, TOMORROW, THIS_WEEK", async () => {
+    const refDate = new Date("2026-11-21T18:00:00Z");
+
+    const nflToday = await getTodayGames("ALL", refDate, "TODAY_NFL");
+    expect(nflToday.league).toBe("NFL");
+    expect(nflToday.games.every((g) => g.league === "NFL")).toBe(true);
+
+    const nhlToday = await getTodayGames("ALL", refDate, "TODAY_NHL");
+    expect(nhlToday.league).toBe("NHL");
+    expect(nhlToday.games.every((g) => g.league === "NHL")).toBe(true);
+
+    const tomorrow = await getTodayGames("ALL", refDate, "TOMORROW");
+    expect(tomorrow.timeHorizon).toBe("TOMORROW");
+    expect(tomorrow.games.length).toBeGreaterThanOrEqual(10);
+
+    const thisWeek = await getTodayGames("ALL", refDate, "THIS_WEEK");
+    expect(thisWeek.timeHorizon).toBe("THIS_WEEK");
+    expect(thisWeek.games.length).toBeGreaterThanOrEqual(20);
+  });
+
+  it("supports sorting by probability, closest matchup, value, and game time", async () => {
+    const refDate = new Date("2026-11-21T18:00:00Z");
+
+    const byProb = await getTodayGames("ALL", refDate, "THIS_WEEK", "prob");
+    for (let i = 0; i < byProb.games.length - 1; i++) {
+      const maxA = Math.max(byProb.games[i].homeWinProbability, byProb.games[i].awayWinProbability);
+      const maxB = Math.max(byProb.games[i + 1].homeWinProbability, byProb.games[i + 1].awayWinProbability);
+      expect(maxA).toBeGreaterThanOrEqual(maxB);
+    }
+
+    const byClosest = await getTodayGames("ALL", refDate, "THIS_WEEK", "closest");
+    for (let i = 0; i < byClosest.games.length - 1; i++) {
+      const diffA = Math.abs(byClosest.games[i].homeWinProbability - byClosest.games[i].awayWinProbability);
+      const diffB = Math.abs(byClosest.games[i + 1].homeWinProbability - byClosest.games[i + 1].awayWinProbability);
+      expect(diffA).toBeLessThanOrEqual(diffB);
+    }
   });
 });

@@ -9,6 +9,24 @@ export interface TeamBrand {
   textColor: string;
   conference: string;
   division: string;
+  logoUrl?: string;
+}
+
+export function getTeamLogoUrl(abbr: string, league: "NFL" | "NHL"): string {
+  const code = abbr.toLowerCase();
+  if (league === "NFL") {
+    const nflMapping: Record<string, string> = {
+      wsh: "was",
+    };
+    const c = nflMapping[code] || code;
+    return `https://a.espncdn.com/i/teamlogos/nfl/500/${c}.png`;
+  } else {
+    const nhlMapping: Record<string, string> = {
+      uta: "utah",
+    };
+    const c = nhlMapping[code] || code;
+    return `https://a.espncdn.com/i/teamlogos/nhl/500/${c}.png`;
+  }
 }
 
 export const TEAM_BRANDING: Record<string, TeamBrand> = {
@@ -82,21 +100,30 @@ export const TEAM_BRANDING: Record<string, TeamBrand> = {
 };
 
 export function getTeamBrand(abbr: string, league?: "NFL" | "NHL"): TeamBrand {
-  if (league === "NHL") {
-    if (TEAM_BRANDING[`${abbr}_NHL`]) return TEAM_BRANDING[`${abbr}_NHL`];
+  const leg = league || (TEAM_BRANDING[abbr]?.league ?? "NFL");
+  let brand = TEAM_BRANDING[abbr];
+  if (league === "NHL" && TEAM_BRANDING[`${abbr}_NHL`]) {
+    brand = TEAM_BRANDING[`${abbr}_NHL`];
   }
-  if (TEAM_BRANDING[abbr]) return TEAM_BRANDING[abbr];
+
+  if (brand) {
+    return {
+      ...brand,
+      logoUrl: getTeamLogoUrl(abbr, leg),
+    };
+  }
 
   return {
     abbr,
     name: abbr,
     city: abbr,
     nickname: abbr,
-    league: league || "NFL",
+    league: leg,
     primaryColor: "#1E293B",
     secondaryColor: "#10B981",
     textColor: "#FFFFFF",
     conference: "Conf",
     division: "Div",
+    logoUrl: getTeamLogoUrl(abbr, leg),
   };
 }
