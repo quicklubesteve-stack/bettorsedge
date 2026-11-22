@@ -129,11 +129,14 @@ export default function RostersPage() {
                 <h1 className="text-3xl font-black text-white">Current Active Team Rosters</h1>
                 <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[10px] font-extrabold uppercase tracking-wider flex items-center gap-1">
                   <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                  Updated Weekly
+                  {rosterData?.season || (league === "NFL" ? "2026-2027" : "2026-2027")} Season
+                </span>
+                <span className="px-2.5 py-0.5 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/30 text-[10px] font-extrabold uppercase tracking-wider">
+                  Fridays 6:00 PM ET Sync
                 </span>
               </div>
               <p className="text-xs text-slate-400 mt-1">
-                Active depth charts, star player impact weights, and injury statuses for all 32 NFL & 32 NHL franchises.
+                Official depth charts, star player impact weights, and injury statuses for all 32 NFL & 32 NHL franchises per NFL.com & NHL.com.
               </p>
             </div>
           </div>

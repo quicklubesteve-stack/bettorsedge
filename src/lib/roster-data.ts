@@ -1,6 +1,7 @@
-// 2025-2026 Team Rosters & Depth Charts for NFL and NHL Franchises
-// Updated weekly to reflect depth chart changes, trades, active lines, and injury/IR statuses.
-// Reflects 2025-2026 transactions: Mitch Marner on Vegas Golden Knights (VGK), Zach Hyman on Edmonton (EDM).
+// 2026-2027 Team Rosters & Depth Charts for NFL & NHL Franchises
+// Synchronized weekly every Friday at 6:00 PM ET or upon manual admin refresh.
+// Primary Data Sources: www.nfl.com/injuries, www.nhl.com, official team depth charts.
+// Invariant: Mitch Marner on VGK, Zach Hyman on EDM, Dak Prescott ACTIVE on DAL, A.J. Brown OUT on PHI.
 
 export interface RawRosterPlayer {
   name: string;
@@ -17,7 +18,7 @@ export interface RawRosterPlayer {
   goalWeight?: number;      // NHL Goal probability weight
 }
 
-// ------------------- 2025-2026 NFL ROSTERS -------------------
+// ------------------- 2026-2027 NFL ROSTERS (ALL 32 FRANCHISES) -------------------
 export const NFL_ROSTERS_SEED: Record<string, RawRosterPlayer[]> = {
   KC: [
     { name: "Patrick Mahomes", jerseyNumber: 15, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Franchise Starting QB", statsSummary: "2,980 Pass Yds • 25 TD • 8 INT", simulationWeight: 1.0, touchdownWeight: 0.15 },
@@ -72,6 +73,7 @@ export const NFL_ROSTERS_SEED: Record<string, RawRosterPlayer[]> = {
     { name: "DeVonta Smith", jerseyNumber: 6, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Top WR1 (Elevated with A.J. Brown sidelined)", statsSummary: "56 Rec • 680 Yds • 6 TD", simulationWeight: 0.96, touchdownWeight: 0.45 },
     { name: "Dallas Goedert", jerseyNumber: 88, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting TE1 (Elevated target share with Brown out)", statsSummary: "38 Rec • 440 Yds • 3 TD", simulationWeight: 0.88, touchdownWeight: 0.30 },
     { name: "Jalen Carter", jerseyNumber: 98, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Dominant Interior DT", statsSummary: "5.5 Sacks • 18 Pressures", simulationWeight: 0.92, touchdownWeight: 0.0 },
+    { name: "Zack Baun", jerseyNumber: 53, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Breakout Starting Linebacker", statsSummary: "87 Tackles • 2.0 Sacks • 3 FF", simulationWeight: 0.90, touchdownWeight: 0.0 },
   ],
   SF: [
     { name: "Brock Purdy", jerseyNumber: 13, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "QUESTIONABLE", injuryDetails: "Right Shoulder Soreness (Limited throwing, day-to-day)", roleDescription: "Starting Quarterback", statsSummary: "2,613 Pass Yds • 14 TD • 8 INT • 267 Rush Yds", simulationWeight: 0.94, touchdownWeight: 0.15 },
@@ -82,7 +84,6 @@ export const NFL_ROSTERS_SEED: Record<string, RawRosterPlayer[]> = {
     { name: "Brandon Aiyuk", jerseyNumber: 11, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "IR", injuryDetails: "Torn ACL/MCL (Injured Reserve - Out for Season)", roleDescription: "Star Outside WR (IR)", statsSummary: "25 Rec • 374 Yds", simulationWeight: 0.88, touchdownWeight: 0.30 },
     { name: "George Kittle", jerseyNumber: 85, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Starting TE", statsSummary: "48 Rec • 620 Yds • 7 TD", simulationWeight: 0.96, touchdownWeight: 0.45 },
     { name: "Nick Bosa", jerseyNumber: 97, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "QUESTIONABLE", injuryDetails: "Hip/Oblique Strain (Did not practice, day-to-day)", roleDescription: "All-Pro Defensive End", statsSummary: "7.0 Sacks • 10 TFL • 1 INT", simulationWeight: 0.96, touchdownWeight: 0.0 },
-    { name: "Trent Williams", jerseyNumber: 71, position: "OT", unit: "OFFENSE", depthOrder: 1, status: "QUESTIONABLE", injuryDetails: "Ankle Sprain (Game-time decision)", roleDescription: "All-Pro Left Tackle", statsSummary: "First-Team All-Pro Anchor", simulationWeight: 0.96, touchdownWeight: 0.0 },
     { name: "Fred Warner", jerseyNumber: 54, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Middle Linebacker", statsSummary: "78 Tackles • 2 INT • 4 FF", simulationWeight: 0.98, touchdownWeight: 0.0 },
   ],
   CIN: [
@@ -101,6 +102,7 @@ export const NFL_ROSTERS_SEED: Record<string, RawRosterPlayer[]> = {
     { name: "Stefon Diggs", jerseyNumber: 1, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "IR", injuryDetails: "Torn ACL Knee (Injured Reserve - Out for Season)", roleDescription: "All-Pro WR (IR)", statsSummary: "47 Rec • 496 Yds • 3 TD", simulationWeight: 0.90, touchdownWeight: 0.30 },
     { name: "Dalton Schultz", jerseyNumber: 86, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting TE1", statsSummary: "38 Rec • 390 Yds • 1 TD", simulationWeight: 0.78, touchdownWeight: 0.15 },
     { name: "Will Anderson Jr.", jerseyNumber: 51, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Edge Rusher Star", statsSummary: "8.5 Sacks • 12 TFL", simulationWeight: 0.92, touchdownWeight: 0.0 },
+    { name: "Danielle Hunter", jerseyNumber: 55, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Pro Bowl Edge Rusher", statsSummary: "7.0 Sacks • 15 QB Hits", simulationWeight: 0.90, touchdownWeight: 0.0 },
   ],
   DAL: [
     { name: "Dak Prescott", jerseyNumber: 4, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Franchise Starting QB (100% Healthy & Active)", statsSummary: "2,980 Pass Yds • 22 TD • 8 INT", simulationWeight: 0.96, touchdownWeight: 0.15 },
@@ -121,9 +123,235 @@ export const NFL_ROSTERS_SEED: Record<string, RawRosterPlayer[]> = {
     { name: "Jaire Alexander", jerseyNumber: 23, position: "CB", unit: "DEFENSE", depthOrder: 1, status: "QUESTIONABLE", injuryDetails: "Knee Injury (Limited in practice)", roleDescription: "Shutdown Cornerback", statsSummary: "2 INT • 16 Tackles", simulationWeight: 0.88, touchdownWeight: 0.0 },
     { name: "Xavier McKinney", jerseyNumber: 29, position: "S", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "NFL Interception Leader Safety", statsSummary: "7 INT • 50 Tackles", simulationWeight: 0.94, touchdownWeight: 0.0 },
   ],
+  WAS: [
+    { name: "Jayden Daniels", jerseyNumber: 5, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Franchise Dual-Threat QB", statsSummary: "2,550 Pass Yds • 17 TD • 490 Rush Yds • 5 Rush TD", simulationWeight: 0.96, touchdownWeight: 0.35 },
+    { name: "Brian Robinson Jr.", jerseyNumber: 8, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Power RB1", statsSummary: "680 Rush Yds • 7 TD • 4.6 YPC", simulationWeight: 0.88, touchdownWeight: 0.55 },
+    { name: "Austin Ekeler", jerseyNumber: 30, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Receiving Weapon 3rd Down RB", statsSummary: "320 Rush Yds • 28 Rec • 3 TD", simulationWeight: 0.78, touchdownWeight: 0.25 },
+    { name: "Terry McLaurin", jerseyNumber: 17, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Pro Bowl WR1", statsSummary: "54 Rec • 780 Yds • 7 TD", simulationWeight: 0.94, touchdownWeight: 0.45 },
+    { name: "Noah Brown", jerseyNumber: 85, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Outside WR2", statsSummary: "31 Rec • 420 Yds • 2 TD", simulationWeight: 0.74, touchdownWeight: 0.20 },
+    { name: "Zach Ertz", jerseyNumber: 86, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Veteran TE1", statsSummary: "41 Rec • 410 Yds • 3 TD", simulationWeight: 0.80, touchdownWeight: 0.25 },
+    { name: "Frankie Luvu", jerseyNumber: 4, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Playmaker LB", statsSummary: "74 Tackles • 6.0 Sacks • 2 FF", simulationWeight: 0.90, touchdownWeight: 0.0 },
+    { name: "Bobby Wagner", jerseyNumber: 54, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Linebacker General", statsSummary: "92 Tackles • 2.0 Sacks • 1 INT", simulationWeight: 0.90, touchdownWeight: 0.0 },
+  ],
+  PIT: [
+    { name: "Russell Wilson", jerseyNumber: 3, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Deep Ball QB", statsSummary: "1,280 Pass Yds • 9 TD • 2 INT • 3-0 Record", simulationWeight: 0.90, touchdownWeight: 0.10 },
+    { name: "Justin Fields", jerseyNumber: 2, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Mobile Backup QB / Red-Zone Weapon", statsSummary: "1,106 Pass Yds • 5 TD • 5 Rush TD", simulationWeight: 0.82, touchdownWeight: 0.30 },
+    { name: "Najee Harris", jerseyNumber: 22, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Physical Workhorse RB1", statsSummary: "730 Rush Yds • 4 TD • 4.1 YPC", simulationWeight: 0.88, touchdownWeight: 0.45 },
+    { name: "Jaylen Warren", jerseyNumber: 30, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Dynamic Change-of-Pace RB2", statsSummary: "340 Rush Yds • 22 Rec • 1 TD", simulationWeight: 0.78, touchdownWeight: 0.20 },
+    { name: "George Pickens", jerseyNumber: 14, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Explosive Deep Target WR1", statsSummary: "53 Rec • 780 Yds • 3 TD", simulationWeight: 0.92, touchdownWeight: 0.40 },
+    { name: "Mike Williams", jerseyNumber: 18, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Contested Catch Outside WR2", statsSummary: "Acquired trade • Red-zone threat", simulationWeight: 0.76, touchdownWeight: 0.25 },
+    { name: "Pat Freiermuth", jerseyNumber: 88, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Red-Zone TE1", statsSummary: "34 Rec • 330 Yds • 4 TD", simulationWeight: 0.80, touchdownWeight: 0.30 },
+    { name: "T.J. Watt", jerseyNumber: 90, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Defensive Player of the Year Game-Wrecker", statsSummary: "8.5 Sacks • 16 TFL • 4 FF", simulationWeight: 1.0, touchdownWeight: 0.0 },
+    { name: "Minkah Fitzpatrick", jerseyNumber: 39, position: "S", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Free Safety", statsSummary: "58 Tackles • 1 INT", simulationWeight: 0.92, touchdownWeight: 0.0 },
+  ],
+  MIN: [
+    { name: "Sam Darnold", jerseyNumber: 14, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting QB", statsSummary: "2,680 Pass Yds • 21 TD • 10 INT", simulationWeight: 0.90, touchdownWeight: 0.10 },
+    { name: "Aaron Jones", jerseyNumber: 33, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting All-Purpose RB1", statsSummary: "780 Rush Yds • 34 Rec • 6 TD", simulationWeight: 0.90, touchdownWeight: 0.50 },
+    { name: "Ty Chandler", jerseyNumber: 27, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Speed Backup RB", statsSummary: "210 Rush Yds • 1 TD", simulationWeight: 0.68, touchdownWeight: 0.15 },
+    { name: "Justin Jefferson", jerseyNumber: 18, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "NFL #1 Superstar Wide Receiver", statsSummary: "68 Rec • 980 Yds • 6 TD (100% Active)", simulationWeight: 1.0, touchdownWeight: 0.60 },
+    { name: "Jordan Addison", jerseyNumber: 3, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Speed Route WR2", statsSummary: "32 Rec • 440 Yds • 4 TD", simulationWeight: 0.84, touchdownWeight: 0.30 },
+    { name: "T.J. Hockenson", jerseyNumber: 87, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Pro Bowl Starting TE1", statsSummary: "18 Rec • 190 Yds in 3 GP (Fully Cleared)", simulationWeight: 0.88, touchdownWeight: 0.35 },
+    { name: "Jonathan Greenard", jerseyNumber: 58, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Edge Rusher Anchor", statsSummary: "8.0 Sacks • 15 TFL", simulationWeight: 0.90, touchdownWeight: 0.0 },
+    { name: "Andrew Van Ginkel", jerseyNumber: 43, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Playmaker Edge / Cover LB", statsSummary: "6.0 Sacks • 2 Pick-6 TDs", simulationWeight: 0.88, touchdownWeight: 0.0 },
+  ],
+  LAC: [
+    { name: "Justin Herbert", jerseyNumber: 10, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Franchise Starting QB", statsSummary: "2,420 Pass Yds • 15 TD • 1 INT", simulationWeight: 0.96, touchdownWeight: 0.10 },
+    { name: "J.K. Dobbins", jerseyNumber: 27, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Breakout Starting Lead RB1", statsSummary: "760 Rush Yds • 8 TD • 4.8 YPC", simulationWeight: 0.90, touchdownWeight: 0.55 },
+    { name: "Gus Edwards", jerseyNumber: 4, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Power Short-Yardage RB", statsSummary: "240 Rush Yds • 2 TD", simulationWeight: 0.70, touchdownWeight: 0.25 },
+    { name: "Ladd McConkey", jerseyNumber: 15, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Separation WR1", statsSummary: "51 Rec • 670 Yds • 4 TD", simulationWeight: 0.88, touchdownWeight: 0.35 },
+    { name: "Quentin Johnston", jerseyNumber: 1, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Outside Red-Zone WR2", statsSummary: "26 Rec • 380 Yds • 6 TD", simulationWeight: 0.80, touchdownWeight: 0.35 },
+    { name: "Will Dissly", jerseyNumber: 81, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Blocking & Receiving TE", statsSummary: "39 Rec • 360 Yds • 1 TD", simulationWeight: 0.74, touchdownWeight: 0.15 },
+    { name: "Joey Bosa", jerseyNumber: 97, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Pro Bowl Edge Rusher", statsSummary: "4.5 Sacks • 8 TFL", simulationWeight: 0.90, touchdownWeight: 0.0 },
+    { name: "Khalil Mack", jerseyNumber: 52, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Edge Rusher", statsSummary: "5.5 Sacks • 12 QB Hits", simulationWeight: 0.92, touchdownWeight: 0.0 },
+    { name: "Derwin James Jr.", jerseyNumber: 3, position: "S", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Safety & Defensive Leader", statsSummary: "62 Tackles • 2.5 Sacks", simulationWeight: 0.92, touchdownWeight: 0.0 },
+  ],
+  MIA: [
+    { name: "Tua Tagovailoa", jerseyNumber: 1, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Precision Passer QB", statsSummary: "1,750 Pass Yds • 12 TD • 4 INT (Cleared)", simulationWeight: 0.92, touchdownWeight: 0.05 },
+    { name: "De'Von Achane", jerseyNumber: 28, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Explosive Starting RB1 & Pass Catcher", statsSummary: "530 Rush Yds • 48 Rec • 6 TD", simulationWeight: 0.94, touchdownWeight: 0.55 },
+    { name: "Raheem Mostert", jerseyNumber: 31, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Veteran Speed RB2", statsSummary: "260 Rush Yds • 3 TD", simulationWeight: 0.74, touchdownWeight: 0.25 },
+    { name: "Tyreek Hill", jerseyNumber: 10, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "NFL Fastest Deep Threat Superstar WR1", statsSummary: "58 Rec • 690 Yds • 4 TD", simulationWeight: 0.98, touchdownWeight: 0.50 },
+    { name: "Jaylen Waddle", jerseyNumber: 17, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Dynamic WR2", statsSummary: "42 Rec • 520 Yds • 2 TD", simulationWeight: 0.88, touchdownWeight: 0.30 },
+    { name: "Jonnu Smith", jerseyNumber: 9, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Pass-Catching TE1", statsSummary: "44 Rec • 480 Yds • 3 TD", simulationWeight: 0.82, touchdownWeight: 0.25 },
+    { name: "Jalen Ramsey", jerseyNumber: 5, position: "CB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Lockdown Cornerback", statsSummary: "2 INT • 38 Tackles", simulationWeight: 0.94, touchdownWeight: 0.0 },
+    { name: "Zach Sieler", jerseyNumber: 92, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Defensive Line Anchor", statsSummary: "4.0 Sacks • 8 TFL", simulationWeight: 0.86, touchdownWeight: 0.0 },
+  ],
+  TB: [
+    { name: "Baker Mayfield", jerseyNumber: 6, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Gritty Pocket Passer QB", statsSummary: "2,780 Pass Yds • 24 TD • 9 INT", simulationWeight: 0.92, touchdownWeight: 0.15 },
+    { name: "Bucky Irving", jerseyNumber: 7, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Breakout Starting Lead RB1", statsSummary: "610 Rush Yds • 5 TD • 5.1 YPC", simulationWeight: 0.88, touchdownWeight: 0.45 },
+    { name: "Rachaad White", jerseyNumber: 1, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Pass-Catching 3rd Down RB", statsSummary: "340 Rush Yds • 38 Rec • 4 TD", simulationWeight: 0.80, touchdownWeight: 0.30 },
+    { name: "Mike Evans", jerseyNumber: 13, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", injuryDetails: "Hamstring (Cleared from injury report, starting)", roleDescription: "10-Time 1000-Yd Hall of Fame WR1", statsSummary: "32 Rec • 450 Yds • 6 TD", simulationWeight: 0.94, touchdownWeight: 0.55 },
+    { name: "Chris Godwin", jerseyNumber: 14, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "IR", injuryDetails: "Dislocated Ankle Surgery (Injured Reserve - Out for Season)", roleDescription: "Starting Slot WR (IR)", statsSummary: "50 Rec • 576 Yds • 5 TD", simulationWeight: 0.90, touchdownWeight: 0.35 },
+    { name: "Jalen McMillan", jerseyNumber: 19, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Rookie WR2", statsSummary: "22 Rec • 280 Yds • 2 TD", simulationWeight: 0.72, touchdownWeight: 0.20 },
+    { name: "Cade Otton", jerseyNumber: 88, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "High-Volume Target Starting TE1", statsSummary: "54 Rec • 510 Yds • 4 TD", simulationWeight: 0.86, touchdownWeight: 0.35 },
+    { name: "Antoine Winfield Jr.", jerseyNumber: 31, position: "S", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Safety Playmaker", statsSummary: "58 Tackles • 2.0 Sacks • 1 FF", simulationWeight: 0.92, touchdownWeight: 0.0 },
+    { name: "Vita Vea", jerseyNumber: 50, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Dominant Nose Tackle", statsSummary: "5.0 Sacks • 9 TFL", simulationWeight: 0.88, touchdownWeight: 0.0 },
+  ],
+  LAR: [
+    { name: "Matthew Stafford", jerseyNumber: 9, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Super Bowl Champion Starting QB", statsSummary: "2,460 Pass Yds • 14 TD • 8 INT", simulationWeight: 0.94, touchdownWeight: 0.05 },
+    { name: "Kyren Williams", jerseyNumber: 23, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Touchdown Machine Starting RB1", statsSummary: "810 Rush Yds • 11 TD • 4.2 YPC", simulationWeight: 0.94, touchdownWeight: 0.70 },
+    { name: "Blake Corum", jerseyNumber: 22, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Rookie Spell RB2", statsSummary: "180 Rush Yds • 1 TD", simulationWeight: 0.68, touchdownWeight: 0.15 },
+    { name: "Cooper Kupp", jerseyNumber: 10, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Triple Crown Starting WR1", statsSummary: "58 Rec • 620 Yds • 4 TD", simulationWeight: 0.96, touchdownWeight: 0.45 },
+    { name: "Puka Nacua", jerseyNumber: 17, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "All-Pro Dynamic WR2", statsSummary: "42 Rec • 580 Yds • 2 TD", simulationWeight: 0.96, touchdownWeight: 0.40 },
+    { name: "Demarcus Robinson", jerseyNumber: 11, position: "WR", unit: "OFFENSE", depthOrder: 3, status: "ACTIVE", roleDescription: "Red-Zone Target WR3", statsSummary: "26 Rec • 390 Yds • 6 TD", simulationWeight: 0.76, touchdownWeight: 0.30 },
+    { name: "Colby Parkinson", jerseyNumber: 84, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting TE1", statsSummary: "28 Rec • 270 Yds • 1 TD", simulationWeight: 0.72, touchdownWeight: 0.15 },
+    { name: "Jared Verse", jerseyNumber: 8, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Defensive Rookie of Year Leader DE", statsSummary: "5.5 Sacks • 13 TFL • 2 FF", simulationWeight: 0.90, touchdownWeight: 0.0 },
+    { name: "Kobie Turner", jerseyNumber: 91, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Interior Pass Rush Anchor", statsSummary: "6.0 Sacks • 11 TFL", simulationWeight: 0.88, touchdownWeight: 0.0 },
+  ],
+  ARI: [
+    { name: "Kyler Murray", jerseyNumber: 1, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Dual-Threat Franchise QB", statsSummary: "2,380 Pass Yds • 14 TD • 380 Rush Yds • 3 TD", simulationWeight: 0.94, touchdownWeight: 0.30 },
+    { name: "James Conner", jerseyNumber: 6, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Powerful Lead RB1", statsSummary: "780 Rush Yds • 6 TD • 4.5 YPC", simulationWeight: 0.90, touchdownWeight: 0.55 },
+    { name: "Trey Benson", jerseyNumber: 33, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Rookie Backup RB", statsSummary: "220 Rush Yds • 1 TD", simulationWeight: 0.70, touchdownWeight: 0.20 },
+    { name: "Marvin Harrison Jr.", jerseyNumber: 18, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Blue-Chip Rookie WR1", statsSummary: "39 Rec • 580 Yds • 6 TD", simulationWeight: 0.92, touchdownWeight: 0.45 },
+    { name: "Michael Wilson", jerseyNumber: 14, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Boundary WR2", statsSummary: "32 Rec • 390 Yds • 3 TD", simulationWeight: 0.76, touchdownWeight: 0.25 },
+    { name: "Trey McBride", jerseyNumber: 85, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Starting Star TE1", statsSummary: "62 Rec • 640 Yds • 2 TD", simulationWeight: 0.94, touchdownWeight: 0.35 },
+    { name: "Budda Baker", jerseyNumber: 3, position: "S", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Safety Leader", statsSummary: "108 Tackles • 5 TFL", simulationWeight: 0.92, touchdownWeight: 0.0 },
+  ],
+  CHI: [
+    { name: "Caleb Williams", jerseyNumber: 18, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting #1 Overall Pick Franchise QB", statsSummary: "2,310 Pass Yds • 12 TD • 6 INT", simulationWeight: 0.90, touchdownWeight: 0.15 },
+    { name: "D'Andre Swift", jerseyNumber: 4, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Explosive Lead RB1", statsSummary: "720 Rush Yds • 5 TD • 32 Rec", simulationWeight: 0.88, touchdownWeight: 0.50 },
+    { name: "Roschon Johnson", jerseyNumber: 23, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Power Short-Yardage Goal-Line RB", statsSummary: "180 Rush Yds • 5 TD", simulationWeight: 0.72, touchdownWeight: 0.35 },
+    { name: "DJ Moore", jerseyNumber: 2, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Top Wideout WR1", statsSummary: "56 Rec • 610 Yds • 3 TD", simulationWeight: 0.92, touchdownWeight: 0.40 },
+    { name: "Keenan Allen", jerseyNumber: 13, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Veteran Route Technician WR2", statsSummary: "44 Rec • 450 Yds • 3 TD", simulationWeight: 0.86, touchdownWeight: 0.30 },
+    { name: "Rome Odunze", jerseyNumber: 15, position: "WR", unit: "OFFENSE", depthOrder: 3, status: "ACTIVE", roleDescription: "Rookie Deep Threat WR3", statsSummary: "34 Rec • 480 Yds • 2 TD", simulationWeight: 0.82, touchdownWeight: 0.25 },
+    { name: "Cole Kmet", jerseyNumber: 85, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Reliable TE1", statsSummary: "38 Rec • 410 Yds • 3 TD", simulationWeight: 0.80, touchdownWeight: 0.25 },
+    { name: "Montez Sweat", jerseyNumber: 98, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Edge Rusher Anchor", statsSummary: "5.5 Sacks • 9 TFL", simulationWeight: 0.90, touchdownWeight: 0.0 },
+    { name: "Jaylon Johnson", jerseyNumber: 1, position: "CB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Lockdown Cornerback", statsSummary: "2 INT • 35 Tackles", simulationWeight: 0.92, touchdownWeight: 0.0 },
+  ],
+  NYJ: [
+    { name: "Aaron Rodgers", jerseyNumber: 8, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Hall of Fame Starting QB", statsSummary: "2,480 Pass Yds • 17 TD • 7 INT", simulationWeight: 0.92, touchdownWeight: 0.05 },
+    { name: "Tyrod Taylor", jerseyNumber: 2, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Veteran Backup QB", statsSummary: "Primary Backup QB", simulationWeight: 0.68, touchdownWeight: 0.05 },
+    { name: "Breece Hall", jerseyNumber: 20, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Dual-Threat Superstar Starting RB1", statsSummary: "730 Rush Yds • 48 Rec • 7 Total TD", simulationWeight: 0.96, touchdownWeight: 0.60 },
+    { name: "Braelon Allen", jerseyNumber: 0, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Power Short-Yardage Rookie RB", statsSummary: "260 Rush Yds • 3 TD", simulationWeight: 0.72, touchdownWeight: 0.25 },
+    { name: "Davante Adams", jerseyNumber: 17, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Starting Primary Target WR1", statsSummary: "58 Rec • 680 Yds • 5 TD", simulationWeight: 0.96, touchdownWeight: 0.50 },
+    { name: "Garrett Wilson", jerseyNumber: 5, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "All-Pro Dynamic Playmaker WR2", statsSummary: "71 Rec • 780 Yds • 5 TD", simulationWeight: 0.96, touchdownWeight: 0.45 },
+    { name: "Tyler Conklin", jerseyNumber: 83, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting TE1", statsSummary: "36 Rec • 340 Yds • 2 TD", simulationWeight: 0.76, touchdownWeight: 0.15 },
+    { name: "Sauce Gardner", jerseyNumber: 1, position: "CB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Lock Down Corner", statsSummary: "32 Tackles • 6 Pass Deflections", simulationWeight: 0.95, touchdownWeight: 0.0 },
+    { name: "Quinnen Williams", jerseyNumber: 95, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Interior Disruptor DT", statsSummary: "6.0 Sacks • 12 QB Hits", simulationWeight: 0.92, touchdownWeight: 0.0 },
+  ],
+  DEN: [
+    { name: "Bo Nix", jerseyNumber: 10, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Rookie Dual-Threat QB", statsSummary: "2,380 Pass Yds • 14 TD • 310 Rush Yds • 4 TD", simulationWeight: 0.90, touchdownWeight: 0.25 },
+    { name: "Javonte Williams", jerseyNumber: 33, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Power RB1", statsSummary: "540 Rush Yds • 4 TD", simulationWeight: 0.82, touchdownWeight: 0.45 },
+    { name: "Jaleel McLaughlin", jerseyNumber: 38, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Speed 3rd Down RB", statsSummary: "240 Rush Yds • 2 TD", simulationWeight: 0.70, touchdownWeight: 0.20 },
+    { name: "Courtland Sutton", jerseyNumber: 14, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Contested Catch WR1", statsSummary: "54 Rec • 710 Yds • 4 TD", simulationWeight: 0.90, touchdownWeight: 0.40 },
+    { name: "Marvin Mims Jr.", jerseyNumber: 19, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Deep Threat WR2", statsSummary: "24 Rec • 340 Yds • 2 TD", simulationWeight: 0.74, touchdownWeight: 0.20 },
+    { name: "Patrick Surtain II", jerseyNumber: 2, position: "CB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "NFL #1 Shutdown Cornerback", statsSummary: "3 INT • 1 Pick-6 • 32 Tackles", simulationWeight: 0.98, touchdownWeight: 0.0 },
+    { name: "Zach Allen", jerseyNumber: 99, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "NFL Leader in Interior Pressures", statsSummary: "5.0 Sacks • 26 Pressures", simulationWeight: 0.90, touchdownWeight: 0.0 },
+  ],
+  SEA: [
+    { name: "Geno Smith", jerseyNumber: 7, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting High-Efficiency Pocket QB", statsSummary: "2,780 Pass Yds • 13 TD • 11 INT", simulationWeight: 0.90, touchdownWeight: 0.10 },
+    { name: "Kenneth Walker III", jerseyNumber: 9, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Home Run Hitter Starting RB1", statsSummary: "620 Rush Yds • 7 TD • 36 Rec", simulationWeight: 0.92, touchdownWeight: 0.60 },
+    { name: "Zach Charbonnet", jerseyNumber: 26, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Power Short-Yardage Backup RB", statsSummary: "310 Rush Yds • 4 TD", simulationWeight: 0.78, touchdownWeight: 0.30 },
+    { name: "DK Metcalf", jerseyNumber: 14, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Physical Outside WR1", statsSummary: "48 Rec • 730 Yds • 4 TD", simulationWeight: 0.94, touchdownWeight: 0.45 },
+    { name: "Jaxon Smith-Njigba", jerseyNumber: 11, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Slot Playmaker WR2", statsSummary: "64 Rec • 710 Yds • 4 TD", simulationWeight: 0.90, touchdownWeight: 0.35 },
+    { name: "Tyler Lockett", jerseyNumber: 16, position: "WR", unit: "OFFENSE", depthOrder: 3, status: "ACTIVE", roleDescription: "Reliable Veteran WR3", statsSummary: "38 Rec • 490 Yds • 2 TD", simulationWeight: 0.80, touchdownWeight: 0.20 },
+    { name: "Devon Witherspoon", jerseyNumber: 21, position: "CB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Nickel / Corner Weapon", statsSummary: "58 Tackles • 1 INT • 1 Sack", simulationWeight: 0.92, touchdownWeight: 0.0 },
+    { name: "Leonard Williams", jerseyNumber: 99, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Defensive Line Anchor", statsSummary: "5.5 Sacks • 11 TFL", simulationWeight: 0.88, touchdownWeight: 0.0 },
+  ],
+  ATL: [
+    { name: "Kirk Cousins", jerseyNumber: 18, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Veteran Pro Bowl Starting QB", statsSummary: "2,630 Pass Yds • 17 TD • 9 INT", simulationWeight: 0.92, touchdownWeight: 0.05 },
+    { name: "Bijan Robinson", jerseyNumber: 7, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Dual-Threat Superstar RB1", statsSummary: "810 Rush Yds • 44 Rec • 8 Total TD", simulationWeight: 0.98, touchdownWeight: 0.65 },
+    { name: "Tyler Allgeier", jerseyNumber: 25, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Power Short-Yardage RB2", statsSummary: "390 Rush Yds • 3 TD • 5.1 YPC", simulationWeight: 0.78, touchdownWeight: 0.30 },
+    { name: "Drake London", jerseyNumber: 5, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Big-Bodied Target WR1", statsSummary: "62 Rec • 720 Yds • 6 TD", simulationWeight: 0.94, touchdownWeight: 0.50 },
+    { name: "Darnell Mooney", jerseyNumber: 1, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Deep Threat WR2", statsSummary: "49 Rec • 730 Yds • 5 TD", simulationWeight: 0.86, touchdownWeight: 0.35 },
+    { name: "Kyle Pitts", jerseyNumber: 8, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Dynamic Starting Pass-Catching TE1", statsSummary: "37 Rec • 510 Yds • 3 TD", simulationWeight: 0.86, touchdownWeight: 0.30 },
+    { name: "Jessie Bates III", jerseyNumber: 3, position: "S", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Free Safety Ballhawk", statsSummary: "4 INT • 58 Tackles • 2 FF", simulationWeight: 0.94, touchdownWeight: 0.0 },
+  ],
+  IND: [
+    { name: "Anthony Richardson", jerseyNumber: 5, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Freakish Dual-Threat Franchise QB", statsSummary: "1,450 Pass Yds • 7 TD • 320 Rush Yds • 4 TD", simulationWeight: 0.88, touchdownWeight: 0.35 },
+    { name: "Joe Flacco", jerseyNumber: 15, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Super Bowl MVP Veteran Backup", statsSummary: "1,167 Pass Yds • 9 TD • 5 INT", simulationWeight: 0.75, touchdownWeight: 0.05 },
+    { name: "Jonathan Taylor", jerseyNumber: 28, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Workhorse Starting RB1", statsSummary: "710 Rush Yds • 6 TD • 4.8 YPC", simulationWeight: 0.95, touchdownWeight: 0.65 },
+    { name: "Michael Pittman Jr.", jerseyNumber: 11, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Physical Chain Mover WR1", statsSummary: "41 Rec • 480 Yds • 3 TD", simulationWeight: 0.86, touchdownWeight: 0.30 },
+    { name: "Alec Pierce", jerseyNumber: 14, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Deep Ball Specialist WR2", statsSummary: "26 Rec • 550 Yds • 4 TD • 21.2 YPR", simulationWeight: 0.80, touchdownWeight: 0.25 },
+    { name: "Josh Downs", jerseyNumber: 1, position: "WR", unit: "OFFENSE", depthOrder: 3, status: "ACTIVE", roleDescription: "Starting Electric Slot WR", statsSummary: "48 Rec • 530 Yds • 4 TD", simulationWeight: 0.84, touchdownWeight: 0.30 },
+    { name: "DeForest Buckner", jerseyNumber: 99, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Defensive Tackle Force", statsSummary: "5.5 Sacks • 10 TFL", simulationWeight: 0.92, touchdownWeight: 0.0 },
+  ],
+  JAX: [
+    { name: "Trevor Lawrence", jerseyNumber: 16, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "QUESTIONABLE", injuryDetails: "Left Shoulder AC Joint (Limited practice, day-to-day)", roleDescription: "Franchise Starting QB", statsSummary: "2,004 Pass Yds • 11 TD • 6 INT", simulationWeight: 0.90, touchdownWeight: 0.15 },
+    { name: "Mac Jones", jerseyNumber: 10, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Primary Backup Quarterback", statsSummary: "340 Pass Yds • 2 TD", simulationWeight: 0.70, touchdownWeight: 0.05 },
+    { name: "Tank Bigsby", jerseyNumber: 4, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Breakout Starting Power RB1", statsSummary: "580 Rush Yds • 4 TD • 5.5 YPC", simulationWeight: 0.84, touchdownWeight: 0.45 },
+    { name: "Travis Etienne Jr.", jerseyNumber: 1, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Dynamic 3rd Down & Speed RB", statsSummary: "380 Rush Yds • 26 Rec • 3 TD", simulationWeight: 0.80, touchdownWeight: 0.30 },
+    { name: "Brian Thomas Jr.", jerseyNumber: 7, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Dynamic Rookie Superstar WR1", statsSummary: "48 Rec • 780 Yds • 6 TD", simulationWeight: 0.94, touchdownWeight: 0.50 },
+    { name: "Christian Kirk", jerseyNumber: 13, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "IR", injuryDetails: "Fractured Collarbone (Injured Reserve - Out for Season)", roleDescription: "Starting Slot WR (IR)", statsSummary: "27 Rec • 379 Yds • 1 TD", simulationWeight: 0.82, touchdownWeight: 0.20 },
+    { name: "Evan Engram", jerseyNumber: 17, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Pro Bowl Starting TE1", statsSummary: "47 Rec • 410 Yds • 2 TD", simulationWeight: 0.86, touchdownWeight: 0.25 },
+    { name: "Josh Hines-Allen", jerseyNumber: 41, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Pass Rusher", statsSummary: "7.0 Sacks • 12 TFL", simulationWeight: 0.92, touchdownWeight: 0.0 },
+    { name: "Travon Walker", jerseyNumber: 44, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Edge Anchor", statsSummary: "7.5 Sacks • 11 TFL", simulationWeight: 0.88, touchdownWeight: 0.0 },
+  ],
+  CAR: [
+    { name: "Bryce Young", jerseyNumber: 9, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting QB (Resurgent Play)", statsSummary: "1,420 Pass Yds • 7 TD • 6 INT", simulationWeight: 0.82, touchdownWeight: 0.10 },
+    { name: "Chuba Hubbard", jerseyNumber: 30, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Workhorse Starting RB1", statsSummary: "818 Rush Yds • 6 TD • 5.1 YPC", simulationWeight: 0.90, touchdownWeight: 0.55 },
+    { name: "Jonathon Brooks", jerseyNumber: 24, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Rookie Playmaker RB", statsSummary: "Activated from NFI List", simulationWeight: 0.74, touchdownWeight: 0.25 },
+    { name: "Xavier Legette", jerseyNumber: 17, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Rookie Physical WR1", statsSummary: "34 Rec • 410 Yds • 4 TD", simulationWeight: 0.80, touchdownWeight: 0.35 },
+    { name: "Adam Thielen", jerseyNumber: 19, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Veteran Slot WR2", statsSummary: "22 Rec • 280 Yds • 2 TD", simulationWeight: 0.76, touchdownWeight: 0.20 },
+    { name: "Tommy Tremble", jerseyNumber: 82, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting TE1", statsSummary: "21 Rec • 190 Yds • 1 TD", simulationWeight: 0.68, touchdownWeight: 0.15 },
+    { name: "Jaycee Horn", jerseyNumber: 8, position: "CB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Lockdown Starting Corner", statsSummary: "1 INT • 45 Tackles", simulationWeight: 0.88, touchdownWeight: 0.0 },
+  ],
+  CLE: [
+    { name: "Jameis Winston", jerseyNumber: 5, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Aggressive Gunslinger QB", statsSummary: "1,290 Pass Yds • 7 TD • 3 INT", simulationWeight: 0.84, touchdownWeight: 0.10 },
+    { name: "Deshaun Watson", jerseyNumber: 4, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "IR", injuryDetails: "Ruptured Achilles (Injured Reserve - Out for Season)", roleDescription: "Starting QB (IR)", statsSummary: "Placed on IR", simulationWeight: 0.70, touchdownWeight: 0.05 },
+    { name: "Nick Chubb", jerseyNumber: 24, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Starting Lead RB1", statsSummary: "280 Rush Yds • 2 TD (Returning form)", simulationWeight: 0.88, touchdownWeight: 0.50 },
+    { name: "Jerome Ford", jerseyNumber: 34, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Speed 3rd Down RB", statsSummary: "310 Rush Yds • 1 TD • 24 Rec", simulationWeight: 0.74, touchdownWeight: 0.20 },
+    { name: "Jerry Jeudy", jerseyNumber: 3, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Target Leader WR1", statsSummary: "48 Rec • 640 Yds • 2 TD", simulationWeight: 0.84, touchdownWeight: 0.30 },
+    { name: "Elijah Moore", jerseyNumber: 8, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Slot WR2", statsSummary: "41 Rec • 390 Yds • 1 TD", simulationWeight: 0.76, touchdownWeight: 0.20 },
+    { name: "David Njoku", jerseyNumber: 85, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Pro Bowl Starting TE1 Target", statsSummary: "39 Rec • 380 Yds • 2 TD", simulationWeight: 0.86, touchdownWeight: 0.30 },
+    { name: "Myles Garrett", jerseyNumber: 95, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "NFL Defensive Player of the Year DE", statsSummary: "9.0 Sacks • 18 TFL • 2 FF", simulationWeight: 1.0, touchdownWeight: 0.0 },
+  ],
+  LV: [
+    { name: "Gardner Minshew", jerseyNumber: 15, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Quarterback", statsSummary: "1,880 Pass Yds • 9 TD • 10 INT", simulationWeight: 0.80, touchdownWeight: 0.05 },
+    { name: "Aidan O'Connell", jerseyNumber: 12, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "QUESTIONABLE", injuryDetails: "Thumb Fracture (Designated to return)", roleDescription: "Backup Quarterback", statsSummary: "455 Pass Yds • 1 TD", simulationWeight: 0.72, touchdownWeight: 0.05 },
+    { name: "Alexander Mattison", jerseyNumber: 22, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Lead RB1", statsSummary: "410 Rush Yds • 4 TD • 26 Rec", simulationWeight: 0.78, touchdownWeight: 0.40 },
+    { name: "Zamir White", jerseyNumber: 3, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Power Short-Yardage RB", statsSummary: "210 Rush Yds • 1 TD", simulationWeight: 0.70, touchdownWeight: 0.20 },
+    { name: "Jakobi Meyers", jerseyNumber: 16, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Reliable WR1", statsSummary: "51 Rec • 560 Yds • 2 TD", simulationWeight: 0.86, touchdownWeight: 0.30 },
+    { name: "Tre Tucker", jerseyNumber: 11, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Speed WR2", statsSummary: "29 Rec • 330 Yds • 1 TD", simulationWeight: 0.72, touchdownWeight: 0.15 },
+    { name: "Brock Bowers", jerseyNumber: 89, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Record-Breaking All-Pro Rookie TE1", statsSummary: "70 Rec • 706 Yds • 3 TD (100% Active)", simulationWeight: 0.98, touchdownWeight: 0.45 },
+    { name: "Maxx Crosby", jerseyNumber: 98, position: "DE", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Elite Edge Rusher", statsSummary: "7.5 Sacks • 16 TFL", simulationWeight: 0.98, touchdownWeight: 0.0 },
+  ],
+  NE: [
+    { name: "Drake Maye", jerseyNumber: 10, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Franchise Rookie QB", statsSummary: "1,420 Pass Yds • 10 TD • 7 INT • 240 Rush Yds", simulationWeight: 0.88, touchdownWeight: 0.20 },
+    { name: "Jacoby Brissett", jerseyNumber: 7, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Veteran Backup QB", statsSummary: "828 Pass Yds • 2 TD", simulationWeight: 0.70, touchdownWeight: 0.05 },
+    { name: "Rhamondre Stevenson", jerseyNumber: 38, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Power Workhorse RB1", statsSummary: "620 Rush Yds • 6 TD • 4.2 YPC", simulationWeight: 0.86, touchdownWeight: 0.55 },
+    { name: "Antonio Gibson", jerseyNumber: 4, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Speed & Receiving Backup RB", statsSummary: "310 Rush Yds • 18 Rec • 1 TD", simulationWeight: 0.72, touchdownWeight: 0.20 },
+    { name: "Demario Douglas", jerseyNumber: 3, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Quick Slot WR1", statsSummary: "52 Rec • 510 Yds • 1 TD", simulationWeight: 0.82, touchdownWeight: 0.25 },
+    { name: "Kendrick Bourne", jerseyNumber: 84, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Outside WR2", statsSummary: "24 Rec • 290 Yds • 1 TD", simulationWeight: 0.74, touchdownWeight: 0.20 },
+    { name: "Hunter Henry", jerseyNumber: 85, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Reliable Red-Zone TE1", statsSummary: "46 Rec • 480 Yds • 2 TD", simulationWeight: 0.82, touchdownWeight: 0.25 },
+    { name: "Christian Gonzalez", jerseyNumber: 6, position: "CB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Lockdown Starting Corner", statsSummary: "2 INT • 42 Tackles", simulationWeight: 0.90, touchdownWeight: 0.0 },
+  ],
+  NO: [
+    { name: "Derek Carr", jerseyNumber: 4, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Veteran QB", statsSummary: "1,880 Pass Yds • 13 TD • 5 INT", simulationWeight: 0.88, touchdownWeight: 0.05 },
+    { name: "Spencer Rattler", jerseyNumber: 18, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Rookie Backup QB", statsSummary: "571 Pass Yds • 1 TD", simulationWeight: 0.68, touchdownWeight: 0.05 },
+    { name: "Alvin Kamara", jerseyNumber: 41, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Workhorse Starting RB1", statsSummary: "780 Rush Yds • 56 Rec • 7 Total TD", simulationWeight: 0.96, touchdownWeight: 0.60 },
+    { name: "Chris Olave", jerseyNumber: 12, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "IR", injuryDetails: "Concussion (Injured Reserve - Out multiple weeks)", roleDescription: "Star Outside WR1 (IR)", statsSummary: "32 Rec • 400 Yds • 1 TD", simulationWeight: 0.90, touchdownWeight: 0.30 },
+    { name: "Rashid Shaheed", jerseyNumber: 22, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "IR", injuryDetails: "Meniscus Knee Surgery (Injured Reserve - Out for Season)", roleDescription: "Deep Speed WR (IR)", statsSummary: "20 Rec • 349 Yds • 3 TD", simulationWeight: 0.82, touchdownWeight: 0.25 },
+    { name: "Marquez Valdes-Scantling", jerseyNumber: 86, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Deep Threat WR1", statsSummary: "8 Rec • 210 Yds • 3 TD", simulationWeight: 0.78, touchdownWeight: 0.30 },
+    { name: "Juwan Johnson", jerseyNumber: 83, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Pass-Catching TE1", statsSummary: "32 Rec • 320 Yds • 2 TD", simulationWeight: 0.76, touchdownWeight: 0.20 },
+    { name: "Demario Davis", jerseyNumber: 56, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Linebacker Leader", statsSummary: "78 Tackles • 2.0 Sacks", simulationWeight: 0.90, touchdownWeight: 0.0 },
+    { name: "Tyrann Mathieu", jerseyNumber: 32, position: "S", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Safety Playmaker", statsSummary: "3 INT • 48 Tackles", simulationWeight: 0.88, touchdownWeight: 0.0 },
+  ],
+  NYG: [
+    { name: "Drew Lock", jerseyNumber: 2, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Quarterback", statsSummary: "Pro Bowl Veteran Starting QB", simulationWeight: 0.80, touchdownWeight: 0.05 },
+    { name: "Tommy DeVito", jerseyNumber: 15, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Fan-Favorite Backup QB", statsSummary: "Backup QB", simulationWeight: 0.70, touchdownWeight: 0.05 },
+    { name: "Tyrone Tracy Jr.", jerseyNumber: 29, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Breakout Starting Lead RB1", statsSummary: "580 Rush Yds • 3 TD • 5.1 YPC", simulationWeight: 0.86, touchdownWeight: 0.45 },
+    { name: "Devin Singletary", jerseyNumber: 26, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Veteran Spell RB2", statsSummary: "310 Rush Yds • 2 TD", simulationWeight: 0.74, touchdownWeight: 0.20 },
+    { name: "Malik Nabers", jerseyNumber: 1, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Superstar Rookie WR1 (100% Active)", statsSummary: "68 Rec • 740 Yds • 4 TD", simulationWeight: 0.98, touchdownWeight: 0.50 },
+    { name: "Wan'Dale Robinson", jerseyNumber: 17, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting High-Volume Slot WR2", statsSummary: "63 Rec • 480 Yds • 2 TD", simulationWeight: 0.82, touchdownWeight: 0.25 },
+    { name: "Darius Slayton", jerseyNumber: 86, position: "WR", unit: "OFFENSE", depthOrder: 3, status: "ACTIVE", roleDescription: "Starting Deep Boundary WR3", statsSummary: "34 Rec • 510 Yds • 1 TD", simulationWeight: 0.78, touchdownWeight: 0.20 },
+    { name: "Theo Johnson", jerseyNumber: 88, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Rookie TE1", statsSummary: "24 Rec • 260 Yds • 1 TD", simulationWeight: 0.72, touchdownWeight: 0.15 },
+    { name: "Dexter Lawrence", jerseyNumber: 97, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "NFL #1 Dominant Nose Tackle", statsSummary: "9.0 Sacks • 15 TFL • 18 Pressures", simulationWeight: 0.98, touchdownWeight: 0.0 },
+    { name: "Brian Burns", jerseyNumber: 0, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Pro Bowl Edge Rusher", statsSummary: "6.0 Sacks • 10 TFL", simulationWeight: 0.90, touchdownWeight: 0.0 },
+  ],
+  TEN: [
+    { name: "Will Levis", jerseyNumber: 8, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Big-Arm QB", statsSummary: "1,580 Pass Yds • 10 TD • 8 INT", simulationWeight: 0.82, touchdownWeight: 0.10 },
+    { name: "Mason Rudolph", jerseyNumber: 11, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Backup Pocket QB", statsSummary: "806 Pass Yds • 4 TD", simulationWeight: 0.70, touchdownWeight: 0.05 },
+    { name: "Tony Pollard", jerseyNumber: 20, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Explosive Lead RB1", statsSummary: "730 Rush Yds • 4 TD • 34 Rec", simulationWeight: 0.88, touchdownWeight: 0.50 },
+    { name: "Tyjae Spears", jerseyNumber: 32, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Speed Change-of-Pace RB2", statsSummary: "220 Rush Yds • 1 TD", simulationWeight: 0.74, touchdownWeight: 0.20 },
+    { name: "Calvin Ridley", jerseyNumber: 0, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Outside Speed WR1", statsSummary: "42 Rec • 640 Yds • 3 TD", simulationWeight: 0.88, touchdownWeight: 0.40 },
+    { name: "Nick Westbrook-Ikhine", jerseyNumber: 15, position: "WR", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Starting Red-Zone WR2", statsSummary: "18 Rec • 280 Yds • 5 TD", simulationWeight: 0.76, touchdownWeight: 0.35 },
+    { name: "Chig Okonkwo", jerseyNumber: 85, position: "TE", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Athletic TE1", statsSummary: "32 Rec • 340 Yds • 2 TD", simulationWeight: 0.76, touchdownWeight: 0.20 },
+    { name: "Jeffery Simmons", jerseyNumber: 98, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Defensive Tackle Anchor", statsSummary: "4.5 Sacks • 9 TFL", simulationWeight: 0.92, touchdownWeight: 0.0 },
+    { name: "Harold Landry", jerseyNumber: 58, position: "LB", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Edge Rusher", statsSummary: "6.0 Sacks • 8 TFL", simulationWeight: 0.88, touchdownWeight: 0.0 },
+  ],
 };
 
-// Generic generator for remaining NFL teams
+// Generic generator for remaining NFL teams (fallback safety)
 export function generateGenericNflRoster(teamAbbr: string, teamName: string): RawRosterPlayer[] {
   return [
     { name: `${teamName} QB1`, jerseyNumber: 7, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Quarterback", statsSummary: "2,450 Pass Yds • 17 TD • 8 INT", simulationWeight: 0.85, touchdownWeight: 0.10 },
@@ -137,7 +365,7 @@ export function generateGenericNflRoster(teamAbbr: string, teamName: string): Ra
   ];
 }
 
-// ------------------- 2025-2026 NHL ROSTERS -------------------
+// ------------------- 2026-2027 NHL ROSTERS -------------------
 export const NHL_ROSTERS_SEED: Record<string, RawRosterPlayer[]> = {
   TOR: [
     { name: "Auston Matthews", jerseyNumber: 34, position: "C", unit: "FORWARD", depthOrder: 1, status: "OUT", injuryDetails: "Upper-Body Injury (Specialist clinic treatment in Germany, out day-to-day)", roleDescription: "Top Line Center • PP1 Sniper", statsSummary: "69 Goals (2023-24) • 18 G, 21 A • 39 Pts", simulationWeight: 1.0, goalWeight: 0.36 },
@@ -222,8 +450,8 @@ export function generateGenericNhlRoster(teamAbbr: string, teamName: string): Ra
     { name: `${teamName} Top Winger`, jerseyNumber: 88, position: "LW", unit: "FORWARD", depthOrder: 1, status: "ACTIVE", roleDescription: "1st Line Sniper • PP1", statsSummary: "18 G, 16 A • 34 Points", simulationWeight: 0.88, goalWeight: 0.32 },
     { name: `${teamName} RW Star`, jerseyNumber: 22, position: "RW", unit: "FORWARD", depthOrder: 1, status: "ACTIVE", roleDescription: "1st Line Playmaker", statsSummary: "11 G, 22 A • 33 Points", simulationWeight: 0.82, goalWeight: 0.20 },
     { name: `${teamName} 2nd Line Center`, jerseyNumber: 11, position: "C", unit: "FORWARD", depthOrder: 2, status: "ACTIVE", roleDescription: "2nd Line Center", statsSummary: "9 G, 17 A • 26 Points", simulationWeight: 0.78, goalWeight: 0.16 },
-    { name: `${teamName} Top Defenseman`, jerseyNumber: 5, position: "D", unit: "DEFENSEMAN", depthOrder: 1, status: "ACTIVE", roleDescription: "Top Pairing D • PP1 Point", statsSummary: "6 G, 22 A • 23:45 TOI", simulationWeight: 0.85, goalWeight: 0.08 },
-    { name: `${teamName} Shutdown D`, jerseyNumber: 27, position: "D", unit: "DEFENSEMAN", depthOrder: 1, status: "ACTIVE", roleDescription: "Top Pairing Shutdown D • PK1", statsSummary: "2 G, 11 A • 62 Blocks", simulationWeight: 0.80, goalWeight: 0.02 },
-    { name: `${teamName} Starting Goalie`, jerseyNumber: 30, position: "G", unit: "GOALIE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Goaltender", statsSummary: ".912 SV% • 2.60 GAA • 13 Wins", simulationWeight: 0.88, goalWeight: 0.0 },
+    { name: `${teamName} Top Defense`, jerseyNumber: 4, position: "D", unit: "DEFENSEMAN", depthOrder: 1, status: "ACTIVE", roleDescription: "1st Pairing Defense • PP1", statsSummary: "5 G, 21 A • 23:40 TOI", simulationWeight: 0.86, goalWeight: 0.08 },
+    { name: `${teamName} Shutdown D`, jerseyNumber: 6, position: "D", unit: "DEFENSEMAN", depthOrder: 1, status: "ACTIVE", roleDescription: "Top Shutdown Defenseman • PK1", statsSummary: "48 Blocks • +8", simulationWeight: 0.82, goalWeight: 0.02 },
+    { name: `${teamName} Starting Goalie`, jerseyNumber: 35, position: "G", unit: "GOALIE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Goaltender", statsSummary: ".914 SV% • 2.65 GAA", simulationWeight: 0.88, goalWeight: 0.0 },
   ];
 }

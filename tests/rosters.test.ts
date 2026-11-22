@@ -6,15 +6,28 @@ import {
   getAllRosters,
   getActiveStartersForSimulation,
 } from "../src/lib/roster-service";
+import { getCurrentSeason, getNextFriday6pmET } from "../src/lib/season-config";
 import { prisma } from "../src/lib/db";
 
-describe("Weekly Team Rosters & Depth Charts System", () => {
+describe("Weekly Team Rosters & Depth Charts System (2026-2027 Season)", () => {
   beforeAll(async () => {
     // Ensure clean roster sync
     await syncRosters("ALL", true);
   });
 
-  it("synchronizes all 32 NFL teams with active players and sets 7-day next sync date", async () => {
+  it("automatically detects active 2026-2027 season and computes Friday 6:00 PM ET schedule", () => {
+    const nflSeason = getCurrentSeason("NFL", new Date("2026-11-22"));
+    const nhlSeason = getCurrentSeason("NHL", new Date("2026-11-22"));
+
+    expect(nflSeason).toBe("2026-2027");
+    expect(nhlSeason).toBe("2026-2027");
+
+    const nextFriday = getNextFriday6pmET(new Date("2026-11-22T12:00:00Z"));
+    expect(nextFriday.getUTCDay()).toBe(5); // Friday
+    expect(nextFriday.getUTCHours()).toBe(23); // 18:00 EST = 23:00 UTC
+  });
+
+  it("synchronizes all 32 NFL teams with active players and sets Friday 6:00 PM ET next sync date", async () => {
     const meta = await prisma.rosterSyncMeta.findUnique({
       where: { league: "NFL" },
     });
@@ -23,16 +36,14 @@ describe("Weekly Team Rosters & Depth Charts System", () => {
     expect(meta?.league).toBe("NFL");
     expect(meta?.totalTeams).toBe(32);
     expect(meta?.totalPlayers).toBeGreaterThanOrEqual(200);
-    expect(meta?.updateFrequency).toBe("WEEKLY");
+    expect(meta?.updateFrequency).toBe("WEEKLY_FRIDAY_6PM_ET");
     expect(meta?.status).toBe("UP_TO_DATE");
 
-    // Exactly 7 days (allow +/- a few seconds for test runtime)
-    const diffDays =
-      (meta!.nextSyncDue.getTime() - meta!.lastSyncedAt.getTime()) / (1000 * 60 * 60 * 24);
-    expect(Math.round(diffDays)).toBe(7);
+    // Next sync is in the future
+    expect(meta!.nextSyncDue.getTime()).toBeGreaterThan(meta!.lastSyncedAt.getTime());
   });
 
-  it("synchronizes all 32 NHL teams with active lines and sets 7-day next sync date", async () => {
+  it("synchronizes all 32 NHL teams with active lines and sets Friday 6:00 PM ET next sync date", async () => {
     const meta = await prisma.rosterSyncMeta.findUnique({
       where: { league: "NHL" },
     });
@@ -41,11 +52,9 @@ describe("Weekly Team Rosters & Depth Charts System", () => {
     expect(meta?.league).toBe("NHL");
     expect(meta?.totalTeams).toBe(32);
     expect(meta?.totalPlayers).toBeGreaterThanOrEqual(180);
-    expect(meta?.updateFrequency).toBe("WEEKLY");
+    expect(meta?.updateFrequency).toBe("WEEKLY_FRIDAY_6PM_ET");
 
-    const diffDays =
-      (meta!.nextSyncDue.getTime() - meta!.lastSyncedAt.getTime()) / (1000 * 60 * 60 * 24);
-    expect(Math.round(diffDays)).toBe(7);
+    expect(meta!.nextSyncDue.getTime()).toBeGreaterThan(meta!.lastSyncedAt.getTime());
   });
 
   it("fetches team roster for Kansas City Chiefs with starters and key positions", async () => {

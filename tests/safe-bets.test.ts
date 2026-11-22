@@ -47,7 +47,7 @@ describe("Safe Bets & High-Conviction Predictions Intelligence", () => {
     }
   });
 
-  it("contains 90%+ safe player props with verified 2025-2026 rosters", async () => {
+  it("contains 90%+ safe player props with verified 2026-2027 rosters", async () => {
     const games = await prisma.scheduledGame.findMany();
     const allProps: any[] = [];
 

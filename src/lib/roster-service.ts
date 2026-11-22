@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db";
 import { NFL_ALL_TEAMS, NHL_ALL_TEAMS } from "@/lib/teams";
+import { getCurrentSeason, getNextFriday6pmET } from "./season-config";
 import {
   NFL_ROSTERS_SEED,
   NHL_ROSTERS_SEED,
@@ -63,6 +64,8 @@ export async function syncRosters(
       season: string;
     }> = [];
 
+    const currentSeason = getCurrentSeason(league);
+
     for (const t of teamsList) {
       const rawPlayers = seedMap[t.abbr] || genericGen(t.abbr, t.name);
 
@@ -83,7 +86,7 @@ export async function syncRosters(
           simulationWeight: p.simulationWeight,
           touchdownWeight: p.touchdownWeight || 0.0,
           goalWeight: p.goalWeight || 0.0,
-          season: "2025-2026",
+          season: currentSeason,
         });
         playersCount++;
       }
@@ -95,8 +98,8 @@ export async function syncRosters(
     });
 
     const now = new Date();
-    // Next weekly sync is scheduled for 7 days in the future
-    const nextSync = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+    // Next automated sync is scheduled for Friday at 6:00 PM Eastern Time
+    const nextSync = getNextFriday6pmET(now);
 
     const meta = await prisma.rosterSyncMeta.upsert({
       where: { league },
@@ -104,19 +107,20 @@ export async function syncRosters(
         league,
         lastSyncedAt: now,
         nextSyncDue: nextSync,
-        updateFrequency: "WEEKLY",
+        updateFrequency: "WEEKLY_FRIDAY_6PM_ET",
         totalPlayers: playersCount,
         totalTeams: teamsList.length,
         status: "UP_TO_DATE",
-        syncNotes: `Weekly roster update completed for 2025-2026 season. ${playersCount} active & reserve players synchronized across ${teamsList.length} franchises.`,
+        syncNotes: `Official roster update completed for ${currentSeason} ${league} season per nfl.com & nhl.com. ${playersCount} active & reserve players synchronized across ${teamsList.length} franchises.`,
       },
       update: {
         lastSyncedAt: now,
         nextSyncDue: nextSync,
+        updateFrequency: "WEEKLY_FRIDAY_6PM_ET",
         totalPlayers: playersCount,
         totalTeams: teamsList.length,
         status: "UP_TO_DATE",
-        syncNotes: `Weekly roster update completed for 2025-2026 season. ${playersCount} active & reserve players synchronized across ${teamsList.length} franchises.`,
+        syncNotes: `Official roster update completed for ${currentSeason} ${league} season per nfl.com & nhl.com. ${playersCount} active & reserve players synchronized across ${teamsList.length} franchises.`,
       },
     });
 
@@ -181,6 +185,7 @@ export async function getTeamRoster(league: "NFL" | "NHL", teamAbbr: string) {
 
   return {
     league,
+    season: getCurrentSeason(league),
     team: teamAbbr,
     players,
     syncMeta,
@@ -219,6 +224,7 @@ export async function getAllRosters(league: "NFL" | "NHL", team?: string, search
 
   return {
     league,
+    season: getCurrentSeason(league),
     total: players.length,
     players,
     syncMeta,

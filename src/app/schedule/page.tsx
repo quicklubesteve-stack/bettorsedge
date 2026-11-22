@@ -26,6 +26,7 @@ import {
 
 export default function SchedulePage() {
   const [league, setLeague] = useState<"ALL" | "NFL" | "NHL">("ALL");
+  const [selectedDay, setSelectedDay] = useState<"ALL" | "SUNDAY" | "MONDAY" | "THANKSGIVING">("ALL");
   const [games, setGames] = useState<any[]>([]);
   const [performance, setPerformance] = useState<any>(null);
   const [showLedger, setShowLedger] = useState(false);
@@ -55,13 +56,27 @@ export default function SchedulePage() {
 
   const filteredGames = games.filter((g) => {
     const q = search.toLowerCase();
-    return (
+    const matchesSearch = (
       g.homeTeam.toLowerCase().includes(q) ||
       g.awayTeam.toLowerCase().includes(q) ||
       g.homeTeamName.toLowerCase().includes(q) ||
       g.awayTeamName.toLowerCase().includes(q) ||
       g.venue.toLowerCase().includes(q)
     );
+    if (!matchesSearch) return false;
+
+    if (selectedDay === "ALL") return true;
+    const dateStr = new Date(g.date).toISOString();
+    if (selectedDay === "SUNDAY") {
+      return dateStr.includes("2026-11-22");
+    }
+    if (selectedDay === "MONDAY") {
+      return dateStr.includes("2026-11-23");
+    }
+    if (selectedDay === "THANKSGIVING") {
+      return dateStr.includes("2026-11-26") || dateStr.includes("2026-11-27") || g.gameId.includes("THX");
+    }
+    return true;
   });
 
   return (
@@ -332,7 +347,45 @@ export default function SchedulePage() {
         </div>
       </div>
 
-
+      {/* Day of the Week / Game Slate Filter */}
+      <div className="flex flex-wrap items-center gap-2 p-3.5 rounded-2xl bg-slate-900 border border-slate-800 text-xs">
+        <span className="text-slate-400 font-bold px-1 flex items-center gap-1.5">
+          <Calendar className="w-3.5 h-3.5 text-emerald-400" />
+          Filter by Game Day:
+        </span>
+        <button
+          onClick={() => setSelectedDay("ALL")}
+          className={`px-3 py-1.5 rounded-lg font-bold transition ${
+            selectedDay === "ALL" ? "bg-emerald-600 text-white" : "bg-slate-950 text-slate-400 hover:text-white border border-slate-800"
+          }`}
+        >
+          All Games ({games.length})
+        </button>
+        <button
+          onClick={() => setSelectedDay("SUNDAY")}
+          className={`px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
+            selectedDay === "SUNDAY" ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20" : "bg-slate-950 text-slate-400 hover:text-white border border-slate-800"
+          }`}
+        >
+          <span>🏈 Sunday Nov 22 Slate (Full Game Day)</span>
+        </button>
+        <button
+          onClick={() => setSelectedDay("MONDAY")}
+          className={`px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
+            selectedDay === "MONDAY" ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20" : "bg-slate-950 text-slate-400 hover:text-white border border-slate-800"
+          }`}
+        >
+          <span>🌙 Monday Night Football (Nov 23)</span>
+        </button>
+        <button
+          onClick={() => setSelectedDay("THANKSGIVING")}
+          className={`px-3 py-1.5 rounded-lg font-bold transition flex items-center gap-1.5 ${
+            selectedDay === "THANKSGIVING" ? "bg-emerald-600 text-white shadow-lg shadow-emerald-500/20" : "bg-slate-950 text-slate-400 hover:text-white border border-slate-800"
+          }`}
+        >
+          <span>🍗 Thanksgiving Day Slate (Nov 26)</span>
+        </button>
+      </div>
 
       {/* Game Cards List */}
       {loading ? (
@@ -351,11 +404,43 @@ export default function SchedulePage() {
               timeZoneName: "short",
             });
 
+            const pickedTeamName = game.predictedWinner === game.homeTeam ? game.homeTeamName : game.awayTeamName;
+            const winProb = game.predictedWinner === game.homeTeam ? game.homeWinProbability : game.awayWinProbability;
+
             return (
               <div
                 key={game.gameId}
                 className="rounded-3xl bg-slate-900 border border-slate-800 hover:border-slate-700 transition overflow-hidden shadow-2xl space-y-6 p-6 sm:p-8"
               >
+                {/* PROMINENT AI WHO TO PICK & WIN % BANNER */}
+                <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-r from-emerald-950/90 via-slate-950 to-blue-950/80 border border-emerald-500/40 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-center gap-3.5">
+                    <div className="w-12 h-12 rounded-2xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-black text-2xl border border-emerald-500/40 shrink-0">
+                      🎯
+                    </div>
+                    <div>
+                      <span className="text-[10px] uppercase font-extrabold tracking-wider text-emerald-400">
+                        Official AI Daily Game Pick
+                      </span>
+                      <h3 className="text-xl font-black text-white">
+                        PICK TO WIN: <span className="text-emerald-400">{pickedTeamName}</span>
+                      </h3>
+                      <p className="text-xs text-slate-300 mt-0.5">
+                        Projected Score: <strong className="text-white font-mono">{game.predictedScore}</strong> • Spread Pick: <strong className="text-emerald-300">{game.predictedSpreadPick}</strong>
+                      </p>
+                    </div>
+                  </div>
+                  <div className="sm:text-right flex sm:flex-col items-center sm:items-end justify-between gap-1 bg-slate-900/80 px-4 py-2.5 rounded-xl border border-slate-800">
+                    <span className="text-[10px] uppercase font-bold text-slate-400">Win Probability</span>
+                    <span className="text-2xl font-black text-emerald-400 font-mono">
+                      {winProb}% Win Chance
+                    </span>
+                    <span className="text-[9px] px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-extrabold uppercase border border-emerald-500/30">
+                      {game.spreadConfidence} Conviction
+                    </span>
+                  </div>
+                </div>
+
                 {/* Game Header Bar */}
                 <div className="flex flex-wrap items-center justify-between gap-3 text-xs border-b border-slate-800 pb-4">
                   <div className="flex items-center gap-3">
