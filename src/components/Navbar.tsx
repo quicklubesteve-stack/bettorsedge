@@ -23,6 +23,8 @@ import {
   Flame,
   ShieldCheck,
   BookOpen,
+  TrendingUp,
+  Target,
 } from "lucide-react";
 
 export default function Navbar() {
@@ -56,6 +58,8 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/#todays-games", label: "Today's Games ⚡", icon: Zap, pro: false },
+    { href: "/betting-value", label: "Betting Value (+EV) 💰", icon: TrendingUp, pro: false },
+    { href: "/performance", label: "Model Accuracy 🎯", icon: Target, pro: false },
     { href: "/safe-bets", label: "Safe Bets 🔥", icon: Flame, pro: false },
     { href: "/betting-explained", label: "Betting Explained 💡", icon: BookOpen, pro: false },
     { href: "/rosters", label: "Team Rosters", icon: Users, pro: false },

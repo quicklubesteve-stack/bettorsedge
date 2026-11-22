@@ -1,0 +1,15 @@
+name = "sportsedge-ai-scheduler"
+compatibility_date = "2024-11-01"
+main = "worker.ts"
+
+[triggers]
+crons = [
+  "0 11 * * *",   # 6:00 AM America/Toronto (EST) - Daily Morning Master Sync
+  "0 17 * * *",   # 12:00 PM America/Toronto (EST) - Midday Injury & Odds Audit
+  "0 23 * * *",   # 6:00 PM America/Toronto (EST) - Evening Starting Lineup Confirmation
+  "0 23 * * 5",   # Friday 6:00 PM America/Toronto (EST) - Weekly Master Sync
+  "*/30 * * * *"  # 30/60-min Pre-Game Inactive List & Starting Goalie Trigger
+]
+
+[env.production]
+name = "sportsedge-ai-scheduler-prod"

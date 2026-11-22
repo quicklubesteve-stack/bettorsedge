@@ -1,5 +1,9 @@
 import Link from "next/link";
 import TodaysGamesDashboard from "@/components/TodaysGamesDashboard";
+import BettingValueDashboard from "@/components/BettingValueDashboard";
+import LineupImpactDashboard from "@/components/LineupImpactDashboard";
+import ModelPerformanceDashboard from "@/components/ModelPerformanceDashboard";
+import ScheduleSyncWidget from "@/components/ScheduleSyncWidget";
 import {
   ShieldAlert,
   Zap,
@@ -67,8 +71,20 @@ export default function HomePage() {
         </div>
       </div>
 
+      {/* AUTOMATED SCHEDULE INTELLIGENCE STATUS */}
+      <ScheduleSyncWidget />
+
       {/* TODAY'S GAMES & AI PREDICTIONS DASHBOARD */}
       <TodaysGamesDashboard />
+
+      {/* AI BETTING VALUE FINDER & ANALYSIS */}
+      <BettingValueDashboard />
+
+      {/* BEFORE / AFTER LINEUP & INJURY IMPACT ENGINE */}
+      <LineupImpactDashboard />
+
+      {/* WALK-FORWARD OUT-OF-SAMPLE MODEL ACCURACY AUDIT */}
+      <ModelPerformanceDashboard />
 
       {/* Feature Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
