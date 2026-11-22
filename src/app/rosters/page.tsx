@@ -24,6 +24,7 @@ export default function RostersPage() {
   const [league, setLeague] = useState<"NFL" | "NHL">("NFL");
   const [selectedTeam, setSelectedTeam] = useState("KC");
   const [searchTerm, setSearchTerm] = useState("");
+  const [statusFilter, setStatusFilter] = useState<"ALL" | "ACTIVE" | "INJURIES">("ALL");
   const [rosterData, setRosterData] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
@@ -73,14 +74,21 @@ export default function RostersPage() {
     }
   };
 
-  // Filter players based on search
-  const filteredPlayers = (rosterData?.players || []).filter((p: any) => {
+  // Filter players based on search and injury status
+  const allTeamPlayers = rosterData?.players || [];
+  const activeCount = allTeamPlayers.filter((p: any) => p.status === "ACTIVE").length;
+  const injuredCount = allTeamPlayers.filter((p: any) => p.status !== "ACTIVE").length;
+
+  const filteredPlayers = allTeamPlayers.filter((p: any) => {
+    if (statusFilter === "ACTIVE" && p.status !== "ACTIVE") return false;
+    if (statusFilter === "INJURIES" && p.status === "ACTIVE") return false;
     if (!searchTerm) return true;
     const term = searchTerm.toLowerCase();
     return (
       p.name.toLowerCase().includes(term) ||
       p.position.toLowerCase().includes(term) ||
-      p.roleDescription.toLowerCase().includes(term)
+      p.roleDescription.toLowerCase().includes(term) ||
+      (p.injuryDetails && p.injuryDetails.toLowerCase().includes(term))
     );
   });
 
@@ -256,7 +264,7 @@ export default function RostersPage() {
               <span>•</span>
               <span>{currentTeamInfo.division} Division</span>
               <span>•</span>
-              <span className="text-emerald-400 font-bold">Week 11 Active Roster</span>
+              <span className="text-emerald-400 font-bold">Current Active Roster & Injury Statuses</span>
             </div>
           </div>
         </div>
@@ -270,6 +278,43 @@ export default function RostersPage() {
             Simulate in Matchup Lab →
           </Link>
         </div>
+      </div>
+
+      {/* FILTER TABS: ALL / ACTIVE / INJURIES */}
+      <div className="flex items-center gap-2">
+        <button
+          onClick={() => setStatusFilter("ALL")}
+          className={`px-3 py-1.5 rounded-xl font-bold text-xs transition border ${
+            statusFilter === "ALL"
+              ? "bg-emerald-600 border-emerald-500 text-white shadow-md shadow-emerald-600/20"
+              : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white"
+          }`}
+        >
+          All Players ({allTeamPlayers.length})
+        </button>
+        <button
+          onClick={() => setStatusFilter("ACTIVE")}
+          className={`px-3 py-1.5 rounded-xl font-bold text-xs transition border ${
+            statusFilter === "ACTIVE"
+              ? "bg-emerald-600 border-emerald-500 text-white shadow-md shadow-emerald-600/20"
+              : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white"
+          }`}
+        >
+          Active Players ({activeCount})
+        </button>
+        <button
+          onClick={() => setStatusFilter("INJURIES")}
+          className={`px-3 py-1.5 rounded-xl font-bold text-xs transition border flex items-center gap-1.5 ${
+            statusFilter === "INJURIES"
+              ? "bg-amber-600 border-amber-500 text-white shadow-md shadow-amber-600/20"
+              : injuredCount > 0
+              ? "bg-slate-900 border-amber-500/30 text-amber-400 hover:bg-amber-500/10"
+              : "bg-slate-900 border-slate-800 text-slate-400 hover:text-white"
+          }`}
+        >
+          <AlertTriangle className="w-3.5 h-3.5" />
+          Injury Report ({injuredCount})
+        </button>
       </div>
 
       {/* ROSTER TABLE */}

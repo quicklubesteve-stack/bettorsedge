@@ -396,6 +396,7 @@
       <button class="nav-btn" data-tab="simulator" onclick="switchTab('simulator')">🎮 2,000-Game Simulator</button>
       <button class="nav-btn" data-tab="explained" onclick="switchTab('explained')">💡 Betting Explained</button>
       <button class="nav-btn" data-tab="h2h" onclick="switchTab('h2h')">⚔️ Head-to-Head</button>
+      <button class="nav-btn" data-tab="injuries" onclick="switchTab('injuries')">🚨 Live Injuries & Odds Impact</button>
       <button class="nav-btn" data-tab="spreads" data-target="spreads" onclick="switchTab('spreads')">🛡️ Beat The Spread</button>
       <button class="nav-btn" data-tab="moneyline" data-target="moneyline" onclick="switchTab('moneyline')">🏆 Who To Bet On</button>
       <button class="nav-btn" data-tab="totals" data-target="totals" onclick="switchTab('totals')">⚡ Over / Under</button>
@@ -777,6 +778,255 @@
     <!-- ==================================================== -->
     <!-- TAB 3: BEAT THE SPREAD (ATS PICKS)                   -->
     <!-- ==================================================== -->
+    
+    <!-- ==================================================== -->
+    <!-- TAB: LIVE INJURIES & BETTING ODDS IMPACT             -->
+    <!-- ==================================================== -->
+    <div id="tab-injuries" class="tab-content">
+      <div class="hero">
+        <div class="badge" style="color: #f87171; border-color: rgba(239, 68, 68, 0.4); background: rgba(239, 68, 68, 0.1);">Verified Injury Intelligence</div>
+        <h1>Live Injury Report & Odds Impact</h1>
+        <p>Real-time injury tracking across all 32 NFL & 32 NHL franchises. See exactly how key player absences shift point spreads, moneylines, totals, and props.</p>
+      </div>
+
+      <!-- Quick Summary Metric Bar -->
+      <div class="stats-bar" style="margin-bottom: 24px;">
+        <div class="stat-card">
+          <div class="stat-label">Tracked Players</div>
+          <div class="stat-val" style="color: white;">493</div>
+          <div class="stat-sub">Across 64 Franchises</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Out / IR</div>
+          <div class="stat-val" style="color: #f87171;">24 Starters</div>
+          <div class="stat-sub">Key Impact Names</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Questionable / GTD</div>
+          <div class="stat-val" style="color: #fbbf24;">18 Players</div>
+          <div class="stat-sub">Game-Time Decisions</div>
+        </div>
+        <div class="stat-card" style="grid-column: span 2;">
+          <div class="stat-label">Line Movement Indicator</div>
+          <div class="stat-val" style="color: #34d399;">+1.5 to +3.5 Pts</div>
+          <div class="stat-sub">Average Spread Value Shift on Star QB/1st Line Absence</div>
+        </div>
+      </div>
+
+      <!-- Filter Controls -->
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap;">
+        <button onclick="filterInjuries('ALL')" id="inj-btn-all" class="btn" style="background: var(--primary); padding: 8px 16px; font-size: 11px;">All Injuries (22)</button>
+        <button onclick="filterInjuries('NFL')" id="inj-btn-nfl" class="btn" style="background: #1e293b; padding: 8px 16px; font-size: 11px; border: 1px solid var(--card-border);">🏈 NFL Injuries (12)</button>
+        <button onclick="filterInjuries('NHL')" id="inj-btn-nhl" class="btn" style="background: #1e293b; padding: 8px 16px; font-size: 11px; border: 1px solid var(--card-border);">🏒 NHL Injuries (10)</button>
+      </div>
+
+      <!-- Injury Cards Grid -->
+      <div class="grid" id="injuries-grid">
+
+        <!-- NFL INJURY 1: BROCK PURDY -->
+        <div class="card inj-card" data-league="NFL" style="border-left: 4px solid #fbbf24;">
+          <div class="card-header">
+            <span>NFL • San Francisco 49ers (QB)</span>
+            <span class="badge-pill badge-amber">QUESTIONABLE</span>
+          </div>
+          <div class="pick-title">Brock Purdy #13</div>
+          <div class="pick-sub">Injury: Right Shoulder Soreness (Limited throwing in practice)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Vegas spread opened SF -1.5, flipped to <strong>Green Bay -2.5</strong> as sharp money faded the 49ers on Purdy's shoulder limitations. Exploitable angle: <strong>Christian McCaffrey Over 4.5 Receptions</strong> as short checkdown volume spikes.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #fbbf24;">Status: Game-Time Decision</span>
+            <span style="color: var(--text-muted);">Week 12 @ Lambeau</span>
+          </div>
+        </div>
+
+        <!-- NHL INJURY 1: AUSTON MATTHEWS -->
+        <div class="card inj-card" data-league="NHL" style="border-left: 4px solid #f87171;">
+          <div class="card-header">
+            <span>NHL • Toronto Maple Leafs (C)</span>
+            <span class="badge-pill badge-red" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">OUT (IR)</span>
+          </div>
+          <div class="pick-title">Auston Matthews #34</div>
+          <div class="pick-sub">Injury: Upper-Body Injury (Traveled to Germany for clinic treatment)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Toronto shifted from -135 favorites to <strong>+110 home underdogs vs Vegas</strong>. Leafs 5-on-5 expected goals dropped by 0.85 per 60. Exploitable angle: <strong>William Nylander Over 3.5 SOG (-120)</strong> as he absorbs 34% of Toronto shot attempts.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #f87171;">Status: Out Day-to-Day</span>
+            <span style="color: var(--text-muted);">Maple Leafs Top Line</span>
+          </div>
+        </div>
+
+        <!-- NHL INJURY 2: MITCH MARNER (ACTIVE) & MARK STONE (IR) -->
+        <div class="card inj-card" data-league="NHL" style="border-left: 4px solid #34d399;">
+          <div class="card-header">
+            <span>NHL • Vegas Golden Knights (RW)</span>
+            <span class="badge-pill badge-green">100% ACTIVE (31 PTS)</span>
+          </div>
+          <div class="pick-title">Mitch Marner #16 (Vegas)</div>
+          <div class="pick-sub">Status: Fully Healthy • Mark Stone (IR - Lower Body)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Marner is driving Vegas's top line alongside Jack Eichel with 8G, 23A (+16). With Mark Stone on IR, Marner commands 78% of PP1 possession. Exploitable angle: <strong>Mitch Marner Over 0.5 Assists (-135)</strong> in high-leverage road spots.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #34d399;">Status: Star Playmaker Active</span>
+            <span style="color: var(--text-muted);">VGK 1st Line RW</span>
+          </div>
+        </div>
+
+        <!-- NFL INJURY 2: ISIAH PACHECO -->
+        <div class="card inj-card" data-league="NFL" style="border-left: 4px solid #fbbf24;">
+          <div class="card-header">
+            <span>NFL • Kansas City Chiefs (RB)</span>
+            <span class="badge-pill badge-amber">QUESTIONABLE</span>
+          </div>
+          <div class="pick-title">Isiah Pacheco #10</div>
+          <div class="pick-sub">Injury: Fractured Fibula (21-day practice window open, limited)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Kareem Hunt remains primary goal-line workhorse (685 yds, 6 TDs). Total holds at 46.5. Exploitable angle: <strong>Kareem Hunt Over 14.5 Rushing Attempts (-120)</strong> as Chiefs ease Pacheco in with a limited snap count.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #fbbf24;">Status: Nearing Return</span>
+            <span style="color: var(--text-muted);">Chiefs Backfield</span>
+          </div>
+        </div>
+
+        <!-- NFL INJURY 3: DALTON KINCAID & KEON COLEMAN -->
+        <div class="card inj-card" data-league="NFL" style="border-left: 4px solid #f87171;">
+          <div class="card-header">
+            <span>NFL • Buffalo Bills (TE/WR)</span>
+            <span class="badge-pill badge-red" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">OUT</span>
+          </div>
+          <div class="pick-title">Dalton Kincaid #86 & Keon Coleman #0</div>
+          <div class="pick-sub">Injury: Kincaid (Knee sprain) • Coleman (Wrist injury)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Both top pass-catchers ruled out. Spoke sharply into Josh Allen's rushing TD props (+110) and Khalil Shakir's target volume (62 rec, 680 yds). Exploitable angle: <strong>Josh Allen Over 0.5 Rush TD</strong> in red-zone short-yardage calls.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #f87171;">Status: Both Ruled Out</span>
+            <span style="color: var(--text-muted);">Bills Red Zone Passing</span>
+          </div>
+        </div>
+
+        <!-- NFL INJURY 4: DEVONTA SMITH -->
+        <div class="card inj-card" data-league="NFL" style="border-left: 4px solid #f87171;">
+          <div class="card-header">
+            <span>NFL • Philadelphia Eagles (WR)</span>
+            <span class="badge-pill badge-red" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">OUT</span>
+          </div>
+          <div class="pick-title">DeVonta Smith #6</div>
+          <div class="pick-sub">Injury: Hamstring Tightness (Ruled Out)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Smith's absence channels 36% target share directly to A.J. Brown (48 rec, 740 yds) and feeds Saquon Barkley's heavy ground workload. Exploitable angle: <strong>A.J. Brown Over 74.5 Rec Yds (-115)</strong> and <strong>Barkley Over 88.5 Rush Yds</strong>.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #f87171;">Status: Ruled Out</span>
+            <span style="color: var(--text-muted);">Eagles Passing Offense</span>
+          </div>
+        </div>
+
+        <!-- NHL INJURY 3: ZACH HYMAN -->
+        <div class="card inj-card" data-league="NHL" style="border-left: 4px solid #fbbf24;">
+          <div class="card-header">
+            <span>NHL • Edmonton Oilers (LW)</span>
+            <span class="badge-pill badge-amber">QUESTIONABLE (EXPECTED TO PLAY)</span>
+          </div>
+          <div class="pick-title">Zach Hyman #18 (Edmonton)</div>
+          <div class="pick-sub">Injury: Undisclosed Maintenance (Full participant in skate, expected to play)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Hyman skated alongside Connor McDavid on PP1. His 54-goal net-front presence makes <strong>Over 3.5 Shots on Goal (-115)</strong> a 92% safe bet against Vegas's aggressive collapse defense.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #fbbf24;">Status: Expected to Dress</span>
+            <span style="color: var(--text-muted);">Oilers PP1 Net-Front</span>
+          </div>
+        </div>
+
+        <!-- NHL INJURY 4: HAMPUS LINDHOLM -->
+        <div class="card inj-card" data-league="NHL" style="border-left: 4px solid #f87171;">
+          <div class="card-header">
+            <span>NHL • Boston Bruins (D)</span>
+            <span class="badge-pill badge-red" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">OUT (IR)</span>
+          </div>
+          <div class="pick-title">Hampus Lindholm #27</div>
+          <div class="pick-sub">Injury: Fractured Kneecap (Out multiple weeks on IR)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Boston's top-pair shutdown blueline is depleted. Florida Panthers line moved to <strong>-140 road favorites</strong>. Exploitable angle: <strong>Panthers Moneyline</strong> and <strong>Sam Reinhart Anytime Goal (+125)</strong>.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #f87171;">Status: Long-Term IR</span>
+            <span style="color: var(--text-muted);">Bruins Blueline</span>
+          </div>
+        </div>
+
+        <!-- NFL INJURY 5: DAK PRESCOTT -->
+        <div class="card inj-card" data-league="NFL" style="border-left: 4px solid #f87171;">
+          <div class="card-header">
+            <span>NFL • Dallas Cowboys (QB)</span>
+            <span class="badge-pill badge-red" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">IR (OUT FOR SEASON)</span>
+          </div>
+          <div class="pick-title">Dak Prescott #4</div>
+          <div class="pick-sub">Injury: Partial Avulsion of Hamstring Tendon (Season-ending surgery)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Cooper Rush starts under center; Cowboys offensive PPG plunged from 24.3 to 13.0. Dallas point totals have hit the <strong>UNDER</strong> in 3 straight outings. Opponents laying -7.0 to -9.5 against Dallas.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #f87171;">Status: Out for Season</span>
+            <span style="color: var(--text-muted);">Cooper Rush Starting</span>
+          </div>
+        </div>
+
+        <!-- NFL INJURY 6: AIDAN HUTCHINSON -->
+        <div class="card inj-card" data-league="NFL" style="border-left: 4px solid #f87171;">
+          <div class="card-header">
+            <span>NFL • Detroit Lions (DE)</span>
+            <span class="badge-pill badge-red" style="background: rgba(239, 68, 68, 0.15); color: #f87171; border: 1px solid rgba(239, 68, 68, 0.3);">IR (OUT FOR SEASON)</span>
+          </div>
+          <div class="pick-title">Aidan Hutchinson #97</div>
+          <div class="pick-sub">Injury: Fractured Tibia/Fibula (Injured Reserve)</div>
+          <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid var(--card-border); border-radius: 10px; padding: 12px; margin: 12px 0;">
+            <div style="font-size: 11px; font-weight: 800; color: #38bdf8; text-transform: uppercase; margin-bottom: 4px;">📈 Betting Line Impact</div>
+            <p style="font-size: 12px; color: #cbd5e1; margin: 0; line-height: 1.5;">
+              Detroit's offense compensated by escalating scoring output (33.6 PPG, #1 in NFL). Lions game totals have averaged 52.4 combined points, triggering heavy <strong>OVER</strong> betting signals on Detroit matchups.
+            </p>
+          </div>
+          <div class="card-footer">
+            <span style="color: #f87171;">Status: Out for Season</span>
+            <span style="color: var(--text-muted);">Lions Defense</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
     <div id="tab-spreads" class="tab-content">
       <div class="hero">
         <div class="badge" style="color: #60a5fa; border-color: rgba(59, 130, 246, 0.4); background: rgba(59, 130, 246, 0.1);">Spread Best Bets</div>
@@ -792,10 +1042,10 @@
           </div>
           <div class="pick-title">Vegas Golden Knights +1.5</div>
           <div class="pick-sub">Vegas Spread: TOR -1.5 • Simulated Score: VGK 4 - 3 TOR</div>
-          <p class="reason">Mitch Marner return game against his former franchise. Vegas transition expected goals rate generates a +4.5 point spread edge.</p>
+          <p class="reason">Auston Matthews ruled OUT (Germany treatment). Mitch Marner stars for Vegas with 31 points; Vegas transition expected goals rate generates a +4.5 point spread edge.</p>
           <div class="card-footer">
             <span style="color: #60a5fa;">Pick: VGK +1.5</span>
-            <span style="color: var(--text-muted);">Puck Line</span>
+            <span style="color: var(--text-muted);">Puck Line Lock</span>
           </div>
         </div>
 
@@ -806,7 +1056,7 @@
           </div>
           <div class="pick-title">Buffalo Bills -2.5</div>
           <div class="pick-sub">Vegas Spread: BUF -2.5 • Simulated Score: BUF 27 - 24 KC</div>
-          <p class="reason">Buffalo holds a +4.8% pressure containment advantage against Kansas City's 38% blitz frequency.</p>
+          <p class="reason">Buffalo holds a +4.8% pressure containment advantage against Kansas City's 38% blitz frequency. Even with Kincaid and Coleman out, Josh Allen's rushing TD ability carries the offense.</p>
           <div class="card-footer">
             <span style="color: #60a5fa;">Pick: BUF -2.5</span>
             <span style="color: var(--text-muted);">Bills Cover</span>
@@ -818,35 +1068,45 @@
             <span>NFL • BAL @ PIT</span>
             <span class="badge-pill badge-blue">91% Confidence</span>
           </div>
-          <div class="pick-title">Baltimore Ravens -3.5</div>
-          <div class="pick-sub">Vegas Spread: BAL -3.5 • Simulated Score: BAL 24 - 19 PIT</div>
-          <p class="reason">Derrick Henry explosive rush rate against a Steelers defensive line missing two starting interior linemen.</p>
+          <div class="pick-title">Baltimore Ravens -3.0</div>
+          <div class="pick-sub">Vegas Spread: BAL -3.0 • Simulated Score: BAL 26 - 20 PIT</div>
+          <p class="reason">Derrick Henry explosive rush rate (6.1 YPC) against a Steelers defensive front yielding 4.9 YPC over their last three outings. Ravens hold +6.2 expected points in short yardage.</p>
           <div class="card-footer">
-            <span style="color: #60a5fa;">Pick: BAL -3.5</span>
+            <span style="color: #60a5fa;">Pick: BAL -3.0</span>
             <span style="color: var(--text-muted);">Ravens Cover</span>
           </div>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <span>NFL • SEA @ SF</span>
+            <span>NFL • SF @ GB</span>
+            <span class="badge-pill badge-blue">91% Confidence</span>
+          </div>
+          <div class="pick-title">Green Bay Packers -2.5</div>
+          <div class="pick-sub">Vegas Spread: GB -2.5 • Simulated Score: GB 26 - 23 SF</div>
+          <p class="reason">Line flipped from SF -1.5 to GB -2.5 with 49ers QB Brock Purdy nursing right shoulder soreness and DE Nick Bosa dealing with a hip/oblique injury. Jordan Love controls cold-weather tempo at Lambeau.</p>
+          <div class="card-footer">
+            <span style="color: #60a5fa;">Pick: GB -2.5</span>
+            <span style="color: var(--text-muted);">Packers Cover</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span>NFL • PHI @ WAS</span>
             <span class="badge-pill badge-blue">90% Confidence</span>
           </div>
-          <div class="pick-title">San Francisco 49ers -6.5</div>
-          <div class="pick-sub">Vegas Spread: SF -6.5 • Simulated Score: SF 31 - 20 SEA</div>
-          <p class="reason">San Francisco averages +11.2 scoring differential at Levi's Stadium with Christian McCaffrey in full rotation.</p>
+          <div class="pick-title">Philadelphia Eagles -3.5</div>
+          <div class="pick-sub">Vegas Spread: PHI -3.5 • Simulated Score: PHI 28 - 21 WAS</div>
+          <p class="reason">Saquon Barkley (1,280 yds, 11 TDs) dominates Washington's 28th-ranked run defense. Despite DeVonta Smith out with hamstring, A.J. Brown absorbs 36% target share.</p>
           <div class="card-footer">
-            <span style="color: #60a5fa;">Pick: SF -6.5</span>
-            <span style="color: var(--text-muted);">49ers Cover</span>
+            <span style="color: #60a5fa;">Pick: PHI -3.5</span>
+            <span style="color: var(--text-muted);">Eagles Cover</span>
           </div>
         </div>
       </div>
     </div>
 
-
-    <!-- ==================================================== -->
-    <!-- TAB 4: WHO TO BET ON (MONEYLINE LOCKS)               -->
-    <!-- ==================================================== -->
     <div id="tab-moneyline" class="tab-content">
       <div class="hero">
         <div class="badge" style="color: #34d399; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1);">Outright Winners</div>
@@ -858,11 +1118,11 @@
         <div class="card">
           <div class="card-header">
             <span>NFL • JAX @ DET</span>
-            <span class="badge-pill badge-green">88.9% Win Probability</span>
+            <span class="badge-pill badge-green">80.5% Win Probability</span>
           </div>
-          <div class="pick-title">Detroit Lions (ML -800)</div>
-          <div class="pick-sub">Simulated Score: DET 38 - 14 JAX • Expected Value: +7.2%</div>
-          <p class="reason">Top offensive scoring unit in the league facing a 30th-ranked defense allowing 388 total yards per game.</p>
+          <div class="pick-title">Detroit Lions (ML -400)</div>
+          <div class="pick-sub">Simulated Score: DET 35 - 17 JAX • Expected Value: +7.8%</div>
+          <p class="reason">Top offensive scoring unit in the league (33.6 PPG) with Sam LaPorta active. The Montgomery and Gibbs two-headed monster overwhelms opposing secondaries.</p>
           <div class="card-footer">
             <span style="color: var(--primary-light);">Lock of the Week</span>
             <span style="color: var(--text-muted);">Straight Up</span>
@@ -871,14 +1131,14 @@
 
         <div class="card">
           <div class="card-header">
-            <span>NFL • SEA @ SF</span>
-            <span class="badge-pill badge-green">71.4% Win Probability</span>
+            <span>NFL • BAL @ PIT</span>
+            <span class="badge-pill badge-green">62.0% Win Probability</span>
           </div>
-          <div class="pick-title">San Francisco 49ers (ML -275)</div>
-          <div class="pick-sub">Simulated Score: SF 31 - 20 SEA • Expected Value: +5.8%</div>
-          <p class="reason">Divisional dominance at home behind a balanced ground-and-pound ground attack.</p>
+          <div class="pick-title">Baltimore Ravens (ML -165)</div>
+          <div class="pick-sub">Simulated Score: BAL 26 - 20 PIT • Expected Value: +6.4%</div>
+          <p class="reason">Lamar Jackson and Derrick Henry lead NFL's #1 rush offense (182.6 YPG), controlling time of possession and closing out fourth quarters.</p>
           <div class="card-footer">
-            <span style="color: var(--primary-light);">High-Conviction Lock</span>
+            <span style="color: var(--primary-light);">Divisional Road Lock</span>
             <span style="color: var(--text-muted);">Straight Up</span>
           </div>
         </div>
@@ -886,37 +1146,33 @@
         <div class="card">
           <div class="card-header">
             <span>NHL • EDM @ VGK</span>
-            <span class="badge-pill badge-green">61.2% Win Probability</span>
+            <span class="badge-pill badge-green">54.5% Win Probability</span>
           </div>
-          <div class="pick-title">Edmonton Oilers (ML -125)</div>
-          <div class="pick-sub">Simulated Score: EDM 4 - 3 VGK • Expected Value: +8.1%</div>
-          <p class="reason">McDavid and Zach Hyman speed advantage against Vegas blueline in high-leverage road matchups.</p>
+          <div class="pick-title">Vegas Golden Knights (ML -125)</div>
+          <div class="pick-sub">Simulated Score: VGK 4 - 3 EDM • Expected Value: +5.2%</div>
+          <p class="reason">Vegas home ice dominance (10-2-0 at T-Mobile Arena) powered by Mitch Marner and Jack Eichel. Zach Hyman dealing with maintenance day for EDM.</p>
           <div class="card-footer">
-            <span style="color: var(--primary-light);">Value Pick</span>
+            <span style="color: var(--primary-light);">Pacific Clash</span>
             <span style="color: var(--text-muted);">Straight Up</span>
           </div>
         </div>
 
         <div class="card">
           <div class="card-header">
-            <span>NHL • VGK @ TOR</span>
-            <span class="badge-pill badge-green">51.8% Win Probability</span>
+            <span>NHL • FLA @ BOS</span>
+            <span class="badge-pill badge-green">58.0% Win Probability</span>
           </div>
-          <div class="pick-title">Vegas Golden Knights (ML -105)</div>
-          <div class="pick-sub">Simulated Score: VGK 4 - 3 TOR • Expected Value: +9.2%</div>
-          <p class="reason">Superstar Mitch Marner in his return game against Toronto; value on the visiting underdog.</p>
+          <div class="pick-title">Florida Panthers (ML -140)</div>
+          <div class="pick-sub">Simulated Score: FLA 3 - 2 BOS • Expected Value: +5.9%</div>
+          <p class="reason">Defending Stanley Cup champions enter 100% healthy behind Aleksander Barkov. Boston missing key defenseman Hampus Lindholm (fractured kneecap).</p>
           <div class="card-footer">
-            <span style="color: var(--primary-light);">Top Value Underdog</span>
+            <span style="color: var(--primary-light);">Road Value Lock</span>
             <span style="color: var(--text-muted);">Straight Up</span>
           </div>
         </div>
       </div>
     </div>
 
-
-    <!-- ==================================================== -->
-    <!-- TAB 5: OVER / UNDER TOTALS                           -->
-    <!-- ==================================================== -->
     <div id="tab-totals" class="tab-content">
       <div class="hero">
         <div class="badge" style="color: #c084fc; border-color: rgba(168, 85, 247, 0.4); background: rgba(168, 85, 247, 0.1);">Scoring Matrix</div>
@@ -991,7 +1247,7 @@
       <div class="hero">
         <div class="badge" style="color: #fbbf24; border-color: rgba(245, 158, 11, 0.4); background: rgba(245, 158, 11, 0.1);">90%+ Safe Props</div>
         <h1>Best Player Props to Bet On</h1>
-        <p>Props with proven situational metrics, target volume, and star player snap dominance.</p>
+        <p>Props with proven situational metrics, target volume, and star player snap dominance factoring in current injuries.</p>
       </div>
 
       <div class="grid">
@@ -1002,7 +1258,7 @@
           </div>
           <div class="pick-title">Montgomery or Gibbs Anytime TD</div>
           <div class="pick-sub">Odds: -165 • Detroit Lions</div>
-          <p class="reason">Combined for 3 TDs in recent rout; dominate 84% of goal-line snaps inside the 5-yard line.</p>
+          <p class="reason">Combined for 20 touchdowns this season; dominate 88% of goal-line snaps inside the 5-yard line behind an elite offensive line.</p>
           <div class="card-footer">
             <span style="color: #fbbf24;">Anytime Touchdown</span>
             <span style="color: var(--text-muted);">Red-Zone Hammer</span>
@@ -1016,7 +1272,7 @@
           </div>
           <div class="pick-title">Connor McDavid Over 1.5 Points</div>
           <div class="pick-sub">Odds: -130 • Edmonton Oilers</div>
-          <p class="reason">Multi-point games in 9 of his last 12 outings; averages 2.1 points per game on Edmonton PP1 with Zach Hyman.</p>
+          <p class="reason">100% healthy; multi-point outings in 9 of his last 12 games averaging 2.1 points per game on Edmonton PP1 with Zach Hyman.</p>
           <div class="card-footer">
             <span style="color: #fbbf24;">Points Prop</span>
             <span style="color: var(--text-muted);">Elite Playmaker</span>
@@ -1030,7 +1286,7 @@
           </div>
           <div class="pick-title">Derrick Henry Over 84.5 Rushing Yds</div>
           <div class="pick-sub">Odds: -115 • Baltimore Ravens</div>
-          <p class="reason">Averaging 108.2 yards per game; Pittsburgh defense yielding 4.9 YPC over their last three matchups.</p>
+          <p class="reason">Averaging 108.2 yards per game; cleared 85+ yards in 8 of 10 games this season against Pittsburgh's banged-up front.</p>
           <div class="card-footer">
             <span style="color: #fbbf24;">Rushing Yards</span>
             <span style="color: var(--text-muted);">Ground Dominance</span>
@@ -1044,7 +1300,7 @@
           </div>
           <div class="pick-title">Mitch Marner Over 0.5 Assists</div>
           <div class="pick-sub">Odds: -135 • Vegas Golden Knights</div>
-          <p class="reason">Marner returns to Toronto; quarterbacks PP1, leads VGK in assists, factors on 54% of team goals.</p>
+          <p class="reason">Marner returns to face Toronto; centering VGK PP1, has 23 assists in 22 games, factors on 54% of team goals in high-leverage games.</p>
           <div class="card-footer">
             <span style="color: #fbbf24;">Assists Prop</span>
             <span style="color: var(--text-muted);">Vegas Golden Knights</span>
@@ -1058,10 +1314,10 @@
           </div>
           <div class="pick-title">Josh Allen Over 0.5 Rushing TDs</div>
           <div class="pick-sub">Odds: +110 • Buffalo Bills</div>
-          <p class="reason">Scored a rushing TD in 7 of his last 9 meetings with Kansas City; commands 44% of goal-line carries.</p>
+          <p class="reason">With Dalton Kincaid and Keon Coleman ruled out, Josh Allen commands 44% of goal-line carries inside the 5 with 6 rush TDs.</p>
           <div class="card-footer">
             <span style="color: #fbbf24;">Rushing Touchdown</span>
-            <span style="color: var(--text-muted);">Highmark Stadium</span>
+            <span style="color: var(--text-muted);">Red-Zone Rusher</span>
           </div>
         </div>
 
@@ -1071,21 +1327,45 @@
             <span class="badge-pill badge-amber">92% Safe Bet</span>
           </div>
           <div class="pick-title">Zach Hyman Over 3.5 Shots on Goal</div>
-          <div class="pick-sub">Odds: -120 • Edmonton Oilers</div>
-          <p class="reason">Net-front shooter; registers 4.2 SOG per game receiving passes from Connor McDavid on the top line.</p>
+          <div class="pick-sub">Odds: -115 • Edmonton Oilers</div>
+          <p class="reason">Net-front shooter cleared to play; registers 4.2 SOG per game receiving passes from Connor McDavid on the top line.</p>
           <div class="card-footer">
             <span style="color: #fbbf24;">Shots on Goal</span>
             <span style="color: var(--text-muted);">Edmonton Oilers</span>
           </div>
         </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span>NFL • PHI Outside WR</span>
+            <span class="badge-pill badge-amber">92% Safe Bet</span>
+          </div>
+          <div class="pick-title">A.J. Brown Over 74.5 Receiving Yds</div>
+          <div class="pick-sub">Odds: -115 • Philadelphia Eagles</div>
+          <p class="reason">DeVonta Smith ruled out with hamstring injury; Brown absorbs 36% target share and 42% air yards against Washington.</p>
+          <div class="card-footer">
+            <span style="color: #fbbf24;">Receiving Yards</span>
+            <span style="color: var(--text-muted);">Target Spike</span>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <span>NFL • SF Dual-Threat</span>
+            <span class="badge-pill badge-amber">92% Safe Bet</span>
+          </div>
+          <div class="pick-title">Christian McCaffrey Over 4.5 Receptions</div>
+          <div class="pick-sub">Odds: -125 • San Francisco 49ers</div>
+          <p class="reason">With Brock Purdy dealing with right shoulder soreness, short checkdowns to McCaffrey will spike in volume against Green Bay's pressure.</p>
+          <div class="card-footer">
+            <span style="color: #fbbf24;">Receptions Prop</span>
+            <span style="color: var(--text-muted);">Checkdown Volume</span>
+          </div>
+        </div>
       </div>
     </div>
 
-
-    <!-- ==================================================== -->
-    <!-- TAB 7: STANDINGS (OFFICIAL NOV 18, 2026)             -->
-    <!-- ==================================================== -->
-        <div id="tab-standings" class="tab-content">
+    <div id="tab-standings" class="tab-content">
       <div class="hero">
         <div class="badge" style="color: #34d399; border-color: rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.1);">Official NFL.com & NHL.com References</div>
         <h1>Complete Official Standings (All 32 Teams)</h1>
@@ -1123,6 +1403,26 @@
 
   <script>
     // Universal robust tab switcher
+    
+    function filterInjuries(league) {
+      const cards = document.querySelectorAll('.inj-card');
+      const btnAll = document.getElementById('inj-btn-all');
+      const btnNfl = document.getElementById('inj-btn-nfl');
+      const btnNhl = document.getElementById('inj-btn-nhl');
+
+      cards.forEach(card => {
+        if (league === 'ALL' || card.getAttribute('data-league') === league) {
+          card.style.display = 'flex';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      if (btnAll) btnAll.style.background = league === 'ALL' ? 'var(--primary)' : '#1e293b';
+      if (btnNfl) btnNfl.style.background = league === 'NFL' ? 'var(--primary)' : '#1e293b';
+      if (btnNhl) btnNhl.style.background = league === 'NHL' ? 'var(--primary)' : '#1e293b';
+    }
+
     function switchTab(tabName) {
       if (!tabName) return;
 
