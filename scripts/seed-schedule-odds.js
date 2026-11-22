@@ -209,7 +209,7 @@ const NFL_GAMES = [
     spreadConfidence: "HIGH",
     predictedOverUnder: "OVER",
     predictionReasoning:
-      "Philadelphia's ground game behind Saquon Barkley (1,280 yds) controls the clock against Washington's 28th-ranked run defense. Even with DeVonta Smith ruled out (hamstring), A.J. Brown and Dallas Goedert provide dominant mismatch targets.",
+      "Philadelphia's ground game behind Saquon Barkley (1,280 yds) controls the clock against Washington's 28th-ranked run defense. With A.J. Brown ruled OUT with a hamstring/knee injury per NFL.com, Jalen Hurts heavily targets DeVonta Smith (WR1) and Dallas Goedert in intermediate concepts.",
     firstTeamToScore: "PHI",
     firstTeamOdds: -135,
     firstTeamReasoning:
@@ -231,11 +231,11 @@ const NFL_GAMES = [
         reason: "Rushed for 146 yards in their last meeting; Washington yields 138 rushing yards per contest.",
       },
       {
-        player: "A.J. Brown",
-        prop: "Over 74.5 Receiving Yards",
+        player: "DeVonta Smith",
+        prop: "Over 68.5 Receiving Yards",
         odds: "-115",
-        conviction: "92% Safe Bet",
-        reason: "Target share jumps to 36% with DeVonta Smith ruled out with a hamstring injury.",
+        conviction: "93% Safe Bet",
+        reason: "Target share surges to 34% as WR1 with A.J. Brown ruled out on the NFL.com injury report.",
       },
       {
         player: "Jalen Hurts",

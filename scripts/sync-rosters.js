@@ -117,18 +117,19 @@ const NFL_ROSTERS = {
   PHI: [
     { name: "Jalen Hurts", jersey: 1, pos: "QB", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting Dual-Threat QB", stats: "2,490 Pass Yds • 16 TD • 11 Rush TD", simWeight: 0.96, tdWeight: 0.40 },
     { name: "Saquon Barkley", jersey: 26, pos: "RB", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting Workhorse RB1", stats: "1,280 Rush Yds • 12 TD • 5.9 YPC", simWeight: 1.0, tdWeight: 0.60 },
-    { name: "A.J. Brown", jersey: 11, pos: "WR", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "All-Pro Starting WR1", stats: "48 Rec • 780 Yds • 6 TD", simWeight: 0.96, tdWeight: 0.45 },
-    { name: "DeVonta Smith", jersey: 6, pos: "WR", unit: "OFFENSE", depth: 2, status: "ACTIVE", role: "Starting WR2 Route Specialist", stats: "50 Rec • 600 Yds • 4 TD", simWeight: 0.88, tdWeight: 0.35 },
-    { name: "Dallas Goedert", jersey: 88, pos: "TE", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting TE1", stats: "32 Rec • 370 Yds • 2 TD", simWeight: 0.80, tdWeight: 0.20 },
+    { name: "A.J. Brown", jersey: 11, pos: "WR", unit: "OFFENSE", depth: 1, status: "OUT", injury: "Hamstring / Knee (Ruled Out per NFL.com)", role: "All-Pro Starting WR1 (Out)", stats: "48 Rec • 780 Yds • 6 TD", simWeight: 0.85, tdWeight: 0.25 },
+    { name: "DeVonta Smith", jersey: 6, pos: "WR", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting Top WR1 (Elevated)", stats: "56 Rec • 680 Yds • 6 TD", simWeight: 0.96, tdWeight: 0.45 },
+    { name: "Dallas Goedert", jersey: 88, pos: "TE", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting TE1", stats: "38 Rec • 440 Yds • 3 TD", simWeight: 0.88, tdWeight: 0.30 },
     { name: "Jalen Carter", jersey: 98, pos: "DT", unit: "DEFENSE", depth: 1, status: "ACTIVE", role: "Defensive Tackle Anchor", stats: "5.5 Sacks", simWeight: 0.92, tdWeight: 0.0 },
   ],
   DAL: [
-    { name: "Dak Prescott", jersey: 4, pos: "QB", unit: "OFFENSE", depth: 1, status: "IR", injury: "Hamstring (Injured Reserve)", role: "Starting QB (IR)", stats: "1,978 Pass Yds • 11 TD", simWeight: 0.90, tdWeight: 0.10 },
-    { name: "Cooper Rush", jersey: 10, pos: "QB", unit: "OFFENSE", depth: 2, status: "ACTIVE", role: "Current Starting QB", stats: "540 Pass Yds • 3 TD", simWeight: 0.70, tdWeight: 0.05 },
-    { name: "Rico Dowdle", jersey: 23, pos: "RB", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting RB1", stats: "490 Rush Yds • 3 TD", simWeight: 0.76, tdWeight: 0.40 },
-    { name: "CeeDee Lamb", jersey: 88, pos: "WR", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "All-Pro WR1", stats: "74 Rec • 860 Yds • 5 TD", simWeight: 0.98, tdWeight: 0.50 },
-    { name: "Jake Ferguson", jersey: 87, pos: "TE", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting TE", stats: "45 Rec • 420 Yds • 1 TD", simWeight: 0.80, tdWeight: 0.20 },
-    { name: "Micah Parsons", jersey: 11, pos: "LB", unit: "DEFENSE", depth: 1, status: "ACTIVE", role: "Pass Rusher Star", stats: "6.5 Sacks", simWeight: 0.98, tdWeight: 0.0 },
+    { name: "Dak Prescott", jersey: 4, pos: "QB", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Franchise Starting QB (100% Healthy & Active)", stats: "2,980 Pass Yds • 22 TD • 8 INT", simWeight: 0.96, tdWeight: 0.15 },
+    { name: "Cooper Rush", jersey: 10, pos: "QB", unit: "OFFENSE", depth: 2, status: "ACTIVE", role: "Backup Quarterback", stats: "Primary Backup QB", simWeight: 0.65, tdWeight: 0.05 },
+    { name: "Rico Dowdle", jersey: 23, pos: "RB", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting Lead RB1", stats: "620 Rush Yds • 4 TD", simWeight: 0.82, tdWeight: 0.45 },
+    { name: "CeeDee Lamb", jersey: 88, pos: "WR", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "All-Pro WR1", stats: "78 Rec • 910 Yds • 6 TD", simWeight: 0.98, tdWeight: 0.50 },
+    { name: "Brandin Cooks", jersey: 3, pos: "WR", unit: "OFFENSE", depth: 2, status: "IR", injury: "Knee (Injured Reserve per NFL.com)", role: "Veteran WR (IR)", stats: "9 Rec • 91 Yds • 1 TD", simWeight: 0.75, tdWeight: 0.20 },
+    { name: "Jake Ferguson", jersey: 87, pos: "TE", unit: "OFFENSE", depth: 1, status: "ACTIVE", role: "Starting TE", stats: "48 Rec • 460 Yds • 2 TD", simWeight: 0.84, tdWeight: 0.25 },
+    { name: "Micah Parsons", jersey: 11, pos: "LB", unit: "DEFENSE", depth: 1, status: "ACTIVE", role: "Pass Rusher Star", stats: "7.5 Sacks", simWeight: 0.98, tdWeight: 0.0 },
   ],
 };
 

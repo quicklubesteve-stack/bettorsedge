@@ -108,14 +108,23 @@ describe("Weekly Team Rosters & Depth Charts System", () => {
   });
 
   it("excludes injured/IR players from active simulation pool", async () => {
-    // In our seed, Dak Prescott is marked IR on Dallas
+    // Dak Prescott is 100% active and healthy on Dallas
     const activeDallas = await getActiveStartersForSimulation("NFL", "DAL");
-
     const dak = activeDallas.find((p) => p.name === "Dak Prescott");
-    const cooperRush = activeDallas.find((p) => p.name === "Cooper Rush");
+    expect(dak).toBeDefined();
+    expect(dak?.status).toBe("ACTIVE");
 
-    expect(dak).toBeUndefined(); // Injured, so excluded from active simulation
-    expect(cooperRush).toBeDefined(); // Backup promoted to active
+    // Brandin Cooks is on IR, so excluded from active simulation
+    const brandinCooks = activeDallas.find((p) => p.name === "Brandin Cooks");
+    expect(brandinCooks).toBeUndefined();
+
+    // A.J. Brown is injured (OUT per NFL.com), so excluded from active Philadelphia simulation
+    const activePhilly = await getActiveStartersForSimulation("NFL", "PHI");
+    const ajBrown = activePhilly.find((p) => p.name === "A.J. Brown");
+    expect(ajBrown).toBeUndefined();
+    const devonta = activePhilly.find((p) => p.name === "DeVonta Smith");
+    expect(devonta).toBeDefined();
+    expect(devonta?.status).toBe("ACTIVE");
   });
 
   it("weekly sync check returns false if sync is not yet due", async () => {
