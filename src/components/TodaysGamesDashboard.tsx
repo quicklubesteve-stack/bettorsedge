@@ -30,7 +30,7 @@ import { EnrichedTodayGame, TodayGamesResponse } from "@/lib/today-games-service
 export default function TodaysGamesDashboard() {
   const [timeHorizon, setTimeHorizon] = useState<
     "TODAY_NFL" | "TODAY_NHL" | "ALL" | "TOMORROW" | "THIS_WEEK"
-  >("ALL");
+  >("TODAY_NFL");
   const [sortBy, setSortBy] = useState<"time" | "prob" | "closest" | "value">("time");
   const [data, setData] = useState<TodayGamesResponse | null>(null);
   const [loading, setLoading] = useState(true);

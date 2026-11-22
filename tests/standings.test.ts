@@ -91,16 +91,16 @@ describe("Live Standings & Playoff Picture (2026 NFL.com Division Standings)", (
     const edm = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "EDM" } });
     expect(edm?.points).toBe(37);
     expect(edm?.wins).toBe(17);
-    expect(edm?.losses).toBe(3);
+    expect(edm?.losses).toBe(4);
     expect(edm?.otLosses).toBe(3);
-    expect(edm?.playoffSeed).toBe(1);
+    expect(edm?.playoffSeed).toBe(2);
 
     const min = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "MIN" } });
-    expect(min?.points).toBe(36);
-    expect(min?.wins).toBe(16);
+    expect(min?.points).toBe(38);
+    expect(min?.wins).toBe(17);
     expect(min?.losses).toBe(3);
     expect(min?.otLosses).toBe(4);
-    expect(min?.playoffSeed).toBe(2);
+    expect(min?.playoffSeed).toBe(1);
 
     const vgk = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "VGK" } });
     expect(vgk?.points).toBe(30);
@@ -109,25 +109,25 @@ describe("Live Standings & Playoff Picture (2026 NFL.com Division Standings)", (
     expect(vgk?.otLosses).toBe(4);
 
     const car = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "CAR" } });
-    expect(car?.points).toBe(34);
+    expect(car?.points).toBe(35);
     expect(car?.wins).toBe(16);
     expect(car?.losses).toBe(3);
-    expect(car?.otLosses).toBe(2);
+    expect(car?.otLosses).toBe(3);
     expect(car?.playoffSeed).toBe(1);
 
     const tbl = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "TBL" } });
-    expect(tbl?.points).toBe(30);
-    expect(tbl?.wins).toBe(14);
+    expect(tbl?.points).toBe(32);
+    expect(tbl?.wins).toBe(15);
     expect(tbl?.losses).toBe(5);
     expect(tbl?.otLosses).toBe(2);
-    expect(tbl?.playoffSeed).toBe(2);
+    expect(tbl?.playoffSeed).toBe(3);
 
     const tor = await prisma.teamStandings.findFirst({ where: { league: "NHL", team: "TOR" } });
-    expect(tor?.points).toBe(18);
-    expect(tor?.wins).toBe(8);
+    expect(tor?.points).toBe(17);
+    expect(tor?.wins).toBe(7);
     expect(tor?.losses).toBe(13);
-    expect(tor?.otLosses).toBe(2);
-    expect(tor?.streak).toBe("L7");
+    expect(tor?.otLosses).toBe(3);
+    expect(tor?.streak).toBe("L2");
     expect(tor?.playoffSeed).toBeNull();
   });
 

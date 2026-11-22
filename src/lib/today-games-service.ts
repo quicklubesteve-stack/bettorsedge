@@ -216,16 +216,23 @@ export async function getTodayGames(
       statusMessage = `Displaying ${weekdayTomorrow}'s NHL matchups (${tomorrowToronto}):`;
     }
   } else {
-    // Default "ALL"
+    // Default "ALL": display today's games PLUS Sunday Nov 22, 2026 NFL game-day slate for complete weekend coverage
     const todayMatches = leagueFilteredGames.filter((g) => getGameDateInToronto(g.date) === todayToronto);
-    if (todayMatches.length > 0) {
+    const sundayNflMatches = leagueFilteredGames.filter(
+      (g) => g.league.toUpperCase() === "NFL" && getGameDateInToronto(g.date) === tomorrowToronto
+    );
+
+    if (todayMatches.length > 0 && sundayNflMatches.length > 0) {
+      targetGames = [...todayMatches, ...sundayNflMatches];
+      statusMessage = `Displaying Today's live NHL slate (${todayToronto}) alongside Sunday's official NFL Game Day Slate (${tomorrowToronto}):`;
+    } else if (todayMatches.length > 0) {
       targetGames = todayMatches;
       statusMessage = `Showing verified live & scheduled games for Today (${todayToronto}) in America/Toronto time.`;
     } else {
       targetGames = leagueFilteredGames.filter((g) => getGameDateInToronto(g.date) === tomorrowToronto);
       effectiveDate = tomorrowToronto;
       isUpcomingOnly = true;
-      statusMessage = `No ${effectiveLeague === "ALL" ? "" : effectiveLeague + " "}games scheduled for today (${todayToronto}). Displaying next upcoming scheduled slate for ${weekdayTomorrow} (${tomorrowToronto}):`;
+      statusMessage = `Displaying official Sunday, Nov 22, 2026 NFL & NHL Game Day Slate (${tomorrowToronto}):`;
     }
   }
 

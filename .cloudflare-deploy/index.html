@@ -628,15 +628,15 @@
       <!-- SIDE-BY-SIDE MATCHUP CARDS CONTAINER -->
       <div id="side-by-side-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px; margin-bottom: 30px;">
 
-        <!-- MATCHUP 1: Dallas Cowboys vs Tennessee Titans -->
-        <div class="card sbs-matchup-card" data-league="NFL" data-horizon="NFL" data-prob="65.0" data-diff="30.0" data-value="15.05" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <!-- MATCHUP: TEN @ DAL -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="78.5" data-diff="57" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <!-- Top info bar -->
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
             <div style="display: flex; align-items: center; gap: 6px;">
               <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
               <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 1:00 PM ET</span>
             </div>
-            <div style="color: #94a3b8; font-size: 11px;">
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
               AT&T Stadium, Arlington, TX • FOX
             </div>
           </div>
@@ -644,70 +644,71 @@
           <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
             <!-- LEFT SIDE: AWAY TEAM -->
-            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-col; justify-content: space-between;">
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
               <div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                   <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/ten.png" style="width: 32px; height: 32px; object-contain;" alt="TEN" onerror="this.style.display='none'">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/ten.png" style="width: 32px; height: 32px; object-fit: contain;" alt="TEN" onerror="this.style.display='none'">
                   <div>
-                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Titans</div>
-                    <div style="font-size: 10px; color: #94a3b8;">Rec: 4-6</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Tennessee Titans</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">1-9</strong></div>
                   </div>
                 </div>
                 <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
                   <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
-                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">35.0%</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">21.5%</div>
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
                   <span style="color: #94a3b8;">Moneyline:</span>
-                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+110</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+260</span>
                 </div>
                 <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
-                  <span style="color: #94a3b8;">QB:</span> <strong>Will Levis</strong> (Active)
+                  <span style="color: #94a3b8;">QB:</span> <strong>Will Levis</strong>
                 </div>
                 <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
-                  Injuries: <span style="color: #34d399; font-weight: 700;">1 Player</span>
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
                   <span style="color: #64748b;">Last 5:</span>
-                  <span style="color: #f87171; font-weight: 800; font-family: monospace;">L L W L W</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L L W L</span>
                 </div>
               </div>
             </div>
 
-            <!-- RIGHT SIDE: HOME TEAM (FAVORED) -->
-            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);">
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
               <div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                   <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
                   <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/dal.png" style="width: 32px; height: 32px; object-contain;" alt="DAL" onerror="this.style.display='none'">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/dal.png" style="width: 32px; height: 32px; object-fit: contain;" alt="DAL" onerror="this.style.display='none'">
                   <div>
-                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Cowboys</div>
-                    <div style="font-size: 10px; color: #94a3b8;">Rec: 7-3</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Dallas Cowboys</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">5-5</strong></div>
                   </div>
                 </div>
                 <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
                   <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
-                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">65.0%</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">78.5%</div>
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
                   <span style="color: #94a3b8;">Moneyline:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">-130</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-320</span>
                 </div>
                 <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
-                  <span style="color: #94a3b8;">QB:</span> <strong>Dak Prescott</strong> (100% Active)
+                  <span style="color: #94a3b8;">QB:</span> <strong>Dak Prescott (100% Active QB1)</strong>
                 </div>
                 <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
                   Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
                   <span style="color: #64748b;">Last 5:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">W W L W W</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W L W W</span>
                 </div>
               </div>
             </div>
@@ -716,62 +717,64 @@
           <!-- PROBABILITY BAR (SUMS TO 100%) -->
           <div style="margin-bottom: 12px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
-              <span style="color: #94a3b8;">TEN 35.0%</span>
+              <span style="color: #94a3b8;">TEN 21.5%</span>
               <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
-              <span style="color: #34d399;">65.0% DAL</span>
+              <span style="color: #34d399;">78.5% DAL</span>
             </div>
             <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
-              <div style="width: 35%; background: #475569;"></div>
-              <div style="width: 65%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+              <div style="width: 21.5%; background: #475569;"></div>
+              <div style="width: 78.5%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
             </div>
           </div>
 
           <!-- Bottom Summary Badge -->
           <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
             <div>
-              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Dallas Cowboys</strong> <span style="color: #34d399; font-family: monospace;">(27 - 17)</span>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Dallas Cowboys</strong> <span style="color: #34d399; font-family: monospace;">(DAL 31 - TEN 17)</span>
             </div>
             <div style="color: #34d399; font-weight: 800;">
               +$15.05 EV / $100
             </div>
           </div>
         </div>
+  
 
-        <!-- MATCHUP 2: Buffalo Bills vs Miami Dolphins -->
-        <div class="card sbs-matchup-card" data-league="NFL" data-horizon="NFL" data-prob="71.0" data-diff="42.0" data-value="10.43" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <!-- MATCHUP: MIA @ BUF -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="68" data-diff="36" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <!-- Top info bar -->
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
             <div style="display: flex; align-items: center; gap: 6px;">
               <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
               <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 1:00 PM ET</span>
             </div>
-            <div style="color: #94a3b8; font-size: 11px;">
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
               Highmark Stadium, Orchard Park, NY • CBS
             </div>
           </div>
 
-          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID -->
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
             <!-- LEFT SIDE: AWAY TEAM -->
-            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-col; justify-content: space-between;">
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
               <div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                   <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/mia.png" style="width: 32px; height: 32px; object-contain;" alt="MIA" onerror="this.style.display='none'">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/mia.png" style="width: 32px; height: 32px; object-fit: contain;" alt="MIA" onerror="this.style.display='none'">
                   <div>
-                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Dolphins</div>
-                    <div style="font-size: 10px; color: #94a3b8;">Rec: 5-5</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Miami Dolphins</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">2-8</strong></div>
                   </div>
                 </div>
                 <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
                   <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
-                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">29.0%</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">32.0%</div>
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
                   <span style="color: #94a3b8;">Moneyline:</span>
-                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+150</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+175</span>
                 </div>
                 <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
                   <span style="color: #94a3b8;">QB:</span> <strong>Tua Tagovailoa</strong>
@@ -781,42 +784,42 @@
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
                   <span style="color: #64748b;">Last 5:</span>
-                  <span style="color: #f87171; font-weight: 800; font-family: monospace;">W L L W L</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L W L L</span>
                 </div>
               </div>
             </div>
 
-            <!-- RIGHT SIDE: HOME TEAM (FAVORED) -->
-            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);">
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
               <div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                   <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
                   <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/buf.png" style="width: 32px; height: 32px; object-contain;" alt="BUF" onerror="this.style.display='none'">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/buf.png" style="width: 32px; height: 32px; object-fit: contain;" alt="BUF" onerror="this.style.display='none'">
                   <div>
-                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Bills</div>
-                    <div style="font-size: 10px; color: #94a3b8;">Rec: 9-2</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Buffalo Bills</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">8-1</strong></div>
                   </div>
                 </div>
                 <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
                   <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
-                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">71.0%</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">68.0%</div>
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
                   <span style="color: #94a3b8;">Moneyline:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">-180</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-210</span>
                 </div>
                 <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
-                  <span style="color: #94a3b8;">QB:</span> <strong>Josh Allen</strong> (Confirmed)
+                  <span style="color: #94a3b8;">QB:</span> <strong>Josh Allen (Active)</strong>
                 </div>
                 <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
                   Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
                   <span style="color: #64748b;">Last 5:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">W W W W L</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W W W W</span>
                 </div>
               </div>
             </div>
@@ -825,88 +828,55 @@
           <!-- PROBABILITY BAR (SUMS TO 100%) -->
           <div style="margin-bottom: 12px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
-              <span style="color: #94a3b8;">MIA 29.0%</span>
+              <span style="color: #94a3b8;">MIA 32.0%</span>
               <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
-              <span style="color: #34d399;">71.0% BUF</span>
+              <span style="color: #34d399;">68.0% BUF</span>
             </div>
             <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
-              <div style="width: 29%; background: #475569;"></div>
-              <div style="width: 71%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+              <div style="width: 32%; background: #475569;"></div>
+              <div style="width: 68%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
             </div>
           </div>
 
           <!-- Bottom Summary Badge -->
           <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
             <div>
-              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Buffalo Bills</strong> <span style="color: #34d399; font-family: monospace;">(30 - 20)</span>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Buffalo Bills</strong> <span style="color: #34d399; font-family: monospace;">(BUF 28 - MIA 20)</span>
             </div>
             <div style="color: #34d399; font-weight: 800;">
               +$10.43 EV / $100
             </div>
           </div>
         </div>
+  
 
-        <!-- MATCHUP 3: NHL - Edmonton Oilers @ Carolina Hurricanes -->
-        <div class="card sbs-matchup-card" data-league="NHL" data-horizon="NHL" data-prob="59.0" data-diff="18.0" data-value="10.33" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+        <!-- MATCHUP: PIT @ PHI -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="59" data-diff="18" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
           <!-- Top info bar -->
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
             <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NHL</span>
-              <span style="color: white; font-weight: 700; font-family: monospace;">Sat Nov 21 • 7:00 PM ET</span>
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 1:00 PM ET</span>
             </div>
-            <div style="color: #94a3b8; font-size: 11px;">
-              PNC Arena, Raleigh, NC • Sportsnet
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Lincoln Financial Field, Philadelphia, PA • CBS
             </div>
           </div>
 
-          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID -->
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-            <!-- LEFT SIDE: AWAY TEAM (FAVORED) -->
-            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
               <div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">AWAY</span>
-                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/edm.png" style="width: 32px; height: 32px; object-contain;" alt="EDM" onerror="this.style.display='none'">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/pit.png" style="width: 32px; height: 32px; object-fit: contain;" alt="PIT" onerror="this.style.display='none'">
                   <div>
-                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Oilers</div>
-                    <div style="font-size: 10px; color: #94a3b8;">Rec: 12-7-1</div>
-                  </div>
-                </div>
-                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
-                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
-                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">59.0%</div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
-                  <span style="color: #94a3b8;">Moneyline:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">-115</span>
-                </div>
-                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
-                  <span style="color: #94a3b8;">Goalie:</span> <strong>Stuart Skinner</strong> (.910)
-                </div>
-                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
-                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
-                </div>
-                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
-                  <span style="color: #64748b;">Last 5:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">W W L W W</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- RIGHT SIDE: HOME TEAM -->
-            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-col; justify-content: space-between;">
-              <div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">HOME</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/car.png" style="width: 32px; height: 32px; object-contain;" alt="CAR" onerror="this.style.display='none'">
-                  <div>
-                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Hurricanes</div>
-                    <div style="font-size: 10px; color: #94a3b8;">Rec: 13-5-0</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Pittsburgh Steelers</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">6-4</strong></div>
                   </div>
                 </div>
                 <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
@@ -915,126 +885,52 @@
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
                   <span style="color: #94a3b8;">Moneyline:</span>
-                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-105</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+145</span>
                 </div>
                 <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
-                  <span style="color: #94a3b8;">Goalie:</span> <strong>Frederik Andersen</strong>
+                  <span style="color: #94a3b8;">QB:</span> <strong>Russell Wilson</strong>
                 </div>
                 <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
                   Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
                   <span style="color: #64748b;">Last 5:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">W L W W L</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- PROBABILITY BAR (SUMS TO 100%) -->
-          <div style="margin-bottom: 12px;">
-            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
-              <span style="color: #34d399;">EDM 59.0%</span>
-              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full Game (OT/SO Incl. 100%)</span>
-              <span style="color: #94a3b8;">41.0% CAR</span>
-            </div>
-            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
-              <div style="width: 59%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
-              <div style="width: 41%; background: #475569;"></div>
-            </div>
-          </div>
-
-          <!-- Bottom Summary Badge -->
-          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
-            <div>
-              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Edmonton Oilers</strong> <span style="color: #34d399; font-family: monospace;">(4 - 3 OT)</span>
-            </div>
-            <div style="color: #34d399; font-weight: 800;">
-              +$10.33 EV / $100
-            </div>
-          </div>
-        </div>
-
-        <!-- MATCHUP 4: NHL - Columbus Blue Jackets @ Toronto Maple Leafs -->
-        <div class="card sbs-matchup-card" data-league="NHL" data-horizon="NHL" data-prob="58.0" data-diff="16.0" data-value="2.50" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
-          <!-- Top info bar -->
-          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
-            <div style="display: flex; align-items: center; gap: 6px;">
-              <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NHL</span>
-              <span style="color: white; font-weight: 700; font-family: monospace;">Sat Nov 21 • 7:00 PM ET</span>
-            </div>
-            <div style="color: #94a3b8; font-size: 11px;">
-              Scotiabank Arena, Toronto, ON • CBC / Sportsnet
-            </div>
-          </div>
-
-          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID -->
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
-            <!-- LEFT SIDE: AWAY TEAM -->
-            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-col; justify-content: space-between;">
-              <div>
-                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
-                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/cbj.png" style="width: 32px; height: 32px; object-contain;" alt="CBJ" onerror="this.style.display='none'">
-                  <div>
-                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Blue Jackets</div>
-                    <div style="font-size: 10px; color: #94a3b8;">Rec: 7-9-2</div>
-                  </div>
-                </div>
-                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
-                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
-                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">42.0%</div>
-                </div>
-                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
-                  <span style="color: #94a3b8;">Moneyline:</span>
-                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+150</span>
-                </div>
-                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
-                  <span style="color: #94a3b8;">Goalie:</span> <strong>Elvis Merzlikins</strong>
-                </div>
-                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
-                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
-                </div>
-                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
-                  <span style="color: #64748b;">Last 5:</span>
-                  <span style="color: #f87171; font-weight: 800; font-family: monospace;">L L W L W</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W L W W L</span>
                 </div>
               </div>
             </div>
 
-            <!-- RIGHT SIDE: HOME TEAM (FAVORED) -->
-            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);">
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
               <div>
                 <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
                   <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
                   <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
                 </div>
                 <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
-                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/tor.png" style="width: 32px; height: 32px; object-contain;" alt="TOR" onerror="this.style.display='none'">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/phi.png" style="width: 32px; height: 32px; object-fit: contain;" alt="PHI" onerror="this.style.display='none'">
                   <div>
-                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Maple Leafs</div>
-                    <div style="font-size: 10px; color: #94a3b8;">Rec: 11-6-2</div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Philadelphia Eagles</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">8-2</strong></div>
                   </div>
                 </div>
                 <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
                   <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
-                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">58.0%</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">59.0%</div>
                 </div>
                 <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
                   <span style="color: #94a3b8;">Moneyline:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">-175</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-165</span>
                 </div>
                 <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
-                  <span style="color: #94a3b8;">Goalie:</span> <strong>Joseph Woll</strong> (.914)
+                  <span style="color: #94a3b8;">QB:</span> <strong>Jalen Hurts</strong>
                 </div>
                 <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
-                  Injuries: <span style="color: #f87171; font-weight: 700;">A. Matthews (IR)</span>
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">A.J. Brown (OUT)</span>
                 </div>
                 <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
                   <span style="color: #64748b;">Last 5:</span>
-                  <span style="color: #34d399; font-weight: 800; font-family: monospace;">W L W W L</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W W W L</span>
                 </div>
               </div>
             </div>
@@ -1043,27 +939,1470 @@
           <!-- PROBABILITY BAR (SUMS TO 100%) -->
           <div style="margin-bottom: 12px;">
             <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
-              <span style="color: #94a3b8;">CBJ 42.0%</span>
-              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full Game (OT/SO Incl. 100%)</span>
-              <span style="color: #34d399;">58.0% TOR</span>
+              <span style="color: #94a3b8;">PIT 41.0%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">59.0% PHI</span>
             </div>
             <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
-              <div style="width: 42%; background: #475569;"></div>
-              <div style="width: 58%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+              <div style="width: 41%; background: #475569;"></div>
+              <div style="width: 59%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
             </div>
           </div>
 
           <!-- Bottom Summary Badge -->
           <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
             <div>
-              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Toronto Maple Leafs</strong> <span style="color: #34d399; font-family: monospace;">(3 - 2)</span>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Philadelphia Eagles</strong> <span style="color: #34d399; font-family: monospace;">(PHI 24 - PIT 20)</span>
             </div>
-            <div style="color: #cbd5e1; font-weight: 800;">
-              Score Impact: -0.35 xG (Matthews OUT)
+            <div style="color: #34d399; font-weight: 800;">
+              +$5.80 EV / $100
             </div>
           </div>
         </div>
+  
 
+        <!-- MATCHUP: BAL @ CAR -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="72.8" data-diff="45.599999999999994" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 1:00 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Bank of America Stadium, Charlotte, NC • FOX
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">AWAY</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/bal.png" style="width: 32px; height: 32px; object-fit: contain;" alt="BAL" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Baltimore Ravens</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">5-5</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">72.8%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-280</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Lamar Jackson (Cleared)</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">Derrick Henry (Active)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W L W L W</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">HOME</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/car.png" style="width: 32px; height: 32px; object-fit: contain;" alt="CAR" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Carolina Panthers</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">6-4</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">27.2%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+235</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Bryce Young</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W L W W</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #34d399;">BAL 72.8%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #94a3b8;">27.2% CAR</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 72.8%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+              <div style="width: 27.2%; background: #475569;"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Baltimore Ravens</strong> <span style="color: #34d399; font-family: monospace;">(BAL 27 - CAR 17)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$12.15 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: TB @ DET -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="63.5" data-diff="27" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 1:00 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Ford Field, Detroit, MI • FOX
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/tb.png" style="width: 32px; height: 32px; object-fit: contain;" alt="TB" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Tampa Bay Buccaneers</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">4-6</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">36.5%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+155</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Baker Mayfield</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L W L L W</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/det.png" style="width: 32px; height: 32px; object-fit: contain;" alt="DET" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Detroit Lions</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">7-3</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">63.5%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-180</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Jared Goff</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W W L W</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">TB 36.5%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">63.5% DET</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 36.5%; background: #475569;"></div>
+              <div style="width: 63.5%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Detroit Lions</strong> <span style="color: #34d399; font-family: monospace;">(DET 30 - TB 23)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$8.20 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: ARI @ KC -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="76" data-diff="52" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 1:00 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              GEHA Field at Arrowhead Stadium, Kansas City, MO • CBS
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/ari.png" style="width: 32px; height: 32px; object-fit: contain;" alt="ARI" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Arizona Cardinals</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">3-7</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">24.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+310</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Kyler Murray</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">2 Players</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L W L L</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/kc.png" style="width: 32px; height: 32px; object-fit: contain;" alt="KC" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Kansas City Chiefs</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">7-3</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">76.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-380</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Patrick Mahomes</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W W W L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">ARI 24.0%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">76.0% KC</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 24%; background: #475569;"></div>
+              <div style="width: 76%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Kansas City Chiefs</strong> <span style="color: #34d399; font-family: monospace;">(KC 27 - ARI 16)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$6.40 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: NO @ CHI -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="68.5" data-diff="37" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 1:00 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Soldier Field, Chicago, IL • FOX
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/no.png" style="width: 32px; height: 32px; object-fit: contain;" alt="NO" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">New Orleans Saints</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">3-8</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">31.5%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+185</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Derek Carr</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L L W L</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/chi.png" style="width: 32px; height: 32px; object-fit: contain;" alt="CHI" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Chicago Bears</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">7-3</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">68.5%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-225</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Caleb Williams</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W L W W</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">NO 31.5%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">68.5% CHI</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 31.5%; background: #475569;"></div>
+              <div style="width: 68.5%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Chicago Bears</strong> <span style="color: #34d399; font-family: monospace;">(CHI 24 - NO 16)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$9.10 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: NYJ @ LAC -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="52" data-diff="4" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 4:05 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              SoFi Stadium, Inglewood, CA • FOX
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/nyj.png" style="width: 32px; height: 32px; object-fit: contain;" alt="NYJ" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">New York Jets</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">2-8</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">48.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-105</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Aaron Rodgers</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L L L W</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/lac.png" style="width: 32px; height: 32px; object-fit: contain;" alt="LAC" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Los Angeles Chargers</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">1-9</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">52.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-115</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Justin Herbert</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L W L L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">NYJ 48.0%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">52.0% LAC</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 48%; background: #475569;"></div>
+              <div style="width: 52%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Los Angeles Chargers</strong> <span style="color: #34d399; font-family: monospace;">(LAC 20 - NYJ 19)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$2.30 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: JAX @ NYG -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="54.5" data-diff="9" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 4:25 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              MetLife Stadium, East Rutherford, NJ • CBS
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">AWAY</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/jax.png" style="width: 32px; height: 32px; object-fit: contain;" alt="JAX" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Jacksonville Jaguars</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">7-3</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">54.5%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-120</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Trevor Lawrence</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W L W W</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">HOME</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/nyg.png" style="width: 32px; height: 32px; object-fit: contain;" alt="NYG" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">New York Giants</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">6-4</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">45.5%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+100</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Daniel Jones</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W L W W L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #34d399;">JAX 54.5%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #94a3b8;">45.5% NYG</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 54.5%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+              <div style="width: 45.5%; background: #475569;"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Jacksonville Jaguars</strong> <span style="color: #34d399; font-family: monospace;">(JAX 23 - NYG 20)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$4.50 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: LV @ DEN -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="62" data-diff="24" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 4:25 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Empower Field at Mile High, Denver, CO • CBS
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/lv.png" style="width: 32px; height: 32px; object-fit: contain;" alt="LV" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Las Vegas Raiders</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">4-6</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">38.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+160</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Gardner Minshew</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L W L L W</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/den.png" style="width: 32px; height: 32px; object-fit: contain;" alt="DEN" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Denver Broncos</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">6-4</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">62.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-190</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Bo Nix</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W L W L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">LV 38.0%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">62.0% DEN</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 38%; background: #475569;"></div>
+              <div style="width: 62%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Denver Broncos</strong> <span style="color: #34d399; font-family: monospace;">(DEN 24 - LV 17)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$7.60 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: MIN @ SF -->
+        <div class="card sbs-matchup-card" data-league="NFL" data-prob="57" data-diff="14" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(245, 158, 11, 0.2); color: #fbbf24; border: 1px solid rgba(245, 158, 11, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NFL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 8:20 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Levi's Stadium, Santa Clara, CA • NBC (SNF)
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/min.png" style="width: 32px; height: 32px; object-fit: contain;" alt="MIN" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Minnesota Vikings</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">7-3</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">43.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+135</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Sam Darnold</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W L W L</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nfl/500/sf.png" style="width: 32px; height: 32px; object-fit: contain;" alt="SF" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">San Francisco 49ers</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">8-2</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">57.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-155</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">QB:</span> <strong>Brock Purdy</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W W W W</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">MIN 43.0%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">57.0% SF</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 43%; background: #475569;"></div>
+              <div style="width: 57%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">San Francisco 49ers</strong> <span style="color: #34d399; font-family: monospace;">(SF 27 - MIN 23)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$5.20 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: CAR @ NYR -->
+        <div class="card sbs-matchup-card" data-league="NHL" data-prob="52.6" data-diff="5.200000000000003" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NHL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 12:30 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Madison Square Garden, New York, NY • NHLN/MSG
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/car.png" style="width: 32px; height: 32px; object-fit: contain;" alt="CAR" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Carolina Hurricanes</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">16-3-3</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">47.4%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-110</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Frederik Andersen</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W W W L</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/nyr.png" style="width: 32px; height: 32px; object-fit: contain;" alt="NYR" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">New York Rangers</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">13-8-1</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">52.6%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-110</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Igor Shesterkin (Confirmed)</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W L W W L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">CAR 47.4%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">52.6% NYR</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 47.4%; background: #475569;"></div>
+              <div style="width: 52.6%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">New York Rangers</strong> <span style="color: #34d399; font-family: monospace;">(NYR 3 - CAR 2 (OT))</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$5.10 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: BUF @ TBL -->
+        <div class="card sbs-matchup-card" data-league="NHL" data-prob="61.5" data-diff="23" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NHL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 5:00 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Amalie Arena, Tampa, FL • NHLN/ESPN+
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/buf.png" style="width: 32px; height: 32px; object-fit: contain;" alt="BUF" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Buffalo Sabres</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">9-10-4</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">38.5%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+160</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Ukko-Pekka Luukkonen</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L W L L</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/tbl.png" style="width: 32px; height: 32px; object-fit: contain;" alt="TBL" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Tampa Bay Lightning</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">15-5-2</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">61.5%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-190</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Andrei Vasilevskiy</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W W L W</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">BUF 38.5%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">61.5% TBL</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 38.5%; background: #475569;"></div>
+              <div style="width: 61.5%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Tampa Bay Lightning</strong> <span style="color: #34d399; font-family: monospace;">(TBL 4 - BUF 2)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$8.40 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: EDM @ STL -->
+        <div class="card sbs-matchup-card" data-league="NHL" data-prob="64" data-diff="28" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NHL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 7:00 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Enterprise Center, St. Louis, MO • ESPN+
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">AWAY</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/edm.png" style="width: 32px; height: 32px; object-fit: contain;" alt="EDM" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Edmonton Oilers</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">17-4-3</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">64.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-170</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Stuart Skinner (Confirmed)</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">Zach Hyman (Active)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W W L W</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">HOME</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/stl.png" style="width: 32px; height: 32px; object-fit: contain;" alt="STL" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">St. Louis Blues</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">11-9-2</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">36.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+145</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Jordan Binnington</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W L L W W</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #34d399;">EDM 64.0%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #94a3b8;">36.0% STL</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 64%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+              <div style="width: 36%; background: #475569;"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Edmonton Oilers</strong> <span style="color: #34d399; font-family: monospace;">(EDM 4 - STL 2)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$9.20 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: PIT @ DAL -->
+        <div class="card sbs-matchup-card" data-league="NHL" data-prob="63" data-diff="26" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NHL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 7:00 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              American Airlines Center, Dallas, TX • ESPN+
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/pit.png" style="width: 32px; height: 32px; object-fit: contain;" alt="PIT" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Pittsburgh Penguins</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">7-12-2</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">37.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+165</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Tristan Jarry</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L W L L</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/dal.png" style="width: 32px; height: 32px; object-fit: contain;" alt="DAL" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Dallas Stars</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">14-6-2</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">63.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-195</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Jake Oettinger</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #34d399; font-weight: 700;">0 (Clean)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">W W L W W</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">PIT 37.0%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">63.0% DAL</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 37%; background: #475569;"></div>
+              <div style="width: 63%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Dallas Stars</strong> <span style="color: #34d399; font-family: monospace;">(DAL 4 - PIT 2)</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$7.80 EV / $100
+            </div>
+          </div>
+        </div>
+  
+
+        <!-- MATCHUP: CHI @ VAN -->
+        <div class="card sbs-matchup-card" data-league="NHL" data-prob="56" data-diff="12" data-value="NaN" style="border: 1px solid #1e293b; border-radius: 16px; padding: 18px; background: #090d16; box-shadow: 0 10px 25px rgba(0,0,0,0.5);">
+          <!-- Top info bar -->
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #1e293b; padding-bottom: 8px; margin-bottom: 12px; font-size: 11px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="background: rgba(59, 130, 246, 0.2); color: #60a5fa; border: 1px solid rgba(59, 130, 246, 0.4); padding: 2px 6px; border-radius: 6px; font-weight: 900;">NHL</span>
+              <span style="color: white; font-weight: 700; font-family: monospace;">Sun Nov 22 • 8:00 PM ET</span>
+            </div>
+            <div style="color: #94a3b8; font-size: 11px; truncate;">
+              Rogers Arena, Vancouver, BC • Sportsnet
+            </div>
+          </div>
+
+          <!-- SIDE-BY-SIDE 2-COLUMN TEAMS GRID (PRESERVED ON MOBILE) -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px;">
+            <!-- LEFT SIDE: AWAY TEAM -->
+            <div style="background: #0f172a; border: 1px solid #1e293b; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #94a3b8;">AWAY</span>
+                  
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/chi.png" style="width: 32px; height: 32px; object-fit: contain;" alt="CHI" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Chicago Blackhawks</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">6-14-2</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid #1e293b; border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #94a3b8; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #cbd5e1; font-family: monospace;">44.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">+115</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Petr Mrazek</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">Connor Bedard (Active)</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L L W L</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- RIGHT SIDE: HOME TEAM -->
+            <div style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.15), #0f172a); border: 2px solid #10b981; border-radius: 12px; padding: 12px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+                  <span style="font-size: 10px; font-weight: 800; color: #34d399;">HOME</span>
+                  <span style="font-size: 9px; font-weight: 900; background: #10b981; color: #022c22; padding: 1px 5px; border-radius: 4px;">FAVORED</span>
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                  <img src="https://a.espncdn.com/i/teamlogos/nhl/500/van.png" style="width: 32px; height: 32px; object-fit: contain;" alt="VAN" onerror="this.style.display='none'">
+                  <div>
+                    <div style="font-size: 14px; font-weight: 900; color: #ffffff;">Vancouver Canucks</div>
+                    <div style="font-size: 10px; color: #94a3b8;">Rec: <strong style="color: #f1f5f9;">5-18-1</strong></div>
+                  </div>
+                </div>
+                <div style="background: #020617; border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 8px; padding: 6px; text-align: center; margin-bottom: 8px;">
+                  <div style="font-size: 9px; color: #34d399; font-weight: 700;">WIN PROB</div>
+                  <div style="font-size: 18px; font-weight: 900; color: #34d399; font-family: monospace;">56.0%</div>
+                </div>
+                <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 6px; border-top: 1px solid #1e293b; padding-top: 6px;">
+                  <span style="color: #94a3b8;">Moneyline:</span>
+                  <span style="color: #ffffff; font-weight: 800; font-family: monospace;">-135</span>
+                </div>
+                <div style="font-size: 10px; color: #cbd5e1; margin-bottom: 4px;">
+                  <span style="color: #94a3b8;">Goalie:</span> <strong>Thatcher Demko</strong>
+                </div>
+                <div style="font-size: 10px; color: #94a3b8; margin-bottom: 6px;">
+                  Injuries: <span style="color: #fbbf24; font-weight: 700;">1 Player</span>
+                </div>
+                <div style="display: flex; align-items: center; justify-content: space-between; font-size: 10px; border-top: 1px solid #1e293b; padding-top: 4px;">
+                  <span style="color: #64748b;">Last 5:</span>
+                  <span style="color: #cbd5e1; font-weight: 800; font-family: monospace;">L L L L L</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- PROBABILITY BAR (SUMS TO 100%) -->
+          <div style="margin-bottom: 12px;">
+            <div style="display: flex; justify-content: space-between; font-size: 11px; font-family: monospace; font-weight: 800; margin-bottom: 4px;">
+              <span style="color: #94a3b8;">CHI 44.0%</span>
+              <span style="color: #64748b; font-size: 10px; font-family: sans-serif;">Full-Game Win % (100%)</span>
+              <span style="color: #34d399;">56.0% VAN</span>
+            </div>
+            <div style="height: 10px; width: 100%; background: #020617; border-radius: 6px; overflow: hidden; display: flex; border: 1px solid #1e293b;">
+              <div style="width: 44%; background: #475569;"></div>
+              <div style="width: 56%; background: linear-gradient(90deg, #10b981, #34d399);"></div>
+            </div>
+          </div>
+
+          <!-- Bottom Summary Badge -->
+          <div style="background: #020617; border: 1px solid #1e293b; border-radius: 10px; padding: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px;">
+            <div>
+              <span style="color: #94a3b8;">Predicted Winner:</span> <strong style="color: white;">Vancouver Canucks</strong> <span style="color: #34d399; font-family: monospace;">(VAN 3 - CHI 2 (OT))</span>
+            </div>
+            <div style="color: #34d399; font-weight: 800;">
+              +$4.60 EV / $100
+            </div>
+          </div>
+        </div>
+  
       </div>
 
       <!-- Script for Filtering Horizons and Sorting -->
