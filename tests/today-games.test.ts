@@ -149,10 +149,11 @@ describe("Today's Games & AI Win Probability Engine", () => {
     expect(nflResult.statusMessage).toContain("Sunday");
     expect(nflResult.games.length).toBeGreaterThanOrEqual(5);
 
-    // Confirm Dallas @ Carolina has Dak Prescott active
+    // Confirm Dallas game has Dak Prescott active
     const dalGame = nflResult.games.find((g) => g.awayTeam === "DAL" || g.homeTeam === "DAL");
     expect(dalGame).toBeDefined();
-    expect(dalGame?.qbMatchup?.awayQb.name).toBe("Dak Prescott");
-    expect(dalGame?.qbMatchup?.awayQb.status).toBe("ACTIVE");
+    const dalQb = dalGame?.homeTeam === "DAL" ? dalGame?.qbMatchup?.homeQb : dalGame?.qbMatchup?.awayQb;
+    expect(dalQb?.name).toBe("Dak Prescott");
+    expect(dalQb?.status).toBe("ACTIVE");
   });
 });
