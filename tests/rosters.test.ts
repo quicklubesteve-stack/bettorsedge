@@ -134,6 +134,16 @@ describe("Weekly Team Rosters & Depth Charts System (2026-2027 Season)", () => {
     const devonta = activePhilly.find((p) => p.name === "DeVonta Smith");
     expect(devonta).toBeDefined();
     expect(devonta?.status).toBe("ACTIVE");
+
+    // Kirk Cousins is confirmed starting QB on Minnesota; Sam Darnold is OUT (injured)
+    const activeVikings = await getActiveStartersForSimulation("NFL", "MIN");
+    const cousins = activeVikings.find((p) => p.name === "Kirk Cousins");
+    expect(cousins).toBeDefined();
+    expect(cousins?.status).toBe("ACTIVE");
+    expect(cousins?.depthOrder).toBe(1);
+
+    const darnold = activeVikings.find((p) => p.name === "Sam Darnold");
+    expect(darnold).toBeUndefined(); // Darnold is OUT, so excluded from active simulation pool
   });
 
   it("weekly sync check returns false if sync is not yet due", async () => {

@@ -131,6 +131,23 @@ export const VERIFIED_LINEUP_CHANGES: LineupImpactEvent[] = [
     verifiedSourceUrl: "https://www.nhl.com",
     impactTier: "MODERATE",
   },
+  {
+    id: "imp-007",
+    gameId: "NFL-2026-MIN-SF",
+    league: "NFL",
+    timestamp: "2026-11-22T06:00:00-05:00",
+    matchup: "Minnesota Vikings @ San Francisco 49ers",
+    affectedTeam: "Minnesota Vikings",
+    opponentTeam: "San Francisco 49ers",
+    newsType: "STARTING_QB",
+    headline: "Kirk Cousins Named Starting QB for Vikings; Sam Darnold Sidelined with Injury",
+    beforeWinProb: 38.5,
+    afterWinProb: 41.2,
+    probDelta: +2.7,
+    tacticalRationale: "Kirk Cousins takes over under center as Minnesota starting QB after Sam Darnold was ruled OUT with a foot/ankle injury. Cousins brings seasoned chemistry with superstar WR Justin Jefferson (+0.12 EPA/dropback), elevating Minnesota's projected red-zone efficiency and downfield pass protection against the 49ers pass rush.",
+    verifiedSourceUrl: "https://www.nfl.com/injuries/",
+    impactTier: "HIGH",
+  },
 ];
 
 export function getLineupImpactEvents(league?: "NFL" | "NHL"): LineupImpactEvent[] {

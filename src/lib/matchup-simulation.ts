@@ -83,6 +83,30 @@ export const NFL_TEAM_STARS: Record<
       { name: "Jauan Jennings", targetShare: 0.22, tdShare: 0.25, ypt: 11.0 },
     ],
   },
+  MIN: {
+    qb: { name: "Kirk Cousins", passBaseYds: 268, passTdRate: 2.1 },
+    rbs: [
+      { name: "Aaron Jones", rushShare: 0.70, tdShare: 0.55, ypc: 4.6 },
+      { name: "Ty Chandler", rushShare: 0.25, tdShare: 0.20, ypc: 4.1 },
+    ],
+    wrs: [
+      { name: "Justin Jefferson", targetShare: 0.35, tdShare: 0.50, ypt: 11.8 },
+      { name: "Jordan Addison", targetShare: 0.25, tdShare: 0.30, ypt: 9.8 },
+      { name: "T.J. Hockenson (TE)", targetShare: 0.22, tdShare: 0.25, ypt: 8.6 },
+    ],
+  },
+  ATL: {
+    qb: { name: "Michael Penix Jr.", passBaseYds: 245, passTdRate: 1.8 },
+    rbs: [
+      { name: "Bijan Robinson", rushShare: 0.75, tdShare: 0.65, ypc: 4.9 },
+      { name: "Tyler Allgeier", rushShare: 0.25, tdShare: 0.30, ypc: 4.3 },
+    ],
+    wrs: [
+      { name: "Drake London", targetShare: 0.32, tdShare: 0.45, ypt: 10.2 },
+      { name: "Darnell Mooney", targetShare: 0.25, tdShare: 0.30, ypt: 9.4 },
+      { name: "Kyle Pitts (TE)", targetShare: 0.22, tdShare: 0.25, ypt: 8.8 },
+    ],
+  },
 };
 
 // Generic fallback generator for any of the other 32 NFL teams

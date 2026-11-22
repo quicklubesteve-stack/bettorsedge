@@ -473,6 +473,47 @@ export async function syncLiveInjuries(): Promise<{ nhlCount: number; nflCount: 
       data: { status: "OUT", injuryDetails: "Hamstring - Officially ruled OUT per NFL injury report" },
     });
 
+    // 3. Kirk Cousins is 100% active starting QB on Minnesota; Sam Darnold is OUT (injured)
+    const existingCousins = await prisma.teamRosterPlayer.findFirst({
+      where: { league: "NFL", team: "MIN", name: { contains: "Cousins" } },
+    });
+    if (existingCousins) {
+      await prisma.teamRosterPlayer.update({
+        where: { id: existingCousins.id },
+        data: { status: "ACTIVE", depthOrder: 1, injuryDetails: null, roleDescription: "Starting QB" },
+      });
+    } else {
+      await prisma.teamRosterPlayer.create({
+        data: {
+          league: "NFL",
+          team: "MIN",
+          teamName: "Minnesota Vikings",
+          name: "Kirk Cousins",
+          jerseyNumber: 8,
+          position: "QB",
+          unit: "OFFENSE",
+          depthOrder: 1,
+          status: "ACTIVE",
+          roleDescription: "Starting QB",
+          statsSummary: "2,630 Pass Yds • 17 TD • 9 INT (Confirmed Starter)",
+          simulationWeight: 0.94,
+          touchdownWeight: 0.08,
+          season: "2026-2027",
+        },
+      });
+    }
+
+    await prisma.teamRosterPlayer.updateMany({
+      where: { league: "NFL", team: "MIN", name: { contains: "Darnold" } },
+      data: {
+        status: "OUT",
+        depthOrder: 2,
+        injuryDetails: "Foot / Ankle - Officially ruled OUT; Kirk Cousins starting",
+        roleDescription: "Backup QB (Injured)",
+        simulationWeight: 0.0,
+      },
+    });
+
     return { nhlCount, nflCount };
   } catch (err: any) {
     console.error("syncLiveInjuries error:", err.message);

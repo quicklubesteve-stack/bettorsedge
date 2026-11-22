@@ -147,7 +147,8 @@ export const NFL_ROSTERS_SEED: Record<string, RawRosterPlayer[]> = {
     { name: "Minkah Fitzpatrick", jerseyNumber: 39, position: "S", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Free Safety", statsSummary: "58 Tackles • 1 INT", simulationWeight: 0.92, touchdownWeight: 0.0 },
   ],
   MIN: [
-    { name: "Sam Darnold", jerseyNumber: 14, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting QB", statsSummary: "2,680 Pass Yds • 21 TD • 10 INT", simulationWeight: 0.90, touchdownWeight: 0.10 },
+    { name: "Kirk Cousins", jerseyNumber: 8, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Pro Bowl QB", statsSummary: "2,630 Pass Yds • 17 TD • 9 INT (Confirmed Starter)", simulationWeight: 0.94, touchdownWeight: 0.08 },
+    { name: "Sam Darnold", jerseyNumber: 14, position: "QB", unit: "OFFENSE", depthOrder: 2, status: "OUT", injuryDetails: "Foot / Ankle - Ruled OUT; Kirk Cousins Starting", roleDescription: "Backup QB (Injured)", statsSummary: "2,680 Pass Yds • 21 TD • 10 INT (Hurt / OUT)", simulationWeight: 0.0, touchdownWeight: 0.0 },
     { name: "Aaron Jones", jerseyNumber: 33, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting All-Purpose RB1", statsSummary: "780 Rush Yds • 34 Rec • 6 TD", simulationWeight: 0.90, touchdownWeight: 0.50 },
     { name: "Ty Chandler", jerseyNumber: 27, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Speed Backup RB", statsSummary: "210 Rush Yds • 1 TD", simulationWeight: 0.68, touchdownWeight: 0.15 },
     { name: "Justin Jefferson", jerseyNumber: 18, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "NFL #1 Superstar Wide Receiver", statsSummary: "68 Rec • 980 Yds • 6 TD (100% Active)", simulationWeight: 1.0, touchdownWeight: 0.60 },
@@ -250,7 +251,7 @@ export const NFL_ROSTERS_SEED: Record<string, RawRosterPlayer[]> = {
     { name: "Leonard Williams", jerseyNumber: 99, position: "DT", unit: "DEFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Defensive Line Anchor", statsSummary: "5.5 Sacks • 11 TFL", simulationWeight: 0.88, touchdownWeight: 0.0 },
   ],
   ATL: [
-    { name: "Kirk Cousins", jerseyNumber: 18, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Veteran Pro Bowl Starting QB", statsSummary: "2,630 Pass Yds • 17 TD • 9 INT", simulationWeight: 0.92, touchdownWeight: 0.05 },
+    { name: "Michael Penix Jr.", jerseyNumber: 9, position: "QB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Franchise QB", statsSummary: "1st-Round Franchise QB • +0.08 EPA/play", simulationWeight: 0.88, touchdownWeight: 0.08 },
     { name: "Bijan Robinson", jerseyNumber: 7, position: "RB", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "All-Pro Dual-Threat Superstar RB1", statsSummary: "810 Rush Yds • 44 Rec • 8 Total TD", simulationWeight: 0.98, touchdownWeight: 0.65 },
     { name: "Tyler Allgeier", jerseyNumber: 25, position: "RB", unit: "OFFENSE", depthOrder: 2, status: "ACTIVE", roleDescription: "Power Short-Yardage RB2", statsSummary: "390 Rush Yds • 3 TD • 5.1 YPC", simulationWeight: 0.78, touchdownWeight: 0.30 },
     { name: "Drake London", jerseyNumber: 5, position: "WR", unit: "OFFENSE", depthOrder: 1, status: "ACTIVE", roleDescription: "Starting Big-Bodied Target WR1", statsSummary: "62 Rec • 720 Yds • 6 TD", simulationWeight: 0.94, touchdownWeight: 0.50 },
