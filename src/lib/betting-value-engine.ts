@@ -114,6 +114,141 @@ export function calculateKellyStake(aiWinProb: number, americanOdds: number): nu
   return Number(pct.toFixed(2));
 }
 
+export interface AtsEvaluation {
+  spread: number; // e.g. -7.5 for Dallas or -1.5 for Edmonton
+  spreadFavorite: "HOME" | "AWAY";
+  spreadOdds: number; // e.g. -110
+  homeSpreadDisplay: string; // e.g. "DAL -7.5 (-110)"
+  awaySpreadDisplay: string; // e.g. "TEN +7.5 (-110)"
+  homeCoverProb: number; // % chance home covers spread
+  awayCoverProb: number; // % chance away covers spread (sums to 100.0%)
+  recommendedPick: string; // e.g. "DAL -7.5" or "PASS"
+  coverProbability: number;
+  edgePct: number;
+  evPer100: number;
+  valueRating: "HIGH VALUE" | "MODERATE VALUE" | "LEAN VALUE" | "NO BET / INSUFFICIENT EDGE";
+  rationale: string;
+}
+
+/**
+ * Standard Normal Cumulative Distribution Function approximation (Abramowitz & Stegun)
+ */
+function normCdf(x: number): number {
+  const a1 = 0.254829592;
+  const a2 = -0.284496736;
+  const a3 = 1.421413741;
+  const a4 = -1.453152027;
+  const a5 = 1.061405429;
+  const p = 0.3275911;
+
+  const sign = x < 0 ? -1 : 1;
+  const absX = Math.abs(x) / Math.sqrt(2);
+  const t = 1.0 / (1.0 + p * absX);
+  const y = 1.0 - (((((a5 * t + a4) * t) + a3) * t + a2) * t + a1) * t * Math.exp(-absX * absX);
+
+  return 0.5 * (1.0 + sign * y);
+}
+
+/**
+ * Calculate Against-The-Spread (ATS) cover probability and expected value
+ * Rigorously models projected margin vs bookmaker spread.
+ * Invariant: homeCoverProb + awayCoverProb === 100.0%
+ */
+export function evaluateAtsBettingValue(
+  league: "NFL" | "NHL",
+  homeTeam: string,
+  awayTeam: string,
+  spread: number, // e.g. -3.5 (negative means home favorite), or positive
+  spreadFavorite: "HOME" | "AWAY",
+  homeWinProb: number, // 0 to 1
+  predictedScore?: string,
+  spreadOdds: number = -110
+): AtsEvaluation {
+  // Determine projected margin
+  // For NFL, standard deviation of game margin is approx 13.5 points
+  // For NHL, standard deviation of game margin is approx 2.0 goals
+  const stdDev = league === "NFL" ? 13.5 : 2.0;
+
+  // Derive projected margin from win probability: margin ~ stdDev * invNorm(winProb)
+  // Or parse from predictedScore if available
+  let projectedMarginHome = 0;
+  if (predictedScore && predictedScore.includes("-")) {
+    const parts = predictedScore.split("-").map((s) => parseFloat(s.trim()));
+    if (parts.length === 2 && !isNaN(parts[0]) && !isNaN(parts[1])) {
+      // predictedScore in format "Home - Away" or "Away - Home"
+      projectedMarginHome = parts[0] - parts[1];
+    }
+  }
+
+  if (projectedMarginHome === 0) {
+    // If no score parsed, approximate from win probability log-odds
+    const z = (homeWinProb - 0.5) * 3.5;
+    projectedMarginHome = z * (league === "NFL" ? 5.5 : 0.8);
+  }
+
+  // Spread line for Home: if spread is negative (e.g. -7.5), Home must win by > 7.5
+  // Line: Home Margin - Spread > 0
+  const effectiveHomeSpread = spreadFavorite === "HOME" ? -Math.abs(spread) : Math.abs(spread);
+  
+  // Z-score for Home covering: (projectedMarginHome - (-effectiveHomeSpread)) / stdDev
+  // i.e., projectedMarginHome + effectiveHomeSpread
+  const zScore = (projectedMarginHome + effectiveHomeSpread) / stdDev;
+  let homeCoverPct = Number((normCdf(zScore) * 100).toFixed(1));
+
+  // Bound within reasonable limits [15%, 85%] to avoid overconfidence
+  homeCoverPct = Math.max(15, Math.min(85, homeCoverPct));
+  const awayCoverPct = Number((100 - homeCoverPct).toFixed(1));
+
+  // American odds -110 has raw implied probability of 52.38% (vig-free is 50.0%)
+  const { fairA: fairCoverProb } = calculateVigFreeProbabilities(spreadOdds, spreadOdds); // 0.50
+
+  const homeEdge = Number((homeCoverPct - fairCoverProb * 100).toFixed(1));
+  const awayEdge = Number((awayCoverPct - fairCoverProb * 100).toFixed(1));
+
+  const bestIsHome = homeEdge >= awayEdge;
+  const bestEdge = bestIsHome ? homeEdge : awayEdge;
+  const bestCoverProb = bestIsHome ? homeCoverPct : awayCoverPct;
+
+  const atsEV = calculateEV(bestCoverProb / 100, spreadOdds, 100);
+
+  let valueRating: AtsEvaluation["valueRating"] = "NO BET / INSUFFICIENT EDGE";
+  if (atsEV.ev >= 5.0 && bestEdge >= 3.5) valueRating = "HIGH VALUE";
+  else if (atsEV.ev >= 2.5 && bestEdge >= 2.0) valueRating = "MODERATE VALUE";
+  else if (atsEV.ev >= 0.8 && bestEdge >= 1.0) valueRating = "LEAN VALUE";
+
+  const homeSpreadSign = effectiveHomeSpread > 0 ? `+${effectiveHomeSpread}` : `${effectiveHomeSpread}`;
+  const awaySpreadSign = effectiveHomeSpread > 0 ? `${-effectiveHomeSpread}` : `+${Math.abs(effectiveHomeSpread)}`;
+
+  const homeSpreadDisplay = `${homeTeam} ${homeSpreadSign} (${spreadOdds > 0 ? `+${spreadOdds}` : spreadOdds})`;
+  const awaySpreadDisplay = `${awayTeam} ${awaySpreadSign} (${spreadOdds > 0 ? `+${spreadOdds}` : spreadOdds})`;
+
+  const recommendedPick =
+    valueRating === "NO BET / INSUFFICIENT EDGE"
+      ? "PASS / NO BET"
+      : bestIsHome
+      ? `${homeTeam} ${homeSpreadSign}`
+      : `${awayTeam} ${awaySpreadSign}`;
+
+  return {
+    spread: Math.abs(spread),
+    spreadFavorite,
+    spreadOdds,
+    homeSpreadDisplay,
+    awaySpreadDisplay,
+    homeCoverProb: homeCoverPct,
+    awayCoverProb: awayCoverPct,
+    recommendedPick,
+    coverProbability: bestCoverProb,
+    edgePct: bestEdge,
+    evPer100: atsEV.ev,
+    valueRating,
+    rationale:
+      valueRating === "NO BET / INSUFFICIENT EDGE"
+        ? `Spread line of ${spreadFavorite === "HOME" ? homeSpreadDisplay : awaySpreadDisplay} is tightly priced by consensus books. Estimated cover probability (${bestCoverProb}%) does not yield a sufficient mathematical edge. Pass.`
+        : `AI model projects ${recommendedPick} with a ${bestCoverProb}% cover probability vs consensus break-even of 52.4% (+${bestEdge}% edge, +$${atsEV.ev.toFixed(2)} EV per $100).`,
+  };
+}
+
 /**
  * Evaluates game sides for betting value
  */

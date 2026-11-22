@@ -12,7 +12,7 @@ import {
   TeamRecordData,
 } from "./win-probability-engine";
 import { getTeamBrand, TeamBrand } from "./team-branding";
-import { evaluateGameBettingValue } from "./betting-value-engine";
+import { evaluateGameBettingValue, evaluateAtsBettingValue, AtsEvaluation } from "./betting-value-engine";
 
 export interface StarterInfo {
   name: string;
@@ -77,6 +77,7 @@ export interface EnrichedTodayGame extends WinProbabilityResult {
     valueRating: "HIGH VALUE" | "MODERATE VALUE" | "LEAN VALUE" | "NO BET / INSUFFICIENT EDGE";
     kellyStakePct: number;
   };
+  atsDetails: AtsEvaluation;
 }
 
 export interface TodayGamesResponse {
@@ -434,6 +435,18 @@ export async function getTodayGames(
     const bestPickIsHome = evalValue.homeValue.evPer100 >= evalValue.awayValue.evPer100;
     const bestValue = bestPickIsHome ? evalValue.homeValue : evalValue.awayValue;
 
+    // Against-The-Spread (ATS) Cover Probability & Odds
+    const atsDetails = evaluateAtsBettingValue(
+      league,
+      game.homeTeam,
+      game.awayTeam,
+      game.spread,
+      (game.spreadFavorite as any) || "HOME",
+      analysis.homeWinProbability / 100,
+      analysis.predictedScore,
+      -110
+    );
+
     return {
       ...analysis,
       homeBrand,
@@ -479,6 +492,7 @@ export async function getTodayGames(
         valueRating: bestValue.valueRating,
         kellyStakePct: bestValue.kellyRecommendedStakePct,
       },
+      atsDetails,
     };
   });
 

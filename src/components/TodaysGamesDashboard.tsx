@@ -38,11 +38,14 @@ export default function TodaysGamesDashboard() {
   const [selectedGameForModal, setSelectedGameForModal] = useState<EnrichedTodayGame | null>(null);
   const [lastRefreshedTime, setLastRefreshedTime] = useState<string>("");
 
-  const fetchGames = async () => {
+  const fetchGames = async (isManualRefresh: boolean = false) => {
     try {
       setLoading(true);
       setError(null);
-      const res = await fetch(`/api/today-games?timeHorizon=${timeHorizon}&sortBy=${sortBy}`);
+      const url = `/api/today-games?timeHorizon=${timeHorizon}&sortBy=${sortBy}${
+        isManualRefresh ? "&refresh=true" : ""
+      }`;
+      const res = await fetch(url);
       if (!res.ok) throw new Error("Failed to load game matchups");
       const json: TodayGamesResponse = await res.json();
       setData(json);
@@ -57,7 +60,7 @@ export default function TodaysGamesDashboard() {
   };
 
   useEffect(() => {
-    fetchGames();
+    fetchGames(false);
   }, [timeHorizon, sortBy]);
 
   return (
@@ -95,7 +98,7 @@ export default function TodaysGamesDashboard() {
               </span>
             )}
             <button
-              onClick={fetchGames}
+              onClick={() => fetchGames(true)}
               disabled={loading}
               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-xs text-white transition font-bold shadow-md shadow-emerald-950/40 disabled:opacity-50"
             >
@@ -214,7 +217,7 @@ export default function TodaysGamesDashboard() {
           <AlertTriangle className="w-6 h-6 text-red-400 mx-auto" />
           <p className="text-sm font-bold text-red-300">{error}</p>
           <button
-            onClick={fetchGames}
+            onClick={() => fetchGames(false)}
             className="px-4 py-1.5 rounded-lg bg-red-500/20 text-red-300 text-xs font-semibold hover:bg-red-500/30 transition"
           >
             Try Again
@@ -576,6 +579,48 @@ export default function TodaysGamesDashboard() {
                         <span>Quality: <strong className="text-emerald-400">{game.dataQuality}</strong></span>
                       </div>
                     </div>
+
+                    {/* Against-The-Spread (ATS) Odds & Model Cover Probability */}
+                    {game.atsDetails && (
+                      <div className="p-2.5 rounded-xl bg-slate-950/90 border border-slate-800/90 flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <TrendingUp className="w-4 h-4 text-cyan-400 shrink-0" />
+                          <div className="text-xs">
+                            <span className="text-slate-400">Point Spread: </span>
+                            <strong className="text-white font-mono font-bold">
+                              {game.atsDetails.spreadFavorite === "HOME"
+                                ? game.atsDetails.homeSpreadDisplay
+                                : game.atsDetails.awaySpreadDisplay}
+                            </strong>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-xs">
+                          <span className="text-slate-400">Cover Prob:</span>
+                          <strong className="text-emerald-400 font-mono font-bold">
+                            {game.atsDetails.coverProbability}%
+                          </strong>
+                          <span className="text-[10px] text-slate-400 font-mono">
+                            ({game.atsDetails.recommendedPick})
+                          </span>
+                          <span
+                            className={`px-2 py-0.5 rounded text-[9px] font-black uppercase tracking-wider border ${
+                              game.atsDetails.valueRating === "HIGH VALUE"
+                                ? "bg-emerald-500/20 text-emerald-300 border-emerald-500/40"
+                                : game.atsDetails.valueRating === "MODERATE VALUE"
+                                ? "bg-teal-500/20 text-teal-300 border-teal-500/40"
+                                : game.atsDetails.valueRating === "LEAN VALUE"
+                                ? "bg-cyan-500/20 text-cyan-300 border-cyan-500/40"
+                                : "bg-slate-800 text-slate-400 border-slate-700"
+                            }`}
+                          >
+                            {game.atsDetails.valueRating === "NO BET / INSUFFICIENT EDGE"
+                              ? "NO BET / PASS"
+                              : `+EV (+${game.atsDetails.edgePct}% EDGE)`}
+                          </span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 

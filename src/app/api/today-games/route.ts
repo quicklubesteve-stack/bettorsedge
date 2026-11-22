@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getTodayGames } from "@/lib/today-games-service";
+import { syncAllLiveSportsData } from "@/lib/live-data-service";
 
 export async function GET(req: Request) {
   try {
@@ -8,6 +9,16 @@ export async function GET(req: Request) {
     const timeHorizonParam = (searchParams.get("timeHorizon") || "ALL").toUpperCase();
     const sortByParam = (searchParams.get("sortBy") || "time").toLowerCase();
     const dateParam = searchParams.get("date"); // optional override for testing
+    const refreshParam = searchParams.get("refresh");
+
+    // Optional on-demand live data refresh
+    if (refreshParam === "true") {
+      try {
+        await syncAllLiveSportsData("One-Click Dashboard Refresh");
+      } catch (syncErr) {
+        console.warn("Live sports sync warning:", syncErr);
+      }
+    }
 
     const league = (["ALL", "NFL", "NHL"].includes(leagueParam)
       ? leagueParam

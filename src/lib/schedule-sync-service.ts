@@ -149,6 +149,13 @@ export function getScheduleStatus(): ScheduleStatus {
   };
 }
 
+export function appendSyncLog(log: SyncJobLog): void {
+  MEMORY_LOGS.unshift(log);
+  if (MEMORY_LOGS.length > 20) {
+    MEMORY_LOGS.pop();
+  }
+}
+
 export function triggerManualSync(source: string = "User Manual Dashboard Refresh"): SyncJobLog {
   const newLog: SyncJobLog = {
     id: `sync-manual-${Date.now()}`,
