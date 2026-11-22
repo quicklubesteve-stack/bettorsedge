@@ -1,4 +1,5 @@
 import Link from "next/link";
+import TodaysGamesDashboard from "@/components/TodaysGamesDashboard";
 import {
   ShieldAlert,
   Zap,
@@ -65,6 +66,9 @@ export default function HomePage() {
           </div>
         </div>
       </div>
+
+      {/* TODAY'S GAMES & AI PREDICTIONS DASHBOARD */}
+      <TodaysGamesDashboard />
 
       {/* Feature Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

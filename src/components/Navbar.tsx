@@ -55,6 +55,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
+    { href: "/#todays-games", label: "Today's Games ⚡", icon: Zap, pro: false },
     { href: "/safe-bets", label: "Safe Bets 🔥", icon: Flame, pro: false },
     { href: "/betting-explained", label: "Betting Explained 💡", icon: BookOpen, pro: false },
     { href: "/rosters", label: "Team Rosters", icon: Users, pro: false },
